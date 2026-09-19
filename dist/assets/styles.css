@@ -116,13 +116,13 @@ h1, h2, h3, p { margin-top: 0; }
 .market-summary strong { display: block; font-size: 1.8rem; }
 .market-summary span { color: var(--muted); }
 
-.mode-tabs, .my-tabs {
+.mode-tabs, .my-tabs, .play-mode-switch {
   display: flex;
   gap: 10px;
   margin-bottom: 16px;
   overflow-x: auto;
 }
-.mode-tabs button, .my-tabs button {
+.mode-tabs button, .my-tabs button, .play-mode-switch button {
   min-height: 42px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -131,7 +131,15 @@ h1, h2, h3, p { margin-top: 0; }
   color: #4b5a60;
   font-weight: 900;
 }
-.mode-tabs button.active, .my-tabs button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.mode-tabs button.active, .my-tabs button.active, .play-mode-switch button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.play-mode-switch {
+  width: max-content;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+}
+.play-mode-switch button { border-radius: 999px; border: 0; }
 
 .feed-layout {
   display: grid;
@@ -231,6 +239,20 @@ h1, h2, h3, p { margin-top: 0; }
 .field-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .publish-form label, .skill-card-form label, .draft-form label { display: grid; gap: 7px; font-weight: 850; }
 .deck-builder { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 16px; }
+.deck-toolbar, .request-board-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: var(--shadow);
+}
+.deck-toolbar h2, .request-board-head h2 { margin-bottom: 4px; }
+.deck-toolbar span { color: var(--muted); line-height: 1.5; }
 .skill-card-form h2, .deck-section h2 { margin-bottom: 0; }
 .eyebrow {
   margin: 0 0 4px;
@@ -260,6 +282,114 @@ h1, h2, h3, p { margin-top: 0; }
   font-weight: 900;
 }
 .skill-deck { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.game-deck {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(190px, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+.game-card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  min-height: 390px;
+  overflow: hidden;
+  padding: 10px;
+  border: 2px solid #b48a3b;
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 32%),
+    linear-gradient(160deg, #221b18, #0c1415 58%, #312116);
+  color: #fff7df;
+  box-shadow: 0 18px 34px rgba(23, 38, 45, 0.2), inset 0 0 0 3px rgba(255, 230, 166, 0.2);
+}
+.game-card::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(255, 226, 157, 0.58);
+  border-radius: 12px;
+  pointer-events: none;
+}
+.game-card:hover { transform: translateY(-3px); transition: 180ms ease; }
+.game-card-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 8px;
+}
+.game-card-top b {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 50%;
+  background: #f5c542;
+  color: #211710;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.45);
+}
+.game-card-top span {
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffe8a8;
+  font-weight: 900;
+  font-size: 0.8rem;
+}
+.game-card-art {
+  position: relative;
+  min-height: 190px;
+  margin: 6px 0 10px;
+  border: 1px solid rgba(255, 226, 157, 0.55);
+  border-radius: 10px;
+  background-image: url("skill-card-sheet.png");
+  background-size: 300% 200%;
+  box-shadow: inset 0 -30px 40px rgba(0, 0, 0, 0.25);
+}
+.art-python .game-card-art { background-position: 0% 0%; }
+.art-ppt .game-card-art { background-position: 50% 0%; }
+.art-excel .game-card-art { background-position: 100% 0%; }
+.art-photo .game-card-art { background-position: 0% 100%; }
+.art-video .game-card-art { background-position: 50% 100%; }
+.art-anime .game-card-art { background-position: 100% 100%; }
+.game-card-body {
+  position: relative;
+  z-index: 1;
+  padding: 10px;
+  border-radius: 9px;
+  background: rgba(7, 13, 16, 0.62);
+}
+.game-card-body h3 { margin: 0 0 8px; font-size: 1.1rem; line-height: 1.25; }
+.game-card-body p { margin: 0; color: #e8dcc5; line-height: 1.45; font-size: 0.9rem; }
+.game-card-foot {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 8px 4px 0;
+}
+.game-card-foot span, .game-card-foot strong {
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffe8a8;
+  font-size: 0.75rem;
+}
+.game-card-foot strong { margin-left: auto; background: #f5c542; color: #211710; }
+.rarity-legend { border-color: #f5c542; box-shadow: 0 20px 40px rgba(245, 197, 66, 0.22), inset 0 0 0 3px rgba(255, 230, 166, 0.2); }
+.rarity-epic { border-color: #d685ff; }
+.want-kind { background: linear-gradient(160deg, #261c29, #102022 58%, #382714); }
+.request-market-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.request-card { min-height: 280px; }
 .skill-card {
   display: grid;
   gap: 10px;
@@ -418,6 +548,116 @@ h1, h2, h3, p { margin-top: 0; }
 }
 .modal-note textarea { min-height: 86px; resize: vertical; }
 .modal-actions { margin-top: 14px; justify-content: flex-end; }
+.card-create-modal { display: grid; gap: 14px; }
+.card-create-modal input, .card-create-modal select, .card-create-modal textarea {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #cbd8d4;
+  border-radius: var(--radius);
+  padding: 9px 10px;
+}
+
+.fun-market {
+  display: grid;
+  gap: 18px;
+}
+.fun-market[hidden] { display: none; }
+.sprite-panel {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #ffffff, #eef8f4);
+  box-shadow: var(--shadow);
+}
+.sprite-panel img {
+  width: 100%;
+  max-height: 260px;
+  object-fit: contain;
+  border-radius: 18px;
+}
+.sprite-dialog h2 { margin-bottom: 12px; }
+.dialog-steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+.dialog-steps label { display: grid; gap: 7px; font-weight: 850; }
+.dialog-steps select {
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 8px;
+}
+.summon-board {
+  display: grid;
+  grid-template-columns: 460px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+}
+.summon-platform {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 460px;
+  border: 1px solid #c8b36a;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 248, 214, 0.95), rgba(218, 244, 235, 0.92) 48%, rgba(23, 38, 45, 0.92) 49%, rgba(23, 38, 45, 0.98) 52%, rgba(255, 255, 255, 0.82) 53%),
+    url("skill-card-sheet.png");
+  background-size: cover;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(23, 38, 45, 0.16);
+}
+.summon-platform canvas {
+  position: relative;
+  z-index: 2;
+  width: min(86%, 420px);
+  aspect-ratio: 1;
+  touch-action: none;
+}
+.platform-copy {
+  position: absolute;
+  left: 50%;
+  bottom: 58px;
+  z-index: 3;
+  width: min(320px, 70%);
+  transform: translateX(-50%);
+  text-align: center;
+  color: #0e2c2b;
+}
+.platform-copy strong, .platform-copy span { display: block; }
+.platform-copy span { margin-top: 4px; color: #526268; font-size: 0.88rem; }
+.summon-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.recommendation-table {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: var(--shadow);
+}
+.recommend-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
+  gap: 12px;
+}
+.game-card.mini {
+  min-height: 290px;
+  border-radius: 13px;
+  padding: 8px;
+}
+.game-card.mini .game-card-art { min-height: 132px; }
+.game-card.mini .game-card-body h3 { font-size: 0.96rem; }
+.game-card.mini .game-card-body p { font-size: 0.82rem; }
 
 .toast {
   position: fixed;
@@ -437,7 +677,7 @@ h1, h2, h3, p { margin-top: 0; }
 .toast.show { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 1180px) {
-  .site-header, .feed-layout, .general-card, .publish-form, .deck-builder, .message-page { grid-template-columns: 1fr; }
+  .site-header, .feed-layout, .general-card, .publish-form, .deck-builder, .message-page, .sprite-panel, .summon-board { grid-template-columns: 1fr; }
   .site-header { position: static; align-items: stretch; padding: 14px; }
   .top-nav, .header-actions { flex-wrap: wrap; }
   .search-box { width: 100%; }
@@ -448,8 +688,10 @@ h1, h2, h3, p { margin-top: 0; }
 
 @media (max-width: 760px) {
   .market-page, .my-page, .message-page { width: min(100% - 20px, 720px); }
-  .exchange-feed, .field-grid, .field-grid.compact, .scenario-grid, .general-stats, .work-grid, .skill-deck, .modal-grid, .draft-units { grid-template-columns: 1fr; }
+  .exchange-feed, .field-grid, .field-grid.compact, .scenario-grid, .general-stats, .work-grid, .skill-deck, .game-deck, .modal-grid, .draft-units, .request-market-list, .dialog-steps, .recommend-row { grid-template-columns: 1fr; }
   .market-title { flex-direction: column; align-items: stretch; }
+  .deck-toolbar, .request-board-head { flex-direction: column; align-items: stretch; }
+  .summon-platform { min-height: 340px; }
   .chat-item, .chat-input { grid-template-columns: 1fr; }
   .bubble { max-width: 100%; }
 }
