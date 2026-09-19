@@ -71,11 +71,23 @@ function artForSkill(name = "") {
   return hit ? hit[1] : "art-python";
 }
 
+function rankForSkill(name = "", kind = "offer") {
+  if (kind === "want") return "学徒";
+  if (name.includes("Python") || name.includes("摄影") || name.includes("剪辑") || name.includes("Figma")) return "大师";
+  return "精英";
+}
+
+function typeForSkill(name = "") {
+  if (name.includes("PPT") || name.includes("脚本") || name.includes("英语")) return "理论+应用";
+  return "应用";
+}
+
 function marketSkillCard(label, title, meta, kind = "offer") {
   const rarity = kind === "want" ? "rarity-apprentice want-kind" : "rarity-elite";
   return `
     <article class="game-card market-skill-card ${artForSkill(title)} ${rarity}">
-      <div class="game-card-top"><b>${label}</b><span>${kind === "want" ? "需求" : "提供"}</span></div>
+      <div class="game-card-top"><b>${rankForSkill(title, kind)}</b><span>${typeForSkill(title)}</span></div>
+      <div class="market-card-label">${label}</div>
       <div class="game-card-art"></div>
       <div class="game-card-body"><h3>${title}</h3><p>${meta}</p></div>
     </article>
@@ -85,7 +97,7 @@ function marketSkillCard(label, title, meta, kind = "offer") {
 function card(item) {
   const offer = item.cards?.[0];
   return `
-    <article class="exchange-card">
+    <article class="exchange-card compact-exchange-card">
       <div class="exchange-card-head">
         <div class="user-line">
           <div class="avatar">${item.avatar}</div>
@@ -93,9 +105,9 @@ function card(item) {
         </div>
         <span class="tag">热度 ${item.heat}</span>
       </div>
-      <div class="market-card-stack">
-        ${marketSkillCard("上牌", offer?.name || item.teach, offer?.scenes || item.teach, "offer")}
-        ${marketSkillCard("下牌", item.want, item.desc, "want")}
+      <div class="market-card-pair">
+        <section><strong>我会</strong>${marketSkillCard("对方提供", offer?.name || item.teach, offer?.scenes || item.teach, "offer")}</section>
+        <section><strong>我想学</strong>${marketSkillCard("对方需求", item.want, item.desc, "want")}</section>
       </div>
       <div class="exchange-meta">
         <span>${item.type === "online" ? "线上" : "线下"}</span>
@@ -110,6 +122,19 @@ function card(item) {
   `;
 }
 
+function visualSkillOption(card, group, checked = false) {
+  const title = card.name || card.title || "技能卡";
+  return `
+    <label class="visual-skill-option">
+      <input type="checkbox" name="${group}" value="${card.id || title}" ${checked ? "checked" : ""} />
+      <article class="game-card modal-skill-card ${artForSkill(title)} rarity-elite">
+        <div class="game-card-top"><b>${rankForSkill(title)}</b><span>${card.style || typeForSkill(title)}</span></div>
+        <div class="game-card-art"></div>
+        <div class="game-card-body"><h3>${title}</h3><p>${card.scenes || card.meta || "技能交换卡"}</p></div>
+      </article>
+    </label>
+  `;
+}
 function skillOption(card, group, checked = false) {
   return `
     <label class="select-skill-card">
@@ -179,9 +204,9 @@ function openExchangeModal(item) {
   const modal = ensureExchangeModal();
   modal.dataset.targetUser = item.user;
   modal.querySelector("#exchange-modal-title").textContent = `向 ${item.user} 发起卡牌交换`;
-  modal.querySelector("[data-my-card-options]").innerHTML = myTeachCards.map((card, index) => skillOption(card, "my-card", index === 0)).join("");
+  modal.querySelector("[data-my-card-options]").innerHTML = myTeachCards.map((card, index) => visualSkillOption(card, "my-card", index === 0)).join("");
   modal.querySelector("[data-target-card-title]").textContent = `${item.user} 递出的卡牌`;
-  modal.querySelector("[data-target-card-options]").innerHTML = item.cards.map((card, index) => skillOption(card, "target-card", index === 0)).join("");
+  modal.querySelector("[data-target-card-options]").innerHTML = item.cards.map((card, index) => visualSkillOption(card, "target-card", index === 0)).join("");
   modal.hidden = false;
 }
 
@@ -311,7 +336,7 @@ const funCardPool = [
 
 function miniGameCard(card) {
   return `
-    <article class="game-card mini ${card.art} ${card.rarity}" data-profile="${card.user}" data-card-title="${card.title}">
+    <article class="game-card mini ${card.art} ${card.rarity}">
       <div class="game-card-top"><b>${card.rank}</b><span>${card.type}</span></div>
       <div class="game-card-art"></div>
       <div class="game-card-body"><h3>${card.title}</h3><p>${card.meta}</p></div>
@@ -320,12 +345,24 @@ function miniGameCard(card) {
   `;
 }
 
+function funPairCard(card, index) {
+  const wanted = myTeachCards[index % myTeachCards.length];
+  return `
+    <article class="fun-pair-card" data-profile="${card.user}" data-card-title="${card.title}">
+      <div class="fun-pair-head"><b>${card.user}</b><span>${card.score}% 匹配</span></div>
+      <div class="fun-pair-body">
+        <section><strong>对方提供</strong>${miniGameCard(card)}</section>
+        <section><strong>对方想学</strong>${marketSkillCard("想换", wanted.name, wanted.scenes, "want")}</section>
+      </div>
+    </article>
+  `;
+}
 function renderFunCards(offset = 0) {
   const root = document.querySelector("[data-fun-results]");
   if (!root) return;
   const cards = Array.from({ length: 10 }, (_, index) => funCardPool[(index + offset) % funCardPool.length]);
-  root.querySelector(".top-row").innerHTML = cards.slice(0, 5).map(miniGameCard).join("");
-  root.querySelector(".bottom-row").innerHTML = cards.slice(5).map(miniGameCard).join("");
+  root.querySelector(".top-row").innerHTML = cards.slice(0, 5).map(funPairCard).join("");
+  root.querySelector(".bottom-row").innerHTML = cards.slice(5).map((card, index) => funPairCard(card, index + 5)).join("");
   root.hidden = false;
   funUnlockedStage = "result";
   setFunStage("result");
@@ -547,6 +584,11 @@ function initMessages() {
   });
   document.querySelector("[data-draft-form]")?.addEventListener("submit", (event) => {
     event.preventDefault();
+    const box = document.querySelector(".messages");
+    if (box) {
+      box.insertAdjacentHTML("beforeend", `<article class="chat-draft-card sent"><b>交换草案已发送</b><span>陈同学：Python 数据分析 · 30 分钟课程</span><span>林岚：动漫制作 · 5 秒循环动画点评</span><em>时间：每周六 15:00-16:00，共 4 周</em></article>`);
+      box.scrollTop = box.scrollHeight;
+    }
     toast("交换草案已发送给对方确认。");
   });
 }
@@ -565,4 +607,7 @@ initMarket();
 initMyTabs();
 initMessages();
 initProfilePage();
+
+
+
 
