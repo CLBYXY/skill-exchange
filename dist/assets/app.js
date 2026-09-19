@@ -397,11 +397,12 @@ function showQuickApply(title) {
 
 function evaluateCardForge() {
   const years = Number(document.querySelector("[data-years-input]")?.value || 0);
-  const uses = Number(document.querySelector("[data-uses-input]")?.value || 0);
   const works = Number(document.querySelector("[data-work-input]")?.value || 0);
+  const level = document.querySelector("[data-level-input]")?.value || "可教学";
   const type = document.querySelector("[data-card-type-input]")?.value || "应用";
   const skill = document.querySelector("[data-skill-input]")?.value || "新技能";
-  const score = years * 22 + Math.min(uses, 80) * 0.8 + works * 14;
+  const levelBonus = { "专家": 34, "可教学": 28, "熟练": 18, "入门": 8, "零基础": 2 }[level] || 10;
+  const score = years * 26 + works * 18 + levelBonus;
   let rank = "学徒";
   let rarity = "rarity-apprentice";
   if (score >= 120) { rank = "传说"; rarity = "rarity-legend"; }
@@ -413,11 +414,11 @@ function evaluateCardForge() {
   document.querySelector("[data-forge-rank]").textContent = rank;
   document.querySelector("[data-forge-type]").textContent = type;
   document.querySelector("[data-forge-title]").textContent = skill;
-  document.querySelector("[data-forge-copy]").textContent = `临时评分 ${Math.round(score)}：综合年限、使用次数和作品数后，卡牌完成锻造。`;
+  document.querySelector("[data-forge-copy]").textContent = `临时评分 ${Math.round(score)}：综合年限、熟练度和作品数后，卡牌完成锻造。`;
   document.querySelector("[data-forge-years]").textContent = `${years} 年`;
   document.querySelector("[data-forge-proof]").textContent = `${works} 作品`;
   document.querySelector("[data-forge-status]").textContent = "已锻造";
-  document.querySelector("[data-forge-log]").innerHTML = `<b>AI 评估过程</b><span>读取年限 ${years} 年、使用 ${uses} 次、作品 ${works} 个。</span><span>评估稳定度与可交换边界。</span><span>锻造结果：${rank} · ${type}。</span>`;
+  document.querySelector("[data-forge-log]").innerHTML = `<b>AI 评估过程</b><span>读取年限 ${years} 年、熟练度 ${level}、作品 ${works} 个。</span><span>评估技能稳定度、可复现程度和学习门槛。</span><span>锻造结果：${rank} · ${type}。</span>`;
 }
 
 function initSummonCanvas() {
