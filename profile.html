@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SkillLoop | 上传技能护照</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body data-page="profile">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="index.html"><span class="brand-mark">SL</span><span><strong>SkillLoop</strong><small>技能配对网站</small></span></a>
+        <nav class="nav">
+          <a href="index.html">今日</a><a class="active" href="profile.html">上传资料</a><a href="market.html">技能市场</a><a href="pet.html">宠物 AI</a><a href="basket.html">猎物篮 <span class="nav-count" data-basket-count>0</span></a><a href="matches.html">配对交换</a>
+        </nav>
+        <section class="side-note"><b>为什么要上传？</b><p>没有清晰资料就无法被高质量推荐。技能护照越完整，Mochi 越会找“靠谱猎物”。</p></section>
+      </aside>
+      <main class="main">
+        <header class="topbar compact">
+          <div><p class="eyebrow">技能护照</p><h1>告诉别人你能教什么，也告诉系统你真正想学什么。</h1><p class="lead">这是配对前的身份资料页。别人只能看到技能、作品和交换边界，看不到联系方式。</p></div>
+        </header>
+
+        <section class="form-layout">
+          <form class="panel form-panel" data-passport-form>
+            <h2>我能教</h2>
+            <div class="field-grid">
+              <label>技能名称<input value="Python 数据分析" /></label>
+              <label>可教水平<select><option>入门陪跑</option><option selected>项目实战</option><option>专业指导</option></select></label>
+              <label>可交换时间<select><option>工作日晚上</option><option selected>周末下午</option><option>碎片 30 分钟</option></select></label>
+              <label>适合对象<select><option>零基础</option><option selected>学过一点但做不出项目</option><option>想作品集提升</option></select></label>
+            </div>
+            <label>教学承诺<textarea>我可以带你用真实数据完成清洗、分析、图表和一页报告，4 周内做出可展示作品。</textarea></label>
+            <h2>我想学</h2>
+            <div class="field-grid">
+              <label>目标技能<input value="摄影构图 / 短视频剪辑" /></label>
+              <label>目标成果<select><option>了解一下</option><option selected>完成一个作品</option><option>系统进阶</option></select></label>
+            </div>
+            <label>学习边界<textarea>希望对方能给具体作业和点评，不接受只聊天不产出。每周最多 2 次，每次 45 分钟。</textarea></label>
+            <h2>作品样例</h2>
+            <div class="upload-box">
+              <span>上传 / 粘贴作品链接</span>
+              <p>示例：数据报告、摄影作品、GitHub 项目、视频链接。原型中点击会模拟上传成功。</p>
+              <button type="button" class="button" data-fake-upload>添加作品样例</button>
+            </div>
+            <button class="button primary" type="submit">保存技能护照</button>
+          </form>
+
+          <aside class="panel preview-panel">
+            <h2>别人会看到的资料</h2>
+            <div class="passport-card">
+              <div class="avatar lg">陈</div>
+              <h3>陈同学</h3>
+              <p>教 Python 数据分析，想学摄影构图和短视频剪辑。</p>
+              <div class="mini-tags"><span>信用 96</span><span>作品 3</span><span>周末可约</span></div>
+            </div>
+            <div class="lock-note">联系方式、详细日程和交换协议会在双方配对成功后才解锁。</div>
+          </aside>
+        </section>
+      </main>
+    </div>
+    <div class="toast" data-toast></div>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
