@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>沟通 | SkillLoop</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body data-page="messages">
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark">SL</span><span>SkillLoop</span></a>
+      <nav class="top-nav" aria-label="主导航">
+        <a href="index.html">技能交换市场</a>
+        <a href="my.html">我的</a>
+        <a class="active" href="messages.html">沟通</a>
+      </nav>
+      <div class="header-actions"><a class="publish-button" href="my.html#publish">发布需求</a></div>
+    </header>
+
+    <main class="message-page">
+      <aside class="message-cats">
+        <h1>消息中心</h1>
+        <button class="active" data-message-cat="system">系统通知</button>
+        <button data-message-cat="likes">赞与评论</button>
+        <button data-message-cat="applications">交换申请 <span>4</span></button>
+      </aside>
+
+      <section class="chat-list">
+        <div class="chat-list-head">
+          <strong data-chat-title>交换申请</strong>
+          <span>⌕</span>
+        </div>
+        <button class="chat-item active" data-chat="lin">
+          <div class="avatar">林</div>
+          <div><b>林岚</b><span>想用动漫制作换你的摄影剪辑</span></div>
+          <time>14:05</time>
+        </button>
+        <button class="chat-item" data-chat="zhou">
+          <div class="avatar">周</div>
+          <div><b>周亦</b><span>发来了短视频剪辑交换申请</span></div>
+          <time>昨天</time>
+        </button>
+        <button class="chat-item" data-chat="xu">
+          <div class="avatar">许</div>
+          <div><b>许诺</b><span>评论了你的 Python 交换需求</span></div>
+          <time>周一</time>
+        </button>
+      </section>
+
+      <section class="chat-thread">
+        <div class="thread-head">
+          <div>
+            <h2 data-thread-name>林岚</h2>
+            <span data-thread-subtitle>摄影、剪辑 ⇄ 动漫制作</span>
+          </div>
+          <button class="primary-action" data-open-draft>交换草案</button>
+        </div>
+        <div class="messages">
+          <div class="bubble other">我看到你会摄影和剪辑，我这边可以教动漫制作，从角色分镜到一个循环动画。</div>
+          <div class="bubble me">我想换的就是这个。我的交换单位是 30 分钟课程，也可以做一次作品点评。</div>
+          <div class="bubble other">可以，我们先拟一个草案，把双方交付和授课时间写清楚。</div>
+        </div>
+        <div class="chat-input">
+          <input placeholder="输入聊天内容，按 Enter 发送" />
+          <button>发送</button>
+        </div>
+      </section>
+
+      <aside class="chat-detail">
+        <div data-detail-default>
+          <h2>聊天详情</h2>
+          <div class="detail-card">
+            <b>交换关系</b>
+            <span>A 用户：陈同学，会摄影、剪辑</span>
+            <span>B 用户：林岚，会动漫制作</span>
+          </div>
+          <div class="detail-card">
+            <b>解锁状态</b>
+            <span>双方已互相发起意向，可以拟定交换草案。</span>
+          </div>
+        </div>
+
+        <form class="draft-form" data-draft-form hidden>
+          <h2>交换草案</h2>
+          <label>A 用户<input value="陈同学" /></label>
+          <label>A 交换物品<input value="摄影、剪辑" /></label>
+          <label>A 单位<input value="30 分钟课程" /></label>
+          <label>B 用户<input value="林岚" /></label>
+          <label>B 交换物品<input value="动漫制作" /></label>
+          <label>B 单位<input value="30 分钟课程" /></label>
+          <label>授课时间<input value="每周六 15:00-16:00，共 4 周" /></label>
+          <label>具体条例<textarea>1. 每次课前 12 小时确认；2. 双方各提供一次作业点评；3. 如需改期，提前 24 小时说明；4. 完成后互评并上传作品。</textarea></label>
+          <button class="primary-action" type="submit">发送草案给对方</button>
+        </form>
+      </aside>
+    </main>
+
+    <div class="toast" data-toast></div>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
