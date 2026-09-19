@@ -1,30 +1,30 @@
 const exchanges = [
-  { user: "林岚", avatar: "林", role: "品牌摄影师", teach: "摄影、剪辑", want: "动漫制作", mode: ["browse", "recommend", "hot"], type: "online", time: "weekend", distance: "3.2km", heat: 96, desc: "可教人像构图、自然光和短视频剪辑节奏，希望换到角色分镜和 5 秒循环动画。", cards: [
+  { user: "林岚", avatar: "林", role: "品牌摄影师", teach: "摄影、剪辑", want: "动漫制作", wantScenes: "角色分镜 / 关键帧 / 5 秒循环动画", mode: ["browse", "recommend", "hot"], type: "online", time: "weekend", distance: "3.2km", heat: 96, desc: "可教人像构图、自然光和短视频剪辑节奏，希望换到角色分镜和 5 秒循环动画。", cards: [
     { id: "photo-frame", name: "手机摄影构图", level: "专家", style: "理论 + 应用", unit: "1 次作品点评", scenes: "人像构图 / 自然光 / 修图方向" },
     { id: "video-edit", name: "短视频剪辑", level: "可教学", style: "应用", unit: "30 分钟课程", scenes: "节奏拆解 / 转场 / 成片优化" },
   ] },
-  { user: "周亦", avatar: "周", role: "剪辑博主", teach: "短视频剪辑、脚本结构", want: "Python 数据分析", mode: ["browse", "recommend", "hot"], type: "online", time: "weekday", distance: "12km", heat: 92, desc: "每次 30 分钟，可按作品拆解剪辑问题，想换一个数据看板入门。", cards: [
+  { user: "周亦", avatar: "周", role: "剪辑博主", teach: "短视频剪辑、脚本结构", want: "Python 数据分析", wantScenes: "订单清洗 / 数据看板 / 入门报告", mode: ["browse", "recommend", "hot"], type: "online", time: "weekday", distance: "12km", heat: 92, desc: "每次 30 分钟，可按作品拆解剪辑问题，想换一个数据看板入门。", cards: [
     { id: "script-cut", name: "短视频剪辑", level: "专家", style: "应用", unit: "30 分钟课程", scenes: "开头钩子 / 镜头节奏 / 发布版成片" },
     { id: "script-structure", name: "脚本结构", level: "熟练", style: "理论", unit: "1 次脚本诊断", scenes: "选题 / 三段结构 / 标题" },
   ] },
-  { user: "许诺", avatar: "许", role: "效率教练", teach: "Notion 学习系统", want: "手机摄影修图", mode: ["browse", "nearby"], type: "online", time: "weekday", distance: "1.8km", heat: 74, desc: "擅长搭建学习复盘系统，希望有人带我做一组可发布的照片。", cards: [
+  { user: "许诺", avatar: "许", role: "效率教练", teach: "Notion 学习系统", want: "手机摄影修图", wantScenes: "人像调色 / 构图复盘 / 发布前精修", mode: ["browse", "nearby"], type: "online", time: "weekday", distance: "1.8km", heat: 74, desc: "擅长搭建学习复盘系统，希望有人带我做一组可发布的照片。", cards: [
     { id: "notion-study", name: "Notion 学习系统", level: "可教学", style: "应用", unit: "1 个模板搭建", scenes: "目标拆解 / 复盘面板 / 周计划" },
   ] },
-  { user: "陈默", avatar: "默", role: "后端工程师", teach: "Python 项目拆解", want: "吉他弹唱", mode: ["browse", "nearby"], type: "offline", time: "weekend", distance: "800m", heat: 81, desc: "可以讲接口设计和自动化脚本，想换吉他节奏和一首完整弹唱。", cards: [
+  { user: "陈默", avatar: "默", role: "后端工程师", teach: "Python 项目拆解", want: "吉他弹唱", wantScenes: "和弦转换 / 扫弦节奏 / 完整弹唱", mode: ["browse", "nearby"], type: "offline", time: "weekend", distance: "800m", heat: 81, desc: "可以讲接口设计和自动化脚本，想换吉他节奏和一首完整弹唱。", cards: [
     { id: "python-project", name: "Python 项目拆解", level: "专家", style: "理论 + 应用", unit: "1 个项目陪跑节点", scenes: "接口设计 / 自动化脚本 / 代码结构" },
   ] },
-  { user: "高晴", avatar: "高", role: "英语教练", teach: "英语面试、口语表达", want: "PPT 视觉设计", mode: ["browse", "recommend"], type: "online", time: "weekday", distance: "8km", heat: 88, desc: "帮你练面试回答和表达流畅度，希望换到一套路演 PPT 设计建议。", cards: [
+  { user: "高晴", avatar: "高", role: "英语教练", teach: "英语面试、口语表达", want: "PPT 视觉设计", wantScenes: "路演封面 / 信息层级 / 一页改稿", mode: ["browse", "recommend"], type: "online", time: "weekday", distance: "8km", heat: 88, desc: "帮你练面试回答和表达流畅度，希望换到一套路演 PPT 设计建议。", cards: [
     { id: "english-interview", name: "英语面试", level: "专家", style: "应用", unit: "30 分钟陪练", scenes: "自我介绍 / 项目表达 / 追问应答" },
     { id: "english-speaking", name: "口语表达", level: "可教学", style: "理论 + 应用", unit: "1 次发音纠正", scenes: "流畅度 / 逻辑连接 / 发音" },
   ] },
-  { user: "韩知", avatar: "韩", role: "产品设计师", teach: "Figma 原型、交互评审", want: "Python 自动化", mode: ["browse", "hot"], type: "online", time: "weekend", distance: "5.6km", heat: 90, desc: "能帮你把想法做成可演示原型，想换脚本自动化处理资料。", cards: [
+  { user: "韩知", avatar: "韩", role: "产品设计师", teach: "Figma 原型、交互评审", want: "Python 自动化", wantScenes: "文件整理 / 批量处理 / 自动化脚本", mode: ["browse", "hot"], type: "online", time: "weekend", distance: "5.6km", heat: 90, desc: "能帮你把想法做成可演示原型，想换脚本自动化处理资料。", cards: [
     { id: "figma-prototype", name: "Figma 原型设计", level: "专家", style: "应用", unit: "1 个可演示原型", scenes: "流程图 / 页面状态 / 交互动效" },
     { id: "interaction-review", name: "交互评审", level: "专家", style: "理论", unit: "1 次方案评审", scenes: "任务路径 / 信息架构 / 可用性问题" },
   ] },
-  { user: "陆声", avatar: "陆", role: "吉他老师", teach: "民谣吉他、弹唱节奏", want: "个人网站搭建", mode: ["browse", "nearby"], type: "offline", time: "weekend", distance: "2.4km", heat: 77, desc: "一对一纠正节奏和和弦，希望换一个个人主页。", cards: [
+  { user: "陆声", avatar: "陆", role: "吉他老师", teach: "民谣吉他、弹唱节奏", want: "个人网站搭建", wantScenes: "个人主页 / 作品展示 / 响应式上线", mode: ["browse", "nearby"], type: "offline", time: "weekend", distance: "2.4km", heat: 77, desc: "一对一纠正节奏和和弦，希望换一个个人主页。", cards: [
     { id: "guitar-rhythm", name: "民谣吉他", level: "可教学", style: "应用", unit: "30 分钟陪练", scenes: "和弦转换 / 扫弦节奏 / 完整弹唱" },
   ] },
-  { user: "袁野", avatar: "袁", role: "咖啡玩家", teach: "咖啡拉花、手冲入门", want: "短视频拍摄", mode: ["browse"], type: "offline", time: "weekend", distance: "4.1km", heat: 69, desc: "适合兴趣入门，想把咖啡制作过程拍成短视频。", cards: [
+  { user: "袁野", avatar: "袁", role: "咖啡玩家", teach: "咖啡拉花、手冲入门", want: "短视频拍摄", wantScenes: "制作过程 / 镜头设计 / 成片节奏", mode: ["browse"], type: "offline", time: "weekend", distance: "4.1km", heat: 69, desc: "适合兴趣入门，想把咖啡制作过程拍成短视频。", cards: [
     { id: "coffee-pour", name: "手冲咖啡", level: "熟练", style: "应用", unit: "1 次线下实操", scenes: "研磨 / 注水 / 风味记录" },
     { id: "latte-art", name: "咖啡拉花", level: "入门陪练", style: "应用", unit: "1 次线下实操", scenes: "打奶泡 / 心形 / 出杯" },
   ] },
@@ -42,6 +42,28 @@ const modeNames = {
   hot: "热门",
   nearby: "周围",
 };
+
+const myOpenRequests = {
+  "req-anime": { label: "Python 数据分析 → 动漫制作", offer: ["Python", "数据分析"], want: ["动漫", "分镜", "动画"] },
+  "req-video": { label: "PPT 结构化表达 → 短视频剪辑", offer: ["PPT", "结构化表达"], want: ["短视频", "剪辑", "脚本"] },
+  "req-coffee": { label: "待确认递出卡牌 → 咖啡拉花", offer: [], want: ["咖啡", "手冲", "拉花"] },
+};
+
+function userStats(item, label = "热度") {
+  const heat = item.heat ?? item.score ?? 90;
+  const done = Math.max(7, Math.round(heat / 4));
+  const rating = (4.4 + Math.min(heat, 100) / 200).toFixed(1);
+  const published = item.cards?.length || Math.max(3, Math.round(heat / 18));
+  return `
+    <div class="user-stat-pack" aria-label="${item.user || "用户"}信用概览">
+      <span class="tag">${label} ${heat}</span>
+      <span><b>${heat}</b>信用分</span>
+      <span><b>${done}</b>完成交换</span>
+      <span><b>${rating}</b>平均评分</span>
+      <span><b>${published}</b>${label === "匹配" ? "作品证明" : "发布中"}</span>
+    </div>
+  `;
+}
 
 function toast(message) {
   const el = document.querySelector("[data-toast]");
@@ -104,6 +126,37 @@ function typeForSkill(name = "") {
   return "应用";
 }
 
+function metaForSkill(name = "", fallback = "技能交换卡") {
+  const metas = [
+    ["Python", "清洗数据 / 可视化图表 / 一页分析报告"],
+    ["数据", "清洗数据 / 可视化图表 / 一页分析报告"],
+    ["PPT", "信息层级 / 路演结构 / 一页改稿"],
+    ["Excel", "函数匹配 / 批量整理 / 自动汇总"],
+    ["摄影", "人像构图 / 自然光 / 修图方向"],
+    ["修图", "色调统一 / 人像精修 / 作品复盘"],
+    ["短视频", "选题脚本 / 镜头节奏 / 成片发布"],
+    ["剪辑", "开头钩子 / 转场节奏 / 成片优化"],
+    ["动漫", "角色分镜 / 关键帧 / 5 秒循环动画"],
+    ["分镜", "镜头设计 / 关键帧 / 节奏点评"],
+    ["吉他", "和弦转换 / 扫弦节奏 / 完整弹唱"],
+    ["民谣", "和弦转换 / 扫弦节奏 / 完整弹唱"],
+    ["咖啡", "研磨参数 / 注水节奏 / 风味记录"],
+    ["手冲", "研磨参数 / 注水节奏 / 风味记录"],
+    ["拉花", "奶泡打发 / 心形拉花 / 出杯稳定"],
+    ["网站", "主页结构 / 响应式布局 / 上线检查"],
+    ["主页", "主页结构 / 响应式布局 / 上线检查"],
+    ["Figma", "流程图 / 页面状态 / 交互动效"],
+    ["原型", "流程图 / 页面状态 / 交互动效"],
+    ["英语", "自我介绍 / 项目表达 / 追问应答"],
+    ["口语", "发音纠正 / 流畅表达 / 逻辑连接"],
+    ["面试", "自我介绍 / 项目表达 / 追问应答"],
+    ["Notion", "目标拆解 / 复盘面板 / 周计划"],
+    ["学习系统", "目标拆解 / 复盘面板 / 周计划"],
+  ];
+  const hit = metas.find(([key]) => name.includes(key));
+  return hit ? hit[1] : fallback;
+}
+
 function marketSkillCard(label, title, meta, kind = "offer") {
   const rarity = kind === "want" ? "rarity-apprentice want-kind" : "rarity-elite";
   return `
@@ -124,11 +177,11 @@ function card(item) {
           <div class="avatar">${item.avatar}</div>
           <div><b>${item.user}</b><span>${item.role}</span></div>
         </div>
-        <span class="tag">热度 ${item.heat}</span>
+        ${userStats(item, "热度")}
       </div>
       <div class="market-card-pair">
-        <section><strong>我会</strong>${marketSkillCard("对方提供", offer?.name || item.teach, offer?.scenes || item.teach, "offer")}</section>
-        <section><strong>我想学</strong>${marketSkillCard("对方需求", item.want, item.desc, "want")}</section>
+        <section><strong>我会</strong>${marketSkillCard("", offer?.name || item.teach, offer?.scenes || item.teach, "offer")}</section>
+        <section><strong>我想学</strong>${marketSkillCard("", item.want, item.wantScenes || metaForSkill(item.want, item.desc), "want")}</section>
       </div>
       <div class="exchange-meta">
         <span>${item.type === "online" ? "线上" : "线下"}</span>
@@ -239,9 +292,14 @@ function renderMarket(mode = "browse") {
   const search = (document.querySelector("[data-search]")?.value || "").trim().toLowerCase();
   const type = document.querySelector("[data-filter-type]")?.value || "all";
   const time = document.querySelector("[data-filter-time]")?.value || "all";
+  const request = document.querySelector("[data-filter-request]")?.value || "all";
   const list = exchanges.filter((item) => {
-    const text = `${item.user} ${item.role} ${item.teach} ${item.want} ${item.desc}`.toLowerCase();
-    return item.mode.includes(mode) && (!search || text.includes(search)) && (type === "all" || item.type === type) && (time === "all" || item.time === time);
+    const text = `${item.user} ${item.role} ${item.teach} ${item.want} ${item.desc} ${item.cards?.map((card) => `${card.name} ${card.scenes}`).join(" ")}`.toLowerCase();
+    const requestRule = myOpenRequests[request];
+    const matchesRequest = !requestRule ||
+      requestRule.want.some((word) => text.includes(word.toLowerCase())) ||
+      requestRule.offer.some((word) => `${item.want} ${item.desc}`.toLowerCase().includes(word.toLowerCase()));
+    return item.mode.includes(mode) && (!search || text.includes(search)) && (type === "all" || item.type === type) && (time === "all" || item.time === time) && matchesRequest;
   });
   document.querySelector("[data-feed-title]").textContent = modeNames[mode];
   document.querySelector("[data-result-count]").textContent = `${list.length} 条交换需求`;
@@ -283,6 +341,7 @@ function initMarket() {
   document.querySelector("[data-search]")?.addEventListener("input", () => renderMarket(current));
   document.querySelector("[data-filter-type]")?.addEventListener("change", () => renderMarket(current));
   document.querySelector("[data-filter-time]")?.addEventListener("change", () => renderMarket(current));
+  document.querySelector("[data-filter-request]")?.addEventListener("change", () => renderMarket(current));
   renderMarket(current);
   initSummonCanvas();
 }
@@ -349,7 +408,7 @@ const funCardPool = [
   { art: "art-photo", title: "手机摄影构图", meta: "人像与自然光", score: 93, rarity: "rarity-master", rank: "大师", type: "理论+应用", user: "许诺" },
   { art: "art-video", title: "短视频剪辑", meta: "开头节奏优化", score: 91, rarity: "rarity-master", rank: "大师", type: "应用", user: "周亦" },
   { art: "art-python", title: "Python 数据分析", meta: "一页报告", score: 89, rarity: "rarity-elite", rank: "精英", type: "应用", user: "陈默" },
-  { art: "art-ppt", title: "PPT 结构表达", meta: "路演叙事", score: 87, rarity: "rarity-elite", rank: "精英", type: "理论", user: "高晴" },
+  { art: "art-ppt", title: "PPT 结构化表达", meta: "路演叙事", score: 87, rarity: "rarity-elite", rank: "精英", type: "理论", user: "高晴" },
   { art: "art-excel", title: "Excel 自动化", meta: "具体函数", score: 84, rarity: "rarity-elite", rank: "精英", type: "应用", user: "韩知" },
   { art: "art-guitar", title: "民谣吉他", meta: "和弦转换", score: 82, rarity: "rarity-elite", rank: "精英", type: "应用", user: "陆声" },
   { art: "art-coffee", title: "咖啡拉花", meta: "心形出杯", score: 80, rarity: "rarity-apprentice", rank: "学徒", type: "应用", user: "袁野" },
@@ -371,12 +430,13 @@ function miniGameCard(card) {
 
 function funPairCard(card, index) {
   const wanted = myTeachCards[index % myTeachCards.length];
+  const profile = exchanges.find((item) => item.user === card.user) || card;
   return `
     <article class="fun-pair-card" data-profile="${card.user}" data-card-title="${card.title}" data-card-meta="${card.meta}">
-      <div class="fun-pair-head"><b>${card.user}</b><span>${card.score}% 匹配</span></div>
+      <div class="fun-pair-head"><b>${card.user}</b>${userStats({ ...profile, heat: card.score, score: card.score }, "匹配")}</div>
       <div class="fun-pair-body">
         <section><strong>对方提供</strong>${miniGameCard(card)}</section>
-        <section><strong>对方想学</strong>${marketSkillCard("想换", wanted.name, wanted.scenes, "want")}</section>
+        <section><strong>对方想学</strong>${marketSkillCard("", wanted.name, wanted.scenes, "want")}</section>
       </div>
       <div class="fun-pair-actions">
         <button class="cart-add-button" type="button" data-add-cart="${card.user}">加入收藏</button>
@@ -388,9 +448,9 @@ function funPairCard(card, index) {
 function renderFunCards(offset = 0) {
   const root = document.querySelector("[data-fun-results]");
   if (!root) return;
-  const cards = Array.from({ length: 10 }, (_, index) => funCardPool[(index + offset) % funCardPool.length]);
-  root.querySelector(".top-row").innerHTML = cards.slice(0, 5).map(funPairCard).join("");
-  root.querySelector(".bottom-row").innerHTML = cards.slice(5).map((card, index) => funPairCard(card, index + 5)).join("");
+  const cards = Array.from({ length: 9 }, (_, index) => funCardPool[(index + offset) % funCardPool.length]);
+  root.querySelector(".top-row").innerHTML = cards.map(funPairCard).join("");
+  root.querySelector(".bottom-row").innerHTML = "";
   root.hidden = false;
   funUnlockedStage = "result";
   setFunStage("result");
