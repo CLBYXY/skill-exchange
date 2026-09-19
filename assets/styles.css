@@ -103,6 +103,11 @@ h1, h2, h3, p { margin-top: 0; }
   align-items: end;
   margin-bottom: 16px;
 }
+.market-title-actions {
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+}
 .market-title h1, .topbar-title h1, .general-card h1 { margin-bottom: 8px; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.1; }
 .market-title p { color: var(--muted); line-height: 1.6; margin-bottom: 0; }
 .market-summary {
@@ -194,6 +199,29 @@ h1, h2, h3, p { margin-top: 0; }
   box-shadow: var(--shadow);
 }
 .exchange-card-head { display: flex; justify-content: space-between; gap: 12px; align-items: start; margin-bottom: 12px; }
+.user-stat-pack {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(64px, auto));
+  gap: 6px;
+  justify-items: end;
+  align-items: start;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+.user-stat-pack .tag {
+  grid-column: 1 / -1;
+  justify-self: end;
+}
+.user-stat-pack span:not(.tag) {
+  padding: 4px 6px;
+  border-radius: 7px;
+  background: var(--soft);
+  white-space: nowrap;
+}
+.user-stat-pack b {
+  margin-right: 2px;
+  color: var(--ink);
+}
 .user-line { display: flex; gap: 10px; align-items: center; }
 .avatar {
   display: grid;
@@ -367,12 +395,21 @@ h1, h2, h3, p { margin-top: 0; }
 .art-photo .game-card-art { background-position: 0% 100%; }
 .art-video .game-card-art { background-position: 50% 100%; }
 .art-anime .game-card-art { background-position: 100% 100%; }
-.art-guitar .game-card-art { background-position: 100% 100%; filter: hue-rotate(24deg) saturate(1.16) brightness(0.96); }
-.art-coffee .game-card-art { background-position: 0% 100%; filter: sepia(0.42) hue-rotate(-18deg) saturate(1.18); }
-.art-web .game-card-art { background-position: 100% 0%; filter: hue-rotate(42deg) saturate(1.14); }
-.art-design .game-card-art { background-position: 50% 0%; filter: hue-rotate(-22deg) saturate(1.2); }
-.art-speech .game-card-art { background-position: 50% 100%; filter: hue-rotate(78deg) saturate(0.96) brightness(1.04); }
-.art-notion .game-card-art { background-position: 0% 0%; filter: grayscale(0.28) contrast(1.08) brightness(1.02); }
+.art-guitar .game-card-art,
+.art-coffee .game-card-art,
+.art-web .game-card-art,
+.art-design .game-card-art,
+.art-speech .game-card-art,
+.art-notion .game-card-art {
+  background-size: cover;
+  background-position: center;
+}
+.art-guitar .game-card-art { background-image: url("skill-card-guitar.png"); }
+.art-coffee .game-card-art { background-image: url("skill-card-coffee.png"); }
+.art-web .game-card-art { background-image: url("skill-card-web.png"); }
+.art-design .game-card-art { background-image: url("skill-card-design.png"); }
+.art-speech .game-card-art { background-image: url("skill-card-speech.png"); }
+.art-notion .game-card-art { background-image: url("skill-card-notion.png"); }
 .game-card-body {
   position: relative;
   z-index: 1;
@@ -1172,15 +1209,23 @@ h1, h2, h3, p { margin-top: 0; }
 
 /* Density and interaction fixes. */
 .recommend-row {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
+.recommend-row:empty { display: none; }
 .fun-pair-card { padding: 12px; }
+.fun-pair-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: start;
+}
+.fun-pair-head > b { font-size: 1.05rem; }
 .fun-pair-body .game-card { min-height: 190px; }
 .fun-pair-body .game-card-art { min-height: 86px; }
 .fun-pair-actions {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   align-items: center;
 }
@@ -1378,5 +1423,6 @@ h1, h2, h3, p { margin-top: 0; }
 @media (max-width: 760px) {
   .recommend-row, .favorites-board, .split-units, .request-visual-grid, .skill-detail-shell, .proof-grid, .favorite-stats { grid-template-columns: 1fr; }
   .favorites-head, .detail-title-row { flex-direction: column; align-items: stretch; }
+  .market-title-actions { justify-items: stretch; }
   .floating-cart { right: 14px; bottom: 14px; }
 }
