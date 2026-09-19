@@ -163,6 +163,7 @@ h1, h2, h3, p { margin-top: 0; }
 .filter-panel label { display: grid; gap: 7px; margin-bottom: 12px; font-weight: 850; }
 .filter-apply-button { width: 100%; min-height: 42px; margin: 2px 0 12px; }
 .filter-panel select, .filter-panel input, .filter-panel textarea,
+.request-search-block input,
 .publish-form input, .publish-form select, .publish-form textarea,
 .skill-card-form input, .skill-card-form select, .skill-card-form textarea,
 .draft-form input, .draft-form textarea {
@@ -1267,6 +1268,75 @@ h1, h2, h3, p { margin-top: 0; }
   gap: 14px;
 }
 .request-visual-grid h3 { margin: 0 0 8px; font-size: 1rem; }
+.request-builder {
+  display: grid;
+  gap: 16px;
+}
+.request-search-block {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(260px, 1.15fr) 160px;
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.72);
+}
+.request-search-block h3 {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 1rem;
+}
+.request-search-block label {
+  display: grid;
+  gap: 7px;
+  font-weight: 850;
+}
+.request-search-results {
+  display: grid;
+  gap: 8px;
+}
+.request-result-item {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  background: #fff;
+  text-align: left;
+  font-weight: 900;
+}
+.request-result-item em {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-style: normal;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.request-result-item:hover {
+  border-color: var(--mint);
+  box-shadow: 0 0 0 3px rgba(53, 199, 166, 0.14);
+}
+.request-selected-card {
+  min-height: 148px;
+}
+.request-preview-card {
+  min-height: 138px;
+  max-width: 150px;
+}
+.request-preview-card .game-card-art { min-height: 58px; }
+.request-preview-card .game-card-body { padding: 6px; }
+.request-preview-card .game-card-body h3 { font-size: 0.78rem; }
+.request-preview-card .game-card-body p { font-size: 0.64rem; }
+.request-empty-result {
+  margin: 0;
+  color: var(--muted);
+  padding: 10px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+}
 .floating-cart {
   position: fixed;
   right: 22px;
@@ -1446,7 +1516,7 @@ h1, h2, h3, p { margin-top: 0; }
 .review-top { display: flex; justify-content: space-between; gap: 12px; }
 .stars { color: #f5b934; letter-spacing: 1px; font-weight: 900; }
 @media (max-width: 760px) {
-  .recommend-row, .favorites-board, .split-units, .request-visual-grid, .skill-detail-shell, .proof-grid, .favorite-stats { grid-template-columns: 1fr; }
+  .recommend-row, .favorites-board, .split-units, .request-visual-grid, .request-search-block, .skill-detail-shell, .proof-grid, .favorite-stats { grid-template-columns: 1fr; }
   .favorites-head, .detail-title-row { flex-direction: column; align-items: stretch; }
   .market-title-actions { justify-items: stretch; }
   .floating-cart { right: 14px; bottom: 14px; }
