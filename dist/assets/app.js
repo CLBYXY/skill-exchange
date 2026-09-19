@@ -183,6 +183,15 @@ function initMarket() {
   const tabs = document.querySelectorAll("[data-mode]");
   if (!tabs.length) return;
   let current = "browse";
+  document.querySelectorAll("[data-market-view]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const isFun = button.dataset.marketView === "fun";
+      document.querySelectorAll("[data-market-view]").forEach((item) => item.classList.toggle("active", item === button));
+      document.querySelector("[data-classic-market]").hidden = isFun;
+      document.querySelector("[data-fun-market]").hidden = !isFun;
+      if (isFun) renderFunCards();
+    });
+  });
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       current = tab.dataset.mode;
@@ -194,6 +203,7 @@ function initMarket() {
   document.querySelector("[data-filter-type]")?.addEventListener("change", () => renderMarket(current));
   document.querySelector("[data-filter-time]")?.addEventListener("change", () => renderMarket(current));
   renderMarket(current);
+  initSummonCanvas();
 }
 
 function initMyTabs() {
@@ -205,7 +215,7 @@ function initMyTabs() {
     panels.forEach((panel) => panel.classList.toggle("active", panel.dataset.tabPanel === name));
   }
   buttons.forEach((button) => button.addEventListener("click", () => activate(button.dataset.myTab)));
-  if (location.hash === "#publish") activate("publish");
+  if (location.hash === "#publish") activate("deck");
   document.querySelector("[data-publish-form]")?.addEventListener("submit", (event) => {
     event.preventDefault();
     toast("新的“我会”技能卡已加入牌组，可用于发起交换。");
@@ -213,6 +223,126 @@ function initMyTabs() {
   document.querySelector("[data-want-form]")?.addEventListener("submit", (event) => {
     event.preventDefault();
     toast("新的“我想学”技能卡已加入牌组，推荐会按这张卡更新。");
+  });
+  initMyModals();
+}
+
+function openSimpleModal(selector) {
+  const modal = document.querySelector(selector);
+  if (modal) modal.hidden = false;
+}
+
+function closeSimpleModal(selector) {
+  const modal = document.querySelector(selector);
+  if (modal) modal.hidden = true;
+}
+
+function initMyModals() {
+  document.querySelector("[data-open-card-modal]")?.addEventListener("click", () => openSimpleModal("[data-card-modal]"));
+  document.querySelector("[data-close-card-modal]")?.addEventListener("click", () => closeSimpleModal("[data-card-modal]"));
+  document.querySelector("[data-card-modal]")?.addEventListener("click", (event) => {
+    if (event.target.matches("[data-card-modal]")) closeSimpleModal("[data-card-modal]");
+  });
+  document.querySelector("[data-card-form]")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    closeSimpleModal("[data-card-modal]");
+    toast("新的技能牌已加入我的牌组。");
+  });
+  document.querySelector("[data-open-request-modal]")?.addEventListener("click", () => openSimpleModal("[data-request-modal]"));
+  document.querySelector("[data-close-request-modal]")?.addEventListener("click", () => closeSimpleModal("[data-request-modal]"));
+  document.querySelector("[data-request-modal]")?.addEventListener("click", (event) => {
+    if (event.target.matches("[data-request-modal]")) closeSimpleModal("[data-request-modal]");
+  });
+  document.querySelector("[data-request-form]")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    closeSimpleModal("[data-request-modal]");
+    toast("新的交换需求已发布，正在等待对方选牌。");
+  });
+}
+
+const funCardPool = [
+  { art: "art-anime", title: "动漫制作", meta: "5 秒循环动画", score: 98, rarity: "rarity-legend" },
+  { art: "art-photo", title: "手机摄影构图", meta: "人像与自然光", score: 93, rarity: "rarity-rare" },
+  { art: "art-video", title: "短视频剪辑", meta: "开头节奏优化", score: 91, rarity: "rarity-epic" },
+  { art: "art-python", title: "Python 数据分析", meta: "一页报告", score: 89, rarity: "rarity-legend" },
+  { art: "art-ppt", title: "PPT 结构表达", meta: "路演叙事", score: 87, rarity: "rarity-rare" },
+  { art: "art-excel", title: "Excel 自动化", meta: "具体函数", score: 84, rarity: "rarity-rare" },
+  { art: "art-video", title: "脚本结构", meta: "选题拆解", score: 82, rarity: "rarity-epic" },
+  { art: "art-photo", title: "作品点评", meta: "拍摄复盘", score: 80, rarity: "rarity-rare" },
+  { art: "art-anime", title: "分镜设计", meta: "关键帧点评", score: 79, rarity: "rarity-legend" },
+  { art: "art-python", title: "数据看板", meta: "入门搭建", score: 77, rarity: "rarity-epic" },
+  { art: "art-ppt", title: "视觉排版", meta: "一页改稿", score: 74, rarity: "rarity-rare" },
+  { art: "art-excel", title: "批量整理", meta: "表格效率", score: 72, rarity: "rarity-rare" },
+];
+
+function miniGameCard(card) {
+  return `
+    <article class="game-card mini ${card.art} ${card.rarity}">
+      <div class="game-card-top"><b>${Math.max(3, Math.round(card.score / 14))}</b><span>${card.score}%</span></div>
+      <div class="game-card-art"></div>
+      <div class="game-card-body"><h3>${card.title}</h3><p>${card.meta}</p></div>
+      <div class="game-card-foot"><span>推荐</span><strong>申请</strong></div>
+    </article>
+  `;
+}
+
+function renderFunCards(offset = 0) {
+  const root = document.querySelector("[data-fun-results]");
+  if (!root) return;
+  const cards = Array.from({ length: 10 }, (_, index) => funCardPool[(index + offset) % funCardPool.length]);
+  root.querySelector(".top-row").innerHTML = cards.slice(0, 5).map(miniGameCard).join("");
+  root.querySelector(".bottom-row").innerHTML = cards.slice(5).map(miniGameCard).join("");
+}
+
+function initSummonCanvas() {
+  const canvas = document.querySelector("[data-summon-canvas]");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  let drawing = false;
+  let offset = 0;
+  const rectPoint = (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const pointer = event.touches?.[0] || event;
+    return { x: (pointer.clientX - rect.left) * (canvas.width / rect.width), y: (pointer.clientY - rect.top) * (canvas.height / rect.height) };
+  };
+  function drawBase() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = "rgba(245, 197, 66, 0.65)";
+    ctx.beginPath();
+    ctx.arc(210, 210, 160, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  drawBase();
+  canvas.addEventListener("pointerdown", (event) => {
+    drawing = true;
+    const point = rectPoint(event);
+    ctx.beginPath();
+    ctx.moveTo(point.x, point.y);
+  });
+  canvas.addEventListener("pointermove", (event) => {
+    if (!drawing) return;
+    const point = rectPoint(event);
+    ctx.lineWidth = 6;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "rgba(53, 199, 166, 0.82)";
+    ctx.lineTo(point.x, point.y);
+    ctx.stroke();
+  });
+  window.addEventListener("pointerup", () => {
+    drawing = false;
+  });
+  document.querySelector("[data-draw-cards]")?.addEventListener("click", () => renderFunCards(offset));
+  document.querySelector("[data-shuffle-cards]")?.addEventListener("click", () => {
+    offset = (offset + 3) % funCardPool.length;
+    renderFunCards(offset);
+    toast("已换一组推荐卡。");
+  });
+  document.querySelector("[data-reset-draw]")?.addEventListener("click", () => {
+    offset = 0;
+    drawBase();
+    renderFunCards(offset);
+    toast("圆台已重置，可以重新抽卡。");
   });
 }
 
