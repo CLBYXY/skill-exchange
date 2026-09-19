@@ -3,632 +3,85 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SkillLoop 技能互换平台</title>
-    <meta name="description" content="SkillLoop 技能互换平台产品原型：技能护照、智能匹配、交换协议、日程履约、沟通协作和成长档案。" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314262e'/%3E%3Cpath d='M17 33c0-8 6-14 14-14h15v8H31a6 6 0 0 0 0 12h2v8h-2c-8 0-14-6-14-14Z' fill='%23f5c542'/%3E%3Cpath d='M47 31c0 8-6 14-14 14H18v-8h15a6 6 0 0 0 0-12h-2v-8h2c8 0 14 6 14 14Z' fill='%2357c7b2'/%3E%3C/svg%3E" />
-    <style>
-      :root {
-        --bg: #eef3f0;
-        --surface: #ffffff;
-        --soft: #f7faf8;
-        --ink: #14262e;
-        --muted: #63737a;
-        --line: #d9e2df;
-        --strong-line: #c4d1cd;
-        --teal: #147a6c;
-        --mint: #57c7b2;
-        --gold: #f5c542;
-        --blue: #406ee8;
-        --red: #c84f62;
-        --shadow: 0 18px 42px rgba(20, 38, 46, 0.1);
-        --radius: 8px;
-      }
-
-      * { box-sizing: border-box; }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        color: var(--ink);
-        background:
-          linear-gradient(115deg, rgba(87, 199, 178, 0.18), transparent 34%),
-          linear-gradient(290deg, rgba(245, 197, 66, 0.17), transparent 28%),
-          var(--bg);
-        font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      }
-
-      button, input, select, textarea { font: inherit; }
-      button { cursor: pointer; }
-      h1, h2, h3, p { margin-top: 0; }
-      h1 { max-width: 780px; margin-bottom: 12px; font-size: clamp(1.8rem, 4vw, 3.1rem); line-height: 1.08; letter-spacing: 0; }
-      h2 { font-size: 1.18rem; }
-      h3 { font-size: 1rem; }
-
-      .app { display: grid; grid-template-columns: 260px minmax(0, 1fr); min-height: 100vh; }
-      .sidebar {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        padding: 18px;
-        border-right: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.76);
-        backdrop-filter: blur(16px);
-      }
-
-      .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-      .logo {
-        display: grid;
-        width: 44px;
-        height: 44px;
-        place-items: center;
-        border-radius: 12px;
-        color: var(--gold);
-        background: var(--ink);
-        font-weight: 900;
-      }
-      .brand strong { display: block; font-size: 1.05rem; }
-      .brand span { color: var(--muted); font-size: 0.82rem; }
-
-      .nav { display: grid; gap: 6px; }
-      .nav button {
-        display: grid;
-        grid-template-columns: 24px 1fr auto;
-        gap: 10px;
-        align-items: center;
-        width: 100%;
-        min-height: 42px;
-        padding: 0 11px;
-        border: 0;
-        border-radius: var(--radius);
-        color: #405057;
-        background: transparent;
-        text-align: left;
-        font-weight: 800;
-      }
-      .nav button.active { color: #08231f; background: #dff4ee; }
-      .nav svg, .icon { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
-      .count {
-        min-width: 24px;
-        padding: 2px 7px;
-        border-radius: 999px;
-        color: #0a312b;
-        background: var(--gold);
-        text-align: center;
-        font-size: 0.75rem;
-      }
-
-      .mentor-note {
-        margin-top: 24px;
-        padding: 14px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: var(--surface);
-      }
-      .mentor-note b { display: block; margin-bottom: 7px; }
-      .mentor-note p { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
-
-      .main { min-width: 0; padding: 18px; }
-      .topbar { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; margin-bottom: 16px; }
-      .search, .profile-chip {
-        min-height: 48px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.82);
-      }
-      .search { display: flex; align-items: center; gap: 10px; padding: 0 14px; }
-      .search input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--ink); }
-      .profile-chip { display: flex; align-items: center; gap: 10px; padding: 6px 12px; }
-      .profile-chip span { display: block; color: var(--muted); font-size: 0.78rem; }
-      .avatar {
-        display: grid;
-        width: 36px;
-        height: 36px;
-        flex: 0 0 36px;
-        place-items: center;
-        border-radius: 50%;
-        color: #fff;
-        background: linear-gradient(135deg, var(--teal), var(--blue));
-        font-weight: 900;
-      }
-
-      .view { display: none; }
-      .view.active { display: block; }
-      .dashboard { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr); gap: 16px; }
-      .grid { display: grid; gap: 16px; }
-      .two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 0.72fr); gap: 16px; }
-
-      .hero {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 310px;
-        gap: 18px;
-        min-height: 320px;
-        padding: 22px;
-        border-radius: var(--radius);
-        color: #f6fffb;
-        background: linear-gradient(135deg, rgba(20, 38, 46, 0.98), rgba(11, 78, 68, 0.96)), var(--ink);
-        box-shadow: var(--shadow);
-        overflow: hidden;
-      }
-      .hero p { max-width: 760px; color: rgba(246, 255, 251, 0.76); font-size: 1rem; line-height: 1.75; }
-      .hero-actions, .actions { display: flex; flex-wrap: wrap; gap: 10px; }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        min-height: 42px;
-        padding: 0 14px;
-        border: 1px solid transparent;
-        border-radius: var(--radius);
-        font-weight: 900;
-        text-decoration: none;
-      }
-      .btn.primary { color: #15221f; background: var(--gold); }
-      .btn.secondary { color: #f6fffb; border-color: rgba(255, 255, 255, 0.28); background: rgba(255, 255, 255, 0.08); }
-      .btn.light { color: var(--ink); background: #eaf3ef; }
-      .btn.outline { color: var(--teal); border-color: var(--strong-line); background: #fff; }
-
-      .journey { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
-      .journey-step {
-        min-height: 108px;
-        padding: 13px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.08);
-      }
-      .journey-step strong { display: block; margin-bottom: 8px; }
-      .journey-step span { color: rgba(246, 255, 251, 0.72); font-size: 0.88rem; line-height: 1.48; }
-
-      .skill-map {
-        min-height: 276px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: var(--radius);
-        background:
-          radial-gradient(circle at 50% 50%, rgba(245, 197, 66, 0.22), transparent 28%),
-          linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-        background-size: auto, 42px 42px, 42px 42px;
-      }
-      .skill-map text { font-size: 12px; font-weight: 800; }
-
-      .section-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin: 20px 0 10px; }
-      .section-head h2 { margin: 0; }
-      .section-head p { margin: 4px 0 0; color: var(--muted); line-height: 1.5; }
-      .card { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.9); box-shadow: var(--shadow); }
-      .card.pad { padding: 16px; }
-      .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 16px; border-bottom: 1px solid var(--line); }
-      .panel-head h2, .panel-head h3 { margin: 0; }
-      .panel-body { padding: 16px; }
-
-      .stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-      .stat { min-height: 96px; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.84); }
-      .stat strong { display: block; margin-bottom: 5px; font-size: 1.4rem; }
-      .stat span, .muted { color: var(--muted); }
-      .small { font-size: 0.86rem; line-height: 1.5; }
-
-      .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-      label { display: grid; gap: 6px; color: #2a3c43; font-size: 0.88rem; font-weight: 800; }
-      input, select, textarea {
-        width: 100%;
-        min-height: 42px;
-        border: 1px solid var(--strong-line);
-        border-radius: var(--radius);
-        background: #fff;
-        color: var(--ink);
-        padding: 10px 11px;
-        outline: 0;
-      }
-      textarea { min-height: 92px; resize: vertical; }
-      input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(20, 122, 108, 0.14); }
-      .segmented { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-      .segmented button { min-height: 38px; border: 0; border-radius: var(--radius); color: #52656b; background: #edf4f1; font-weight: 900; }
-      .segmented button.active { color: #08231f; background: var(--mint); }
-
-      .badge, .chip {
-        display: inline-flex;
-        align-items: center;
-        border-radius: 999px;
-        font-weight: 900;
-      }
-      .badge { min-height: 24px; padding: 2px 8px; color: #11372f; background: #e1f4ee; font-size: 0.75rem; }
-      .chip { min-height: 30px; padding: 4px 10px; border: 1px solid var(--line); color: var(--muted); background: #fff; font-size: 0.84rem; }
-      .chip.active { color: #0c352f; border-color: rgba(20, 122, 108, 0.36); background: #ddf4ed; }
-
-      .match-layout { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 16px; }
-      .filters { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 14px; }
-      .match-list { display: grid; gap: 12px; }
-      .match-card {
-        display: grid;
-        grid-template-columns: auto minmax(0, 1fr) auto;
-        gap: 13px;
-        align-items: center;
-        padding: 14px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: #fff;
-        text-align: left;
-      }
-      .match-card.selected { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(20, 122, 108, 0.12); }
-      .person-name { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-bottom: 4px; }
-      .swap-line { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--muted); font-size: 0.9rem; }
-      .score-ring {
-        display: grid;
-        width: 62px;
-        height: 62px;
-        place-items: center;
-        border-radius: 50%;
-        background: radial-gradient(circle at center, #fff 57%, transparent 58%), conic-gradient(var(--mint) var(--score), #e3ebe8 0);
-        color: var(--ink);
-        font-weight: 900;
-      }
-      .detail-panel { position: sticky; top: 18px; }
-      .detail-hero, .timeline, .message-list { display: grid; gap: 12px; }
-      .detail-head { display: flex; gap: 12px; align-items: center; }
-      .progress { overflow: hidden; height: 9px; border-radius: 999px; background: #e2ebe7; }
-      .progress span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--mint), var(--blue)); }
-      .reason-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-      .reason { min-height: 82px; padding: 11px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--soft); }
-      .reason strong { display: block; margin-bottom: 5px; }
-
-      .timeline-row {
-        display: grid;
-        grid-template-columns: 84px 1fr auto;
-        gap: 12px;
-        align-items: center;
-        padding: 12px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: #fff;
-      }
-      .time { color: var(--teal); font-weight: 900; }
-      .kanban { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-      .lane { min-height: 260px; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.7); }
-      .lane h3 { margin: 0 0 10px; }
-      .task { display: grid; gap: 7px; margin-bottom: 10px; padding: 11px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
-      .task span { color: var(--muted); font-size: 0.84rem; }
-
-      .message { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
-      .passport { display: grid; grid-template-columns: 280px 1fr; gap: 16px; }
-      .portfolio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-      .work {
-        min-height: 172px;
-        padding: 12px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: linear-gradient(135deg, rgba(64, 110, 232, 0.09), transparent), #fff;
-      }
-      .work-visual {
-        display: grid;
-        height: 84px;
-        margin-bottom: 11px;
-        place-items: center;
-        border-radius: var(--radius);
-        color: #fff;
-        background: linear-gradient(135deg, rgba(20, 38, 46, 0.9), rgba(20, 122, 108, 0.78)), var(--ink);
-        font-weight: 900;
-      }
-
-      .toast {
-        position: fixed;
-        right: 18px;
-        bottom: 18px;
-        max-width: min(410px, calc(100vw - 36px));
-        padding: 13px 15px;
-        border-radius: var(--radius);
-        background: var(--ink);
-        color: #fff;
-        box-shadow: var(--shadow);
-        opacity: 0;
-        transform: translateY(10px);
-        transition: 180ms ease;
-        pointer-events: none;
-      }
-      .toast.show { opacity: 1; transform: translateY(0); }
-
-      @media (max-width: 1180px) {
-        .app, .dashboard, .hero, .match-layout, .two-col, .passport { grid-template-columns: 1fr; }
-        .sidebar { position: static; height: auto; padding-bottom: 12px; }
-        .nav { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-        .nav button { grid-template-columns: 24px 1fr; }
-        .nav .count, .mentor-note { display: none; }
-        .detail-panel { position: static; }
-      }
-
-      @media (max-width: 760px) {
-        .main, .sidebar { padding: 12px; }
-        .topbar, .stat-grid, .journey, .form-grid, .kanban, .portfolio { grid-template-columns: 1fr; }
-        .nav { display: flex; overflow-x: auto; padding-bottom: 4px; }
-        .nav button { flex: 0 0 152px; }
-        .match-card, .timeline-row { grid-template-columns: 1fr; }
-        .reason-grid { grid-template-columns: 1fr; }
-      }
-    </style>
+    <title>SkillLoop | 今日配对</title>
+    <meta name="description" content="SkillLoop 是带 AI 宠物助手的技能配对互换平台。" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/styles.css" />
   </head>
-  <body>
-    <div class="app">
+  <body data-page="home">
+    <div class="app-shell">
       <aside class="sidebar">
-        <div class="brand">
-          <div class="logo">SL</div>
-          <div><strong>SkillLoop</strong><span>技能互换工作台</span></div>
-        </div>
-        <nav class="nav" aria-label="主要模块">
-          <button class="active" data-view="home" title="首页"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8" /><path d="M5 10v10h14V10" /></svg>首页<span class="count">3</span></button>
-          <button data-view="match" title="匹配"><svg viewBox="0 0 24 24"><path d="M7 7h10v10H7z" /><path d="M3 12h4M17 12h4M12 3v4M12 17v4" /></svg>匹配<span class="count">12</span></button>
-          <button data-view="plan" title="交换计划"><svg viewBox="0 0 24 24"><path d="M7 3v4M17 3v4M4 8h16M5 5h14v16H5z" /></svg>计划<span class="count">4</span></button>
-          <button data-view="messages" title="沟通"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z" /></svg>沟通<span class="count">5</span></button>
-          <button data-view="passport" title="成长档案"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z" /><path d="M9 8h6M9 12h6M9 16h4" /></svg>档案<span class="count">8</span></button>
+        <a class="brand" href="index.html" aria-label="SkillLoop 首页">
+          <span class="brand-mark">SL</span>
+          <span><strong>SkillLoop</strong><small>技能配对网站</small></span>
+        </a>
+        <nav class="nav" aria-label="主导航">
+          <a class="active" href="index.html">今日</a>
+          <a href="profile.html">上传资料</a>
+          <a href="market.html">技能市场</a>
+          <a href="pet.html">宠物 AI</a>
+          <a href="basket.html">猎物篮 <span class="nav-count" data-basket-count>0</span></a>
+          <a href="matches.html">配对交换</a>
         </nav>
-        <div class="mentor-note"><b>产品判断</b><p>核心不是发帖找人，而是让陌生人敢开始、能坚持、可验证地完成一次技能交换。</p></div>
+        <section class="side-note">
+          <b>核心机制</b>
+          <p>先互相看见价值，再互相选择。只有双方配对成功，才解锁联系方式、日程和交换协议。</p>
+        </section>
       </aside>
 
       <main class="main">
         <header class="topbar">
-          <div class="search"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" /></svg><input id="globalSearch" aria-label="搜索技能或用户" placeholder="搜索 Python、摄影、吉他、剪辑或学习目标" /></div>
-          <div class="profile-chip"><div class="avatar">陈</div><div><strong>陈同学</strong><span>信用 96 · 本周 2 次交换</span></div></div>
+          <div>
+            <p class="eyebrow">今天的小伙伴：Mochi</p>
+            <h1>Mochi 出门给你带回了 6 个技能“猎物”。</h1>
+            <p class="lead">它先替你筛掉时间不合、目标模糊、信用不足的人，只留下适合互选的候选。你可以加入猎物篮，等双方都点头后再交换技能。</p>
+          </div>
+          <div class="pet-card">
+            <div class="pet-face" aria-hidden="true">ฅ</div>
+            <div><strong>AI 宠物雷达</strong><span>根据你的技能护照，今日推荐准确度 94%</span></div>
+          </div>
         </header>
 
-        <section class="view active" id="home">
-          <div class="dashboard">
-            <div class="grid">
-              <section class="hero">
-                <div>
-                  <h1>把技能交换从“聊一聊”变成一次能完成的学习项目。</h1>
-                  <p>用户先建立技能护照，系统用目标、时间、作品要求和信用记录推荐最适合的人，再生成交换协议、课程日程和验收任务。每一次互换都会沉淀成作品、评价和下一次匹配优势。</p>
-                  <div class="hero-actions">
-                    <button class="btn primary" data-view-jump="match">查看今日最佳匹配</button>
-                    <button class="btn secondary" data-view-jump="plan">继续本周交换计划</button>
-                  </div>
-                  <div class="journey">
-                    <div class="journey-step"><strong>1. 建立护照</strong><span>录入能教、想学、时间、成果和边界。</span></div>
-                    <div class="journey-step"><strong>2. 智能匹配</strong><span>按互补价值、目标一致和履约可能排序。</span></div>
-                    <div class="journey-step"><strong>3. 签订交换</strong><span>确认课时、作业、取消规则和验收物。</span></div>
-                    <div class="journey-step"><strong>4. 完成复盘</strong><span>作品入档，信用更新，解锁更高质量匹配。</span></div>
-                  </div>
-                </div>
-                <svg class="skill-map" viewBox="0 0 320 276" role="img" aria-label="技能交换关系图">
-                  <defs><filter id="soft"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#071815" flood-opacity=".28" /></filter></defs>
-                  <line x1="160" y1="138" x2="72" y2="78" stroke="#ffffff55" stroke-width="2" />
-                  <line x1="160" y1="138" x2="252" y2="82" stroke="#ffffff55" stroke-width="2" />
-                  <line x1="160" y1="138" x2="86" y2="204" stroke="#ffffff55" stroke-width="2" />
-                  <line x1="160" y1="138" x2="244" y2="204" stroke="#ffffff55" stroke-width="2" />
-                  <circle cx="160" cy="138" r="54" fill="#f5c542" filter="url(#soft)" /><text x="160" y="132" text-anchor="middle" fill="#14262e">你的</text><text x="160" y="149" text-anchor="middle" fill="#14262e">技能护照</text>
-                  <circle cx="72" cy="78" r="37" fill="#57c7b2" /><text x="72" y="75" text-anchor="middle" fill="#08231f">摄影</text><text x="72" y="91" text-anchor="middle" fill="#08231f">构图</text>
-                  <circle cx="252" cy="82" r="37" fill="#ffffff22" stroke="#fff" /><text x="252" y="79" text-anchor="middle" fill="#fff">Python</text><text x="252" y="95" text-anchor="middle" fill="#fff">项目</text>
-                  <circle cx="86" cy="204" r="37" fill="#ffffff22" stroke="#fff" /><text x="86" y="201" text-anchor="middle" fill="#fff">吉他</text><text x="86" y="217" text-anchor="middle" fill="#fff">弹唱</text>
-                  <circle cx="244" cy="204" r="37" fill="#406ee8" /><text x="244" y="201" text-anchor="middle" fill="#fff">剪辑</text><text x="244" y="217" text-anchor="middle" fill="#fff">脚本</text>
-                </svg>
-              </section>
-
-              <section>
-                <div class="section-head"><div><h2>今天的产品体验</h2><p>用户打开平台后，不需要猜下一步，系统直接给出最重要的行动。</p></div></div>
-                <div class="stat-grid">
-                  <div class="stat"><strong>96%</strong><span>资料完整度，已可获得高质量推荐</span></div>
-                  <div class="stat"><strong>12</strong><span>个高匹配对象等待确认</span></div>
-                  <div class="stat"><strong>4</strong><span>节交换课已排入日程</span></div>
-                  <div class="stat"><strong>2</strong><span>个作品可加入成长档案</span></div>
-                </div>
-              </section>
+        <section class="hero-grid">
+          <article class="panel primary-panel">
+            <div class="panel-copy">
+              <h2>从发布资料到配对交换，一条完整路径。</h2>
+              <p>SkillLoop 不让用户在帖子海里乱翻。你先上传“我会教”和“我想学”，系统生成技能护照；宠物 AI 外出淘技能；你把候选放进猎物篮；双方互选后进入交换房间。</p>
             </div>
+            <div class="flow-strip">
+              <span>上传技能护照</span><span>宠物外出海淘</span><span>加入猎物篮</span><span>双方配对成功</span><span>解锁交换房间</span>
+            </div>
+          </article>
 
-            <aside class="grid">
-              <section class="card">
-                <div class="panel-head"><h2>发布交换需求</h2><span class="badge">实时预匹配</span></div>
-                <div class="panel-body">
-                  <div class="segmented" role="group" aria-label="发布类型"><button class="active" data-intent="teach">我能教</button><button data-intent="learn">我想学</button><button data-intent="both">都需要</button></div>
-                  <div class="form-grid" style="margin-top: 12px">
-                    <label>技能<input id="skillInput" value="Python 数据分析" /></label>
-                    <label>可用时间<select id="timeInput"><option>工作日晚上</option><option selected>周末下午</option><option>碎片时间 30 分钟</option></select></label>
-                    <label style="grid-column: 1 / -1">期待成果<textarea id="goalInput">4 周内完成一个作品：用真实数据做一页分析报告，并换到摄影构图指导。</textarea></label>
-                  </div>
-                  <div class="actions" style="margin-top: 12px"><button class="btn primary" id="publishBtn">生成匹配</button><button class="btn light" id="scenarioBtn">换个用户场景</button></div>
-                </div>
-              </section>
-
-              <section class="card pad">
-                <h2>交换质量保障</h2>
-                <p class="muted small">平台在交换前降低风险，在交换中推动履约，在交换后沉淀信用。</p>
-                <div class="reason-grid">
-                  <div class="reason"><strong>作品先行</strong><span class="small muted">查看对方样例、课程大纲和历史评价。</span></div>
-                  <div class="reason"><strong>协议锁定</strong><span class="small muted">课时、取消规则、交付成果提前确认。</span></div>
-                  <div class="reason"><strong>进度提醒</strong><span class="small muted">课前提醒、课后确认、作业自动追踪。</span></div>
-                  <div class="reason"><strong>信用更新</strong><span class="small muted">爽约、反馈质量和完成情况影响推荐。</span></div>
-                </div>
-              </section>
-            </aside>
-          </div>
+          <aside class="panel">
+            <h2>你的状态</h2>
+            <div class="status-list">
+              <div><strong>资料完整度</strong><span>86% · 还差 1 个作品样例</span></div>
+              <div><strong>猎物篮</strong><span><span data-basket-count>0</span> 个候选等待勾选</span></div>
+              <div><strong>已配对</strong><span>2 个交换房间可继续推进</span></div>
+            </div>
+            <a class="button full" href="profile.html">补全我的技能护照</a>
+          </aside>
         </section>
 
-        <section class="view" id="match">
-          <div class="section-head"><div><h2>匹配中心</h2><p>用户不需要浏览海量帖子，只看和自己目标互补、时间可约、信用可靠的人。</p></div><button class="btn outline" id="sortBtn">按匹配度排序</button></div>
-          <div class="match-layout">
-            <section>
-              <div class="filters" aria-label="匹配筛选"><span class="chip active">高匹配</span><span class="chip">同城可线下</span><span class="chip">本周可开始</span><span class="chip">有作品样例</span><span class="chip">信用 90+</span></div>
-              <div class="match-list" id="matchList"></div>
-            </section>
-            <aside class="card detail-panel"><div class="panel-head"><h2>匹配详情</h2><span class="badge">推荐沟通</span></div><div class="panel-body detail-hero" id="matchDetail"></div></aside>
-          </div>
+        <section class="section-head">
+          <div><h2>今日推荐猎物</h2><p>Mochi 按技能互补度、时间重合、作品可信度和配对概率排序。</p></div>
+          <a class="button ghost" href="market.html">进入技能市场</a>
         </section>
+        <section class="profile-grid" data-featured-profiles></section>
 
-        <section class="view" id="plan">
-          <div class="section-head"><div><h2>交换计划</h2><p>一次交换被拆成清晰课程、任务和验收节点，双方都知道本周该做什么。</p></div><button class="btn primary" id="completeTaskBtn">确认本节完成</button></div>
-          <div class="two-col">
-            <section class="card">
-              <div class="panel-head"><h2>4 周交换协议</h2><span class="badge">进行中</span></div>
-              <div class="panel-body">
-                <div class="timeline">
-                  <div class="timeline-row"><div class="time">第 1 周</div><div><strong>Python 清洗真实数据</strong><div class="small muted">你教林岚完成图片订单数据整理。</div></div><span class="badge">已完成</span></div>
-                  <div class="timeline-row"><div class="time">第 2 周</div><div><strong>人像构图与自然光</strong><div class="small muted">林岚带你完成 9 张照片构图练习。</div></div><span class="badge">明天</span></div>
-                  <div class="timeline-row"><div class="time">第 3 周</div><div><strong>分析报告页面搭建</strong><div class="small muted">你输出一页可复用数据看板模板。</div></div><span class="badge">待开始</span></div>
-                  <div class="timeline-row"><div class="time">第 4 周</div><div><strong>作品复盘与互评</strong><div class="small muted">双方提交作品，互评教学和学习质量。</div></div><span class="badge">待开始</span></div>
-                </div>
-              </div>
-            </section>
-            <section class="card pad">
-              <h2>本次交换规则</h2>
-              <p class="small muted">每节 45 分钟，允许提前 12 小时改期 1 次。连续爽约会冻结新匹配 7 天。</p>
-              <div class="reason-grid">
-                <div class="reason"><strong>你交付</strong><span class="small muted">数据清洗脚本、分析模板、一次作业点评。</span></div>
-                <div class="reason"><strong>对方交付</strong><span class="small muted">构图清单、拍摄练习、照片点评。</span></div>
-                <div class="reason"><strong>验收物</strong><span class="small muted">1 页分析报告 + 9 张可展示照片。</span></div>
-                <div class="reason"><strong>信用影响</strong><span class="small muted">按时完成 +4，优质反馈 +3。</span></div>
-              </div>
-            </section>
-          </div>
-          <div class="section-head"><div><h2>任务看板</h2><p>把学习坚持拆成小任务，降低半途而废的概率。</p></div></div>
-          <div class="kanban">
-            <div class="lane"><h3>准备</h3><div class="task"><strong>上传 3 张旧作品</strong><span>让对方先判断构图问题。</span></div><div class="task"><strong>确认明天时间</strong><span>19:30 线上视频，课前 2 小时提醒。</span></div></div>
-            <div class="lane"><h3>进行中</h3><div class="task"><strong>整理图片订单数据</strong><span>用作第三周分析模板素材。</span></div><div class="task"><strong>完成九宫格构图练习</strong><span>每张照片标注主题、光线和视角。</span></div></div>
-            <div class="lane"><h3>验收</h3><div class="task"><strong>提交一页分析报告</strong><span>作为你能教数据分析的公开作品。</span></div><div class="task"><strong>互评教学质量</strong><span>评价是否清楚、及时、可复用。</span></div></div>
-          </div>
+        <section class="section-head">
+          <div><h2>配对规则</h2><p>平台故意不让任何人直接交换，先保护双方时间和信任。</p></div>
         </section>
-
-        <section class="view" id="messages">
-          <div class="section-head"><div><h2>沟通与约课</h2><p>对话不只是聊天，系统会把意向自动转成协议草案和日程建议。</p></div><button class="btn primary" id="draftBtn">生成交换协议草案</button></div>
-          <div class="two-col">
-            <section class="card">
-              <div class="panel-head"><h2>会话列表</h2><span class="badge">5 条待处理</span></div>
-              <div class="panel-body message-list">
-                <div class="message"><div class="avatar">林</div><div><strong>林岚</strong><p class="small muted">我可以周日带你拍一组人像，你能帮我把客户图片数据做个自动分类吗？</p></div></div>
-                <div class="message"><div class="avatar">周</div><div><strong>周亦</strong><p class="small muted">剪辑课我可以给你脚本模板，想换一个数据看板入门。</p></div></div>
-                <div class="message"><div class="avatar">许</div><div><strong>许诺</strong><p class="small muted">Notion 交换摄影修图可以，但我希望每次 30 分钟。</p></div></div>
-              </div>
-            </section>
-            <section class="card pad">
-              <h2>协议草案预览</h2>
-              <p class="small muted" id="draftText">选择沟通对象后，系统会根据双方技能、时间和成果要求生成可编辑协议。</p>
-              <div class="timeline" style="margin-top: 12px">
-                <div class="timeline-row"><div class="time">课时</div><div>双方各 4 节，每节 45 分钟</div><span class="badge">建议</span></div>
-                <div class="timeline-row"><div class="time">成果</div><div>分析报告、构图练习照片、课后点评</div><span class="badge">建议</span></div>
-                <div class="timeline-row"><div class="time">保障</div><div>提前 12 小时改期，爽约进入信用记录</div><span class="badge">建议</span></div>
-              </div>
-            </section>
-          </div>
-        </section>
-
-        <section class="view" id="passport">
-          <div class="section-head"><div><h2>成长档案</h2><p>用户的每次交换都沉淀成可被信任的能力证明，让下一次匹配更顺畅。</p></div><button class="btn outline" id="shareBtn">生成公开作品页</button></div>
-          <div class="passport">
-            <aside class="card pad">
-              <div class="detail-head"><div class="avatar">陈</div><div><h2 style="margin-bottom: 4px">陈同学</h2><div class="small muted">能教 Python 数据分析 · 想学摄影和剪辑</div></div></div>
-              <div style="margin-top: 16px"><div class="small muted">技能信用</div><div class="progress" style="margin-top: 8px"><span style="width: 96%"></span></div></div>
-              <div class="reason-grid" style="margin-top: 14px"><div class="reason"><strong>18</strong><span class="small muted">完成交换</span></div><div class="reason"><strong>4.9</strong><span class="small muted">平均评价</span></div><div class="reason"><strong>12</strong><span class="small muted">公开作品</span></div><div class="reason"><strong>96</strong><span class="small muted">信用分</span></div></div>
-            </aside>
-            <section>
-              <div class="portfolio">
-                <article class="work"><div class="work-visual">Data</div><h3>电商订单分析报告</h3><p class="small muted">证明：能把真实数据清洗并讲清业务结论。</p></article>
-                <article class="work"><div class="work-visual">Photo</div><h3>自然光人像练习</h3><p class="small muted">证明：完成构图、光线和视角的系统练习。</p></article>
-                <article class="work"><div class="work-visual">Guide</div><h3>Python 入门课大纲</h3><p class="small muted">证明：能把教学拆成可跟随的 4 周计划。</p></article>
-              </div>
-            </section>
-          </div>
+        <section class="rule-grid">
+          <article class="rule-card"><b>1. 先加入猎物篮</b><span>用户先收藏想交换的对象，比较技能价值、作品和时间。</span></article>
+          <article class="rule-card"><b>2. 一键勾选换技能</b><span>从猎物篮发起意向，对方看到的是明确的交换提案。</span></article>
+          <article class="rule-card"><b>3. 互选才解锁</b><span>只有双方都选择对方，才开放联系方式、日程和协议。</span></article>
+          <article class="rule-card"><b>4. 完成后沉淀信用</b><span>作品、评价、爽约记录会影响下一次被推荐概率。</span></article>
         </section>
       </main>
     </div>
-
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-    <script>
-      const people = [
-        { initials: "林", name: "林岚", role: "品牌摄影师", teach: "人像构图、自然光拍摄、照片点评", learn: "Python 自动整理图片订单", score: 97, trust: "信用 98 · 完成 21 次交换", reason: "周末时间重合，双方目标都能用作品验收，技能价值接近。", plan: "建议双方各 4 节课：你教数据整理，她教人像构图。" },
-        { initials: "周", name: "周亦", role: "短视频剪辑博主", teach: "脚本结构、剪辑节奏、封面选题", learn: "数据看板搭建", score: 92, trust: "信用 94 · 完成 13 次交换", reason: "你想学剪辑，她想把内容数据做成看板，交换成果清晰。", plan: "建议 3 节剪辑训练 + 3 节数据看板搭建，作品互评。" },
-        { initials: "陈", name: "陈默", role: "后端工程师", teach: "Python 项目拆解、接口设计", learn: "民谣吉他弹唱", score: 88, trust: "信用 91 · 完成 9 次交换", reason: "技术背景接近，适合互相拆项目，但学习目标不完全互补。", plan: "建议先约一次 30 分钟试讲，再决定是否进入完整交换。" },
-        { initials: "许", name: "许诺", role: "效率系统教练", teach: "Notion 学习系统、复盘模板", learn: "手机摄影修图", score: 84, trust: "信用 93 · 完成 16 次交换", reason: "适合碎片化交换，双方都偏轻量陪跑，履约压力低。", plan: "建议每次 30 分钟，共 6 次，围绕模板和照片点评推进。" },
-      ];
-      const scenarios = [
-        ["Python 数据分析", "周末下午", "4 周内完成一个作品：用真实数据做一页分析报告，并换到摄影构图指导。"],
-        ["民谣吉他入门", "工作日晚上", "想换英语口语面试陪练，每周 2 次，最后能完成 3 分钟自我介绍。"],
-        ["手机摄影修图", "碎片时间 30 分钟", "想换 Notion 学习系统搭建，用来管理课程、作品和复盘。"],
-      ];
-
-      const navButtons = document.querySelectorAll("[data-view]");
-      const views = document.querySelectorAll(".view");
-      const matchList = document.querySelector("#matchList");
-      const matchDetail = document.querySelector("#matchDetail");
-      const toast = document.querySelector("#toast");
-      let scenarioIndex = 0;
-      let activePerson = 0;
-
-      function showToast(text) {
-        toast.textContent = text;
-        toast.classList.add("show");
-        clearTimeout(showToast.timer);
-        showToast.timer = setTimeout(() => toast.classList.remove("show"), 2600);
-      }
-      function switchView(id) {
-        navButtons.forEach((button) => button.classList.toggle("active", button.dataset.view === id));
-        views.forEach((view) => view.classList.toggle("active", view.id === id));
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-      function renderMatches() {
-        matchList.innerHTML = people.map((person, index) => `
-          <button class="match-card ${index === activePerson ? "selected" : ""}" data-person="${index}">
-            <div class="avatar">${person.initials}</div>
-            <div>
-              <div class="person-name"><strong>${person.name}</strong><span class="badge">${person.role}</span></div>
-              <div class="swap-line"><span>教：${person.teach}</span><span>换：${person.learn}</span></div>
-              <div class="small muted">${person.trust}</div>
-            </div>
-            <div class="score-ring" style="--score:${person.score}%">${person.score}</div>
-          </button>
-        `).join("");
-        document.querySelectorAll("[data-person]").forEach((button) => {
-          button.addEventListener("click", () => {
-            activePerson = Number(button.dataset.person);
-            renderMatches();
-            renderDetail();
-          });
-        });
-      }
-      function renderDetail() {
-        const person = people[activePerson];
-        matchDetail.innerHTML = `
-          <div class="detail-head"><div class="avatar">${person.initials}</div><div><h2 style="margin-bottom:4px">${person.name}</h2><div class="small muted">${person.role} · ${person.trust}</div></div></div>
-          <div><div class="small muted">匹配度 ${person.score}%</div><div class="progress" style="margin-top:8px"><span style="width:${person.score}%"></span></div></div>
-          <div class="reason-grid">
-            <div class="reason"><strong>对方能教</strong><span class="small muted">${person.teach}</span></div>
-            <div class="reason"><strong>对方想学</strong><span class="small muted">${person.learn}</span></div>
-            <div class="reason"><strong>推荐理由</strong><span class="small muted">${person.reason}</span></div>
-            <div class="reason"><strong>交换建议</strong><span class="small muted">${person.plan}</span></div>
-          </div>
-          <div class="actions"><button class="btn primary" id="inviteBtn">发起交换邀请</button><button class="btn outline" data-view-jump="messages">先沟通</button></div>
-        `;
-        document.querySelector("#inviteBtn").addEventListener("click", () => showToast(`已向 ${person.name} 发出交换邀请，协议草案同步生成。`));
-        document.querySelectorAll("[data-view-jump]").forEach((button) => button.addEventListener("click", () => switchView(button.dataset.viewJump)));
-      }
-
-      navButtons.forEach((button) => button.addEventListener("click", () => switchView(button.dataset.view)));
-      document.querySelectorAll("[data-view-jump]").forEach((button) => button.addEventListener("click", () => switchView(button.dataset.viewJump)));
-      document.querySelectorAll("[data-intent]").forEach((button) => {
-        button.addEventListener("click", () => document.querySelectorAll("[data-intent]").forEach((item) => item.classList.toggle("active", item === button)));
-      });
-      document.querySelector("#publishBtn").addEventListener("click", () => {
-        const skill = document.querySelector("#skillInput").value.trim() || "新技能";
-        showToast(`已基于“${skill}”刷新匹配，优先展示可互换且本周能开始的人。`);
-        switchView("match");
-      });
-      document.querySelector("#scenarioBtn").addEventListener("click", () => {
-        scenarioIndex = (scenarioIndex + 1) % scenarios.length;
-        const [skill, time, goal] = scenarios[scenarioIndex];
-        document.querySelector("#skillInput").value = skill;
-        document.querySelector("#timeInput").value = time;
-        document.querySelector("#goalInput").value = goal;
-        showToast("已切换用户场景，产品会围绕新目标重新推荐。");
-      });
-      document.querySelector("#sortBtn").addEventListener("click", () => showToast("已按匹配度、时间重合和信用记录综合排序。"));
-      document.querySelector("#completeTaskBtn").addEventListener("click", () => showToast("本节课已确认完成，双方信用和成长档案将同步更新。"));
-      document.querySelector("#draftBtn").addEventListener("click", () => {
-        document.querySelector("#draftText").textContent = "协议已生成：双方各 4 节课，每节 45 分钟；你交付数据整理与报告模板，对方交付构图训练与照片点评。";
-        showToast("交换协议草案已生成，可发送给对方确认。");
-      });
-      document.querySelector("#shareBtn").addEventListener("click", () => showToast("公开作品页已生成，可作为下一次匹配的能力证明。"));
-      document.querySelector("#globalSearch").addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-          showToast(`正在查找“${event.currentTarget.value || "热门技能"}”相关的交换机会。`);
-          switchView("match");
-        }
-      });
-      renderMatches();
-      renderDetail();
-    </script>
+    <div class="toast" data-toast></div>
+    <script src="assets/app.js"></script>
   </body>
 </html>
