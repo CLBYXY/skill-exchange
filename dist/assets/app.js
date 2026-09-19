@@ -55,15 +55,37 @@ function toast(message) {
 const skillArtMap = {
   "Python": "art-python",
   "数据": "art-python",
+  "看板": "art-python",
   "PPT": "art-ppt",
+  "表达": "art-ppt",
+  "排版": "art-ppt",
   "Excel": "art-excel",
+  "函数": "art-excel",
+  "自动化": "art-excel",
   "摄影": "art-photo",
   "修图": "art-photo",
+  "拍摄": "art-photo",
   "短视频": "art-video",
   "剪辑": "art-video",
   "脚本": "art-video",
   "动漫": "art-anime",
   "分镜": "art-anime",
+  "吉他": "art-guitar",
+  "弹唱": "art-guitar",
+  "民谣": "art-guitar",
+  "咖啡": "art-coffee",
+  "手冲": "art-coffee",
+  "拉花": "art-coffee",
+  "网站": "art-web",
+  "主页": "art-web",
+  "Figma": "art-design",
+  "原型": "art-design",
+  "交互": "art-design",
+  "英语": "art-speech",
+  "口语": "art-speech",
+  "面试": "art-speech",
+  "Notion": "art-notion",
+  "学习系统": "art-notion",
 };
 
 function artForSkill(name = "") {
@@ -87,7 +109,6 @@ function marketSkillCard(label, title, meta, kind = "offer") {
   return `
     <article class="game-card market-skill-card ${artForSkill(title)} ${rarity}">
       <div class="game-card-top"><b>${rankForSkill(title, kind)}</b><span>${typeForSkill(title)}</span></div>
-      <div class="market-card-label">${label}</div>
       <div class="game-card-art"></div>
       <div class="game-card-body"><h3>${title}</h3><p>${meta}</p></div>
     </article>
@@ -330,12 +351,12 @@ const funCardPool = [
   { art: "art-python", title: "Python 数据分析", meta: "一页报告", score: 89, rarity: "rarity-elite", rank: "精英", type: "应用", user: "陈默" },
   { art: "art-ppt", title: "PPT 结构表达", meta: "路演叙事", score: 87, rarity: "rarity-elite", rank: "精英", type: "理论", user: "高晴" },
   { art: "art-excel", title: "Excel 自动化", meta: "具体函数", score: 84, rarity: "rarity-elite", rank: "精英", type: "应用", user: "韩知" },
-  { art: "art-video", title: "脚本结构", meta: "选题拆解", score: 82, rarity: "rarity-elite", rank: "精英", type: "理论", user: "周亦" },
-  { art: "art-photo", title: "作品点评", meta: "拍摄复盘", score: 80, rarity: "rarity-apprentice", rank: "学徒", type: "应用", user: "袁野" },
-  { art: "art-anime", title: "分镜设计", meta: "关键帧点评", score: 79, rarity: "rarity-master", rank: "大师", type: "理论+应用", user: "林岚" },
-  { art: "art-python", title: "数据看板", meta: "入门搭建", score: 77, rarity: "rarity-elite", rank: "精英", type: "应用", user: "陈默" },
-  { art: "art-ppt", title: "视觉排版", meta: "一页改稿", score: 74, rarity: "rarity-apprentice", rank: "学徒", type: "应用", user: "韩知" },
-  { art: "art-excel", title: "批量整理", meta: "表格效率", score: 72, rarity: "rarity-apprentice", rank: "学徒", type: "应用", user: "高晴" },
+  { art: "art-guitar", title: "民谣吉他", meta: "和弦转换", score: 82, rarity: "rarity-elite", rank: "精英", type: "应用", user: "陆声" },
+  { art: "art-coffee", title: "咖啡拉花", meta: "心形出杯", score: 80, rarity: "rarity-apprentice", rank: "学徒", type: "应用", user: "袁野" },
+  { art: "art-web", title: "个人网站搭建", meta: "主页上线", score: 79, rarity: "rarity-master", rank: "大师", type: "理论+应用", user: "韩知" },
+  { art: "art-speech", title: "英语口语表达", meta: "面试陪练", score: 77, rarity: "rarity-elite", rank: "精英", type: "应用", user: "高晴" },
+  { art: "art-design", title: "Figma 原型设计", meta: "交互动效", score: 74, rarity: "rarity-apprentice", rank: "学徒", type: "应用", user: "韩知" },
+  { art: "art-notion", title: "Notion 学习系统", meta: "复盘模板", score: 72, rarity: "rarity-apprentice", rank: "学徒", type: "应用", user: "许诺" },
 ];
 
 function miniGameCard(card) {
@@ -344,7 +365,6 @@ function miniGameCard(card) {
       <div class="game-card-top"><b>${card.rank}</b><span>${card.type}</span></div>
       <div class="game-card-art"></div>
       <div class="game-card-body"><h3>${card.title}</h3><p>${card.meta}</p></div>
-      <div class="game-card-foot"><span>${card.score}% 匹配</span><strong>${card.user}</strong></div>
     </article>
   `;
 }
@@ -358,7 +378,10 @@ function funPairCard(card, index) {
         <section><strong>对方提供</strong>${miniGameCard(card)}</section>
         <section><strong>对方想学</strong>${marketSkillCard("想换", wanted.name, wanted.scenes, "want")}</section>
       </div>
-      <button class="cart-add-button" type="button" data-add-cart="${card.user}">加入购物车</button>
+      <div class="fun-pair-actions">
+        <button class="cart-add-button" type="button" data-add-cart="${card.user}">加入收藏</button>
+        <button class="ghost-action" type="button" data-view-detail="${card.user}" data-skill="${card.title}">查看详情</button>
+      </div>
     </article>
   `;
 }
@@ -375,6 +398,12 @@ function renderFunCards(offset = 0) {
     button.addEventListener("click", (event) => {
       event.stopPropagation();
       addToCart(button.closest("[data-profile]"));
+    });
+  });
+  document.querySelectorAll("[data-view-detail]").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      openSkillDetail(button.dataset.viewDetail, button.dataset.skill);
     });
   });
   document.querySelectorAll("[data-profile]").forEach((card) => {
@@ -565,6 +594,13 @@ function initSummonCanvas() {
 
 const exchangeCart = [];
 
+function openSkillDetail(user = "", skill = "") {
+  const params = new URLSearchParams();
+  if (user) params.set("user", user);
+  if (skill) params.set("skill", skill);
+  location.href = `skill-detail.html?${params.toString()}`;
+}
+
 function ensureCartModal() {
   let modal = document.querySelector("[data-cart-modal]");
   if (modal) return modal;
@@ -572,7 +608,7 @@ function ensureCartModal() {
   modal.className = "modal-backdrop";
   modal.dataset.cartModal = "";
   modal.hidden = true;
-  modal.innerHTML = `<div class="exchange-modal cart-modal"><div class="modal-head"><div><p class="eyebrow">Exchange Cart</p><h2>交换购物车</h2></div><button class="icon-button" type="button" data-close-cart>×</button></div><div class="cart-list" data-cart-list></div></div>`;
+  modal.innerHTML = `<div class="exchange-modal cart-modal"><div class="modal-head"><div><p class="eyebrow">Favorites</p><h2>我的收藏</h2></div><button class="icon-button" type="button" data-close-cart>×</button></div><div class="cart-list" data-cart-list></div></div>`;
   document.body.appendChild(modal);
   modal.querySelector("[data-close-cart]").addEventListener("click", () => modal.hidden = true);
   modal.addEventListener("click", (event) => { if (event.target === modal) modal.hidden = true; });
@@ -586,18 +622,22 @@ function showCartButton() {
     button.className = "floating-cart";
     button.type = "button";
     button.dataset.openCart = "";
-    button.innerHTML = `🛒<span data-cart-count>0</span>`;
+    button.innerHTML = `★<span data-cart-count>0</span>`;
     document.body.appendChild(button);
     button.addEventListener("click", () => {
       const modal = ensureCartModal();
       modal.querySelector("[data-cart-list]").innerHTML = exchangeCart.map((item) => `
         <article class="cart-request-row">
-          <div class="cart-user"><b>${item.user}</b><span>${item.info}</span></div>
+          <div class="cart-user"><b>${item.user}</b><span>${item.role}</span><em>信用分 ${item.credit} · 完成交换 ${item.done}</em></div>
           <div class="market-card-pair">
-            <section><strong>对方提供</strong>${marketSkillCard("提供", item.title, item.meta, "offer")}</section>
-            <section><strong>对方想学</strong>${marketSkillCard("想换", "Python 数据分析", "清洗订单数据 / 一页报告", "want")}</section>
+            <section><strong>对方提供</strong>${marketSkillCard("", item.title, item.meta, "offer")}</section>
+            <section><strong>对方想学</strong>${marketSkillCard("", item.wantTitle, item.wantMeta, "want")}</section>
           </div>
-        </article>`).join("") || `<p class="empty-cart">还没有加入交换申请。</p>`;
+          <button class="ghost-action cart-detail-button" type="button" data-cart-detail="${item.user}" data-cart-skill="${item.title}">查看详情</button>
+        </article>`).join("") || `<p class="empty-cart">还没有加入收藏。</p>`;
+      modal.querySelectorAll("[data-cart-detail]").forEach((detailButton) => {
+        detailButton.addEventListener("click", () => openSkillDetail(detailButton.dataset.cartDetail, detailButton.dataset.cartSkill));
+      });
       modal.hidden = false;
     });
   }
@@ -607,9 +647,20 @@ function showCartButton() {
 
 function addToCart(card) {
   if (!card) return;
-  exchangeCart.push({ user: card.dataset.profile, title: card.dataset.cardTitle, meta: card.dataset.cardMeta || "技能交换" });
+  const user = card.dataset.profile;
+  const profile = exchanges.find((item) => item.user === user);
+  exchangeCart.push({
+    user,
+    role: profile?.role || "技能交换用户",
+    credit: profile?.heat || 90,
+    done: profile ? Math.max(8, Math.round(profile.heat / 4)) : 12,
+    title: card.dataset.cardTitle,
+    meta: card.dataset.cardMeta || "技能交换",
+    wantTitle: "Python 数据分析",
+    wantMeta: "清洗订单数据 / 一页报告",
+  });
   showCartButton();
-  toast(`${card.dataset.profile} 的交换申请已加入购物车。`);
+  toast(`${card.dataset.profile} 的交换申请已加入收藏。`);
 }
 
 function initWorkRows() {
@@ -621,7 +672,7 @@ function initWorkRows() {
       if (preview) preview.dataset.mode = tab.textContent.trim();
       toast(`已切换到${tab.textContent.trim()}。`);
     }));
-    row.querySelector(".work-row-head button")?.addEventListener("click", () => toast(`${row.querySelector("strong")?.textContent || "作品"}详情已打开。`));
+    row.querySelector(".work-row-head button")?.addEventListener("click", () => openSkillDetail("陈同学", row.querySelector("strong")?.textContent || "作品"));
   });
 }
 
@@ -697,11 +748,40 @@ function initProfilePage() {
   document.querySelector("[data-profile-apply]")?.addEventListener("click", () => toast(`已向 ${user} 发起交换申请。`));
 }
 
+function initSkillDetailPage() {
+  const titleEl = document.querySelector("[data-detail-title]");
+  if (!titleEl) return;
+  const params = new URLSearchParams(location.search);
+  const skill = params.get("skill") || "手机摄影构图";
+  const user = params.get("user") || "林岚";
+  const source = exchanges.find((item) => item.user === user);
+  const card = source?.cards?.find((item) => skill.includes(item.name) || item.name.includes(skill)) || source?.cards?.[0];
+  titleEl.textContent = skill;
+  document.querySelector("[data-detail-user]").textContent = user;
+  document.querySelector("[data-detail-role]").textContent = source?.role || "技能交换用户";
+  document.querySelector("[data-detail-score]").textContent = source?.heat || 96;
+  document.querySelector("[data-detail-card]").className = `game-card detail-hero-card ${artForSkill(skill)} rarity-elite`;
+  document.querySelector("[data-detail-rank]").textContent = rankForSkill(skill);
+  document.querySelector("[data-detail-type]").textContent = typeForSkill(skill);
+  document.querySelector("[data-detail-card-title]").textContent = skill;
+  document.querySelector("[data-detail-card-meta]").textContent = card?.scenes || "作品展示 / 课程评价 / 交换边界";
+
+  const tabs = document.querySelectorAll("[data-detail-tab]");
+  const panels = document.querySelectorAll("[data-detail-panel]");
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((item) => item.classList.toggle("active", item === tab));
+      panels.forEach((panel) => panel.classList.toggle("active", panel.dataset.detailPanel === tab.dataset.detailTab));
+    });
+  });
+}
+
 initMarket();
 initMyTabs();
 initMessages();
 initProfilePage();
 initWorkRows();
+initSkillDetailPage();
 
 
 
