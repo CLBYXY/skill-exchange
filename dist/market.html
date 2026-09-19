@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SkillLoop | 技能市场</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body data-page="market">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="index.html"><span class="brand-mark">SL</span><span><strong>SkillLoop</strong><small>技能配对网站</small></span></a>
+        <nav class="nav">
+          <a href="index.html">今日</a><a href="profile.html">上传资料</a><a class="active" href="market.html">技能市场</a><a href="pet.html">宠物 AI</a><a href="basket.html">猎物篮 <span class="nav-count" data-basket-count>0</span></a><a href="matches.html">配对交换</a>
+        </nav>
+      </aside>
+      <main class="main">
+        <header class="topbar compact">
+          <div><p class="eyebrow">Skill Market</p><h1>大量用户画像，但不是谁都能直接交换。</h1><p class="lead">市场只展示足够的判断信息。你可以把合适的人放进猎物篮，真正交换必须双方互选。</p></div>
+        </header>
+        <section class="market-toolbar">
+          <input data-market-search placeholder="搜索 Python、摄影、英语、吉他、剪辑" />
+          <select data-market-filter><option value="all">全部技能</option><option value="design">创作表达</option><option value="tech">技术效率</option><option value="life">生活兴趣</option></select>
+          <a class="button ghost" href="pet.html">让 Mochi 去海淘</a>
+        </section>
+        <section class="profile-grid" data-market-profiles></section>
+      </main>
+    </div>
+    <div class="toast" data-toast></div>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
