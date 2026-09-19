@@ -36,127 +36,90 @@
       </section>
 
       <section class="my-tabs" aria-label="我的功能页签">
-        <button class="active" data-my-tab="publish" id="publish">发布新的交换需求</button>
-        <button data-my-tab="requests">我的交换需求</button>
+        <button class="active" data-my-tab="deck" id="publish">我的牌组</button>
+        <button data-my-tab="requests">交换需求</button>
         <button data-my-tab="works">作品管理</button>
       </section>
 
-      <section class="my-panel active" data-tab-panel="publish">
-        <div class="deck-builder">
-          <form class="form-card skill-card-form" data-publish-form>
-            <div>
-              <p class="eyebrow">我会卡片</p>
-              <h2>新建可交换技能卡</h2>
-            </div>
-            <label>标准技能名
-              <select>
-                <option>Python 数据分析</option>
-                <option>PPT 结构化表达</option>
-                <option>Excel 函数自动化</option>
-                <option>手机摄影构图</option>
-                <option>短视频剪辑</option>
-                <option>Figma 原型设计</option>
-              </select>
-            </label>
-            <div class="field-grid compact">
-              <label>熟练度<select><option>可教学</option><option>熟练</option><option>专家</option><option>入门陪练</option></select></label>
-              <label>类型<select><option>应用</option><option>理论</option><option>理论 + 应用</option></select></label>
-              <label>交换单位<select><option>30 分钟课程</option><option>1 次作品点评</option><option>1 个具体函数</option><option>1 个项目陪跑节点</option></select></label>
-            </div>
-            <div class="scenario-grid">
-              <label>使用场景 1<input value="清洗一份订单数据" /></label>
-              <label>使用场景 2<input value="做一页分析报告" /></label>
-              <label>使用场景 3<input value="讲清楚图表结论" /></label>
-            </div>
-            <button class="primary-action" type="submit">加入我会牌组</button>
-          </form>
-
-          <form class="form-card skill-card-form" data-want-form>
-            <div>
-              <p class="eyebrow">我想学卡片</p>
-              <h2>新建学习目标卡</h2>
-            </div>
-            <label>标准技能名
-              <select>
-                <option>动漫制作</option>
-                <option>手机摄影构图</option>
-                <option>短视频剪辑</option>
-                <option>英语口语表达</option>
-                <option>吉他弹唱</option>
-                <option>个人网站搭建</option>
-              </select>
-            </label>
-            <div class="field-grid compact">
-              <label>当前程度<select><option>零基础</option><option>入门</option><option>需要突破</option></select></label>
-              <label>学习方向<select><option>应用</option><option>理论</option><option>理论 + 应用</option></select></label>
-              <label>期望单位<select><option>30 分钟课程</option><option>1 次作业点评</option><option>1 个作品项目</option><option>1 个具体函数</option></select></label>
-            </div>
-            <div class="scenario-grid">
-              <label>想用在 1<input value="做一个 5 秒循环动画" /></label>
-              <label>想用在 2<input value="理解角色分镜流程" /></label>
-              <label>想用在 3<input value="完成可发布作品" /></label>
-            </div>
-            <button class="ghost-action" type="submit">加入我想学牌组</button>
-          </form>
+      <section class="my-panel active" data-tab-panel="deck">
+        <div class="deck-toolbar">
+          <div>
+            <p class="eyebrow">Card Deck</p>
+            <h2>我的牌组</h2>
+            <span>所有交换都从这里抽牌：先维护你会的卡和想学的卡，再把卡牌连到交换需求里。</span>
+          </div>
+          <button class="primary-action" data-open-card-modal>+ 新增技能牌</button>
         </div>
 
         <div class="deck-board">
           <section class="deck-section">
-            <div class="deck-head">
-              <div>
-                <p class="eyebrow">可递出的筹码</p>
-                <h2>我会牌组</h2>
-              </div>
-              <span>3 张</span>
+            <div>
+              <p class="eyebrow">可递出的筹码</p>
+              <h2>我会牌组</h2>
             </div>
-            <div class="skill-deck">
-              <article class="skill-card teach-card">
-                <small>标准技能名</small>
-                <h3>Python 数据分析</h3>
-                <div class="card-tags"><span>可教学</span><span>应用</span><span>30 分钟课程</span></div>
-                <p>场景：清洗订单数据 / 做一页分析报告 / 讲清楚图表结论</p>
+            <div class="game-deck">
+              <article class="game-card art-python rarity-legend">
+                <div class="game-card-top"><b>7</b><span>我会</span></div>
+                <div class="game-card-art"></div>
+                <div class="game-card-body">
+                  <h3>Python 数据分析</h3>
+                  <p>清洗订单数据 / 做一页分析报告 / 讲清楚图表结论</p>
+                </div>
+                <div class="game-card-foot"><span>可教学</span><span>应用</span><strong>30min</strong></div>
               </article>
-              <article class="skill-card teach-card">
-                <small>标准技能名</small>
-                <h3>PPT 结构化表达</h3>
-                <div class="card-tags"><span>专家</span><span>理论 + 应用</span><span>1 次作品点评</span></div>
-                <p>场景：路演框架 / 信息层级 / 一页改稿</p>
+              <article class="game-card art-ppt rarity-rare">
+                <div class="game-card-top"><b>6</b><span>我会</span></div>
+                <div class="game-card-art"></div>
+                <div class="game-card-body">
+                  <h3>PPT 结构化表达</h3>
+                  <p>路演框架 / 信息层级 / 一页改稿</p>
+                </div>
+                <div class="game-card-foot"><span>专家</span><span>理论+应用</span><strong>点评</strong></div>
               </article>
-              <article class="skill-card teach-card">
-                <small>标准技能名</small>
-                <h3>Excel 函数自动化</h3>
-                <div class="card-tags"><span>熟练</span><span>应用</span><span>1 个具体函数</span></div>
-                <p>场景：匹配查找 / 批量整理 / 自动汇总</p>
+              <article class="game-card art-excel rarity-rare">
+                <div class="game-card-top"><b>5</b><span>我会</span></div>
+                <div class="game-card-art"></div>
+                <div class="game-card-body">
+                  <h3>Excel 函数自动化</h3>
+                  <p>匹配查找 / 批量整理 / 自动汇总</p>
+                </div>
+                <div class="game-card-foot"><span>熟练</span><span>应用</span><strong>函数</strong></div>
               </article>
             </div>
           </section>
 
           <section class="deck-section">
-            <div class="deck-head">
-              <div>
-                <p class="eyebrow">想抽到的能力</p>
-                <h2>我想学牌组</h2>
-              </div>
-              <span>3 张</span>
+            <div>
+              <p class="eyebrow">想抽到的能力</p>
+              <h2>我想学牌组</h2>
             </div>
-            <div class="skill-deck">
-              <article class="skill-card want-card">
-                <small>标准技能名</small>
-                <h3>动漫制作</h3>
-                <div class="card-tags"><span>零基础</span><span>应用</span><span>1 个作品项目</span></div>
-                <p>场景：角色草图 / 分镜节奏 / 5 秒循环动画</p>
+            <div class="game-deck">
+              <article class="game-card art-anime rarity-legend want-kind">
+                <div class="game-card-top"><b>8</b><span>想学</span></div>
+                <div class="game-card-art"></div>
+                <div class="game-card-body">
+                  <h3>动漫制作</h3>
+                  <p>角色草图 / 分镜节奏 / 5 秒循环动画</p>
+                </div>
+                <div class="game-card-foot"><span>零基础</span><span>应用</span><strong>项目</strong></div>
               </article>
-              <article class="skill-card want-card">
-                <small>标准技能名</small>
-                <h3>手机摄影构图</h3>
-                <div class="card-tags"><span>入门</span><span>理论 + 应用</span><span>1 次作品点评</span></div>
-                <p>场景：人像拍摄 / 自然光 / 修图方向</p>
+              <article class="game-card art-photo rarity-rare want-kind">
+                <div class="game-card-top"><b>4</b><span>想学</span></div>
+                <div class="game-card-art"></div>
+                <div class="game-card-body">
+                  <h3>手机摄影构图</h3>
+                  <p>人像拍摄 / 自然光 / 修图方向</p>
+                </div>
+                <div class="game-card-foot"><span>入门</span><span>理论+应用</span><strong>点评</strong></div>
               </article>
-              <article class="skill-card want-card">
-                <small>标准技能名</small>
-                <h3>短视频剪辑</h3>
-                <div class="card-tags"><span>需要突破</span><span>应用</span><span>30 分钟课程</span></div>
-                <p>场景：开头节奏 / 转场 / 发布版成片</p>
+              <article class="game-card art-video rarity-epic want-kind">
+                <div class="game-card-top"><b>6</b><span>想学</span></div>
+                <div class="game-card-art"></div>
+                <div class="game-card-body">
+                  <h3>短视频剪辑</h3>
+                  <p>开头节奏 / 转场 / 发布版成片</p>
+                </div>
+                <div class="game-card-foot"><span>突破</span><span>应用</span><strong>30min</strong></div>
               </article>
             </div>
           </section>
@@ -164,10 +127,24 @@
       </section>
 
       <section class="my-panel" data-tab-panel="requests">
-        <div class="request-table">
-          <article><b>递出卡：Python 数据分析 · 30 分钟课程</b><span>想换卡：手机摄影构图 · 1 次作品点评</span><em>3 个候选连线 · 1 个草案待确认</em></article>
-          <article><b>递出卡：PPT 结构化表达 · 1 次作品点评</b><span>想换卡：短视频剪辑 · 30 分钟课程</span><em>2 个候选连线 · 对方正在选牌</em></article>
-          <article><b>递出卡：Excel 函数自动化 · 1 个具体函数</b><span>想换卡：英语口语表达 · 30 分钟陪练</span><em>5 个候选连线 · 已进入沟通</em></article>
+        <div class="request-board-head">
+          <div>
+            <p class="eyebrow">Exchange Requests</p>
+            <h2>已发送的交换需求</h2>
+          </div>
+          <button class="primary-action add-request-button" data-open-request-modal>+ 新增需求</button>
+        </div>
+        <div class="request-market-list">
+          <article class="exchange-card request-card">
+            <div class="exchange-card-head"><div class="user-line"><div class="avatar">陈</div><div><b>发给林岚</b><span>等待对方选牌</span></div></div><span class="tag">草案前</span></div>
+            <div class="swap-boxes"><div class="swap-box"><small>我递出</small><strong>Python 数据分析 · 30min</strong></div><div class="swap-box want"><small>我想换</small><strong>动漫制作 · 5 秒循环动画</strong></div></div>
+            <p>希望对方先讲分镜，再点评我的第一次作业。</p>
+          </article>
+          <article class="exchange-card request-card">
+            <div class="exchange-card-head"><div class="user-line"><div class="avatar">陈</div><div><b>发给周亦</b><span>已进入沟通</span></div></div><span class="tag">互选成功</span></div>
+            <div class="swap-boxes"><div class="swap-box"><small>我递出</small><strong>PPT 结构化表达 · 作品点评</strong></div><div class="swap-box want"><small>我想换</small><strong>短视频剪辑 · 30min</strong></div></div>
+            <p>交换边界已确认，下一步拟定具体课时和验收方式。</p>
+          </article>
         </div>
       </section>
 
@@ -181,6 +158,44 @@
     </main>
 
     <div class="toast" data-toast></div>
+    <section class="modal-backdrop" data-card-modal hidden>
+      <form class="exchange-modal card-create-modal" data-card-form>
+        <div class="modal-head">
+          <div><p class="eyebrow">Create Card</p><h2>新增技能牌</h2></div>
+          <button class="icon-button" type="button" data-close-card-modal aria-label="关闭">×</button>
+        </div>
+        <div class="field-grid compact">
+          <label>卡牌类型<select><option>我会</option><option>我想学</option></select></label>
+          <label>标准技能名<select><option>Python 数据分析</option><option>动漫制作</option><option>手机摄影构图</option><option>短视频剪辑</option><option>PPT 结构化表达</option><option>Excel 函数自动化</option></select></label>
+          <label>熟练度<select><option>可教学</option><option>专家</option><option>熟练</option><option>入门</option><option>零基础</option></select></label>
+        </div>
+        <div class="field-grid compact">
+          <label>方向<select><option>应用</option><option>理论</option><option>理论 + 应用</option></select></label>
+          <label>交换单位<select><option>30 分钟课程</option><option>1 次作品点评</option><option>1 个具体函数</option><option>1 个作品项目</option></select></label>
+          <label>稀有度<select><option>Rare</option><option>Epic</option><option>Legend</option></select></label>
+        </div>
+        <div class="scenario-grid">
+          <label>使用场景 1<input value="完成一个可展示作品" /></label>
+          <label>使用场景 2<input value="解决一个具体问题" /></label>
+          <label>使用场景 3<input value="形成可复用方法" /></label>
+        </div>
+        <button class="primary-action" type="submit">加入牌组</button>
+      </form>
+    </section>
+    <section class="modal-backdrop" data-request-modal hidden>
+      <form class="exchange-modal card-create-modal" data-request-form>
+        <div class="modal-head">
+          <div><p class="eyebrow">New Request</p><h2>新增交换需求</h2></div>
+          <button class="icon-button" type="button" data-close-request-modal aria-label="关闭">×</button>
+        </div>
+        <div class="modal-grid">
+          <label>选择我递出的卡牌<select><option>Python 数据分析 · 30min</option><option>PPT 结构化表达 · 作品点评</option><option>Excel 函数自动化 · 具体函数</option></select></label>
+          <label>想换的标准技能<select><option>动漫制作</option><option>手机摄影构图</option><option>短视频剪辑</option><option>英语口语表达</option></select></label>
+        </div>
+        <label class="modal-note">具体卡牌信息<textarea>希望交换到：1 个 5 秒循环动画，从分镜到关键帧点评。</textarea></label>
+        <button class="primary-action" type="submit">发布到我的交换需求</button>
+      </form>
+    </section>
     <script src="assets/app.js"></script>
   </body>
 </html>
