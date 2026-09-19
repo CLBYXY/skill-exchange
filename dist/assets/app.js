@@ -52,7 +52,38 @@ function toast(message) {
   toast.timer = setTimeout(() => el.classList.remove("show"), 2400);
 }
 
+const skillArtMap = {
+  "Python": "art-python",
+  "数据": "art-python",
+  "PPT": "art-ppt",
+  "Excel": "art-excel",
+  "摄影": "art-photo",
+  "修图": "art-photo",
+  "短视频": "art-video",
+  "剪辑": "art-video",
+  "脚本": "art-video",
+  "动漫": "art-anime",
+  "分镜": "art-anime",
+};
+
+function artForSkill(name = "") {
+  const hit = Object.entries(skillArtMap).find(([key]) => name.includes(key));
+  return hit ? hit[1] : "art-python";
+}
+
+function marketSkillCard(label, title, meta, kind = "offer") {
+  const rarity = kind === "want" ? "rarity-apprentice want-kind" : "rarity-elite";
+  return `
+    <article class="game-card market-skill-card ${artForSkill(title)} ${rarity}">
+      <div class="game-card-top"><b>${label}</b><span>${kind === "want" ? "需求" : "提供"}</span></div>
+      <div class="game-card-art"></div>
+      <div class="game-card-body"><h3>${title}</h3><p>${meta}</p></div>
+    </article>
+  `;
+}
+
 function card(item) {
+  const offer = item.cards?.[0];
   return `
     <article class="exchange-card">
       <div class="exchange-card-head">
@@ -62,16 +93,15 @@ function card(item) {
         </div>
         <span class="tag">热度 ${item.heat}</span>
       </div>
-      <div class="swap-boxes">
-        <div class="swap-box"><small>我会</small><strong>${item.teach}</strong></div>
-        <div class="swap-box want"><small>我想换</small><strong>${item.want}</strong></div>
+      <div class="market-card-stack">
+        ${marketSkillCard("上牌", offer?.name || item.teach, offer?.scenes || item.teach, "offer")}
+        ${marketSkillCard("下牌", item.want, item.desc, "want")}
       </div>
       <div class="exchange-meta">
         <span>${item.type === "online" ? "线上" : "线下"}</span>
         <span>${item.time === "weekend" ? "周末可约" : "工作日可约"}</span>
         <span>${item.distance}</span>
       </div>
-      <p>${item.desc}</p>
       <div class="exchange-actions">
         <button class="primary-action" data-apply="${item.user}">申请交换</button>
         <button class="ghost-action" data-save="${item.user}">收藏</button>
@@ -535,3 +565,4 @@ initMarket();
 initMyTabs();
 initMessages();
 initProfilePage();
+
