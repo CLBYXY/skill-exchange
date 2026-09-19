@@ -40,6 +40,7 @@
         <button data-my-tab="requests">交换需求</button>
         <button data-my-tab="works">作品管理</button>
         <button data-my-tab="calendar">授课日历</button>
+        <button data-my-tab="favorites">我的收藏</button>
       </section>
 
       <section class="my-panel active" data-tab-panel="deck">
@@ -60,7 +61,7 @@
             </div>
             <div class="game-deck">
               <article class="game-card art-python rarity-master">
-                <div class="game-card-top"><b>大师</b><span>应用</span></div>
+                <div class="game-card-top"><button class="card-delete" type="button" data-delete-card aria-label="删除卡牌">×</button><b>大师</b><span>应用</span></div>
                 <div class="game-card-art"></div>
                 <div class="game-card-body">
                   <h3>Python 数据分析</h3>
@@ -69,7 +70,7 @@
                 <div class="game-card-foot"><span>可教学</span><span>3 年使用</span><strong>30min</strong></div>
               </article>
               <article class="game-card art-ppt rarity-elite">
-                <div class="game-card-top"><b>精英</b><span>理论+应用</span></div>
+                <div class="game-card-top"><button class="card-delete" type="button" data-delete-card aria-label="删除卡牌">×</button><b>精英</b><span>理论+应用</span></div>
                 <div class="game-card-art"></div>
                 <div class="game-card-body">
                   <h3>PPT 结构化表达</h3>
@@ -78,7 +79,7 @@
                 <div class="game-card-foot"><span>专家</span><span>5 年使用</span><strong>点评</strong></div>
               </article>
               <article class="game-card art-excel rarity-elite">
-                <div class="game-card-top"><b>精英</b><span>应用</span></div>
+                <div class="game-card-top"><button class="card-delete" type="button" data-delete-card aria-label="删除卡牌">×</button><b>精英</b><span>应用</span></div>
                 <div class="game-card-art"></div>
                 <div class="game-card-body">
                   <h3>Excel 函数自动化</h3>
@@ -98,7 +99,7 @@
             </div>
             <div class="game-deck">
               <article class="game-card art-anime rarity-apprentice want-kind">
-                <div class="game-card-top"><b>学徒</b><span>应用</span></div>
+                <div class="game-card-top"><button class="card-delete" type="button" data-delete-card aria-label="删除卡牌">×</button><b>学徒</b><span>应用</span></div>
                 <div class="game-card-art"></div>
                 <div class="game-card-body">
                   <h3>动漫制作</h3>
@@ -107,7 +108,7 @@
                 <div class="game-card-foot"><span>零基础</span><span>0 年使用</span><strong>项目</strong></div>
               </article>
               <article class="game-card art-photo rarity-apprentice want-kind">
-                <div class="game-card-top"><b>学徒</b><span>理论+应用</span></div>
+                <div class="game-card-top"><button class="card-delete" type="button" data-delete-card aria-label="删除卡牌">×</button><b>学徒</b><span>理论+应用</span></div>
                 <div class="game-card-art"></div>
                 <div class="game-card-body">
                   <h3>手机摄影构图</h3>
@@ -116,7 +117,7 @@
                 <div class="game-card-foot"><span>入门</span><span>1 年使用</span><strong>点评</strong></div>
               </article>
               <article class="game-card art-video rarity-elite want-kind">
-                <div class="game-card-top"><b>精英</b><span>应用</span></div>
+                <div class="game-card-top"><button class="card-delete" type="button" data-delete-card aria-label="删除卡牌">×</button><b>精英</b><span>应用</span></div>
                 <div class="game-card-art"></div>
                 <div class="game-card-body">
                   <h3>短视频剪辑</h3>
@@ -272,6 +273,25 @@
           </div>
         </div>
       </section>
+
+      <section class="my-panel" data-tab-panel="favorites">
+        <div class="favorites-board">
+          <article class="exchange-card compact-exchange-card">
+            <div class="exchange-card-head"><div class="user-line"><div class="avatar">林</div><div><b>林岚</b><span>品牌摄影师</span></div></div><span class="tag">热度 96</span></div>
+            <div class="market-card-pair">
+              <section><strong>我会</strong><article class="game-card market-skill-card art-photo rarity-elite"><div class="game-card-top"><b>大师</b><span>应用</span></div><div class="game-card-art"></div><div class="game-card-body"><h3>手机摄影构图</h3><p>人像构图 / 自然光 / 修图方向</p></div></article></section>
+              <section><strong>我想学</strong><article class="game-card market-skill-card art-anime rarity-apprentice want-kind"><div class="game-card-top"><b>学徒</b><span>应用</span></div><div class="game-card-art"></div><div class="game-card-body"><h3>动漫制作</h3><p>角色分镜 / 5 秒循环动画</p></div></article></section>
+            </div>
+          </article>
+          <article class="exchange-card compact-exchange-card">
+            <div class="exchange-card-head"><div class="user-line"><div class="avatar">周</div><div><b>周亦</b><span>剪辑博主</span></div></div><span class="tag">热度 92</span></div>
+            <div class="market-card-pair">
+              <section><strong>我会</strong><article class="game-card market-skill-card art-video rarity-elite"><div class="game-card-top"><b>大师</b><span>应用</span></div><div class="game-card-art"></div><div class="game-card-body"><h3>短视频剪辑</h3><p>开头钩子 / 镜头节奏</p></div></article></section>
+              <section><strong>我想学</strong><article class="game-card market-skill-card art-python rarity-apprentice want-kind"><div class="game-card-top"><b>学徒</b><span>应用</span></div><div class="game-card-art"></div><div class="game-card-body"><h3>Python 数据分析</h3><p>清洗订单数据 / 一页报告</p></div></article></section>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
 
     <div class="toast" data-toast></div>
@@ -333,6 +353,7 @@
     <script src="assets/app.js"></script>
   </body>
 </html>
+
 
 
 
