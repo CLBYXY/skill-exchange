@@ -85,6 +85,8 @@
                 </div>
                 <div class="game-card-foot"><span>熟练</span><span>2 年使用</span><strong>函数</strong></div>
               </article>
+              <article class="game-card empty-card" aria-label="空牌位"><div class="empty-card-inner">空牌位</div></article>
+              <article class="game-card empty-card" aria-label="空牌位"><div class="empty-card-inner">空牌位</div></article>
             </div>
           </section>
 
@@ -121,6 +123,8 @@
                 </div>
                 <div class="game-card-foot"><span>突破</span><span>2 年使用</span><strong>30min</strong></div>
               </article>
+              <article class="game-card empty-card" aria-label="空牌位"><div class="empty-card-inner">空牌位</div></article>
+              <article class="game-card empty-card" aria-label="空牌位"><div class="empty-card-inner">空牌位</div></article>
             </div>
           </section>
         </div>
@@ -204,10 +208,40 @@
       </section>
 
       <section class="my-panel" data-tab-panel="works">
-        <div class="work-grid">
-          <article><strong>数据分析报告</strong><span>绑定卡牌：Python 数据分析，用于证明可教学</span><button>管理</button></article>
-          <article><strong>PPT 改稿前后对比</strong><span>绑定卡牌：PPT 结构化表达，用于提高申请通过率</span><button>管理</button></article>
-          <article><strong>函数案例库</strong><span>绑定卡牌：Excel 函数自动化，让对方知道可交换边界</span><button>管理</button></article>
+        <div class="work-list">
+          <article class="work-row" data-work-detail>
+            <article class="game-card micro art-python rarity-master">
+              <div class="game-card-top"><b>大师</b><span>应用</span></div>
+              <div class="game-card-art"></div>
+            </article>
+            <div class="work-row-main">
+              <div class="work-row-head"><strong>数据分析报告</strong><span>绑定卡牌：Python 数据分析</span><button type="button">查看详情</button></div>
+              <div class="work-tabs"><button class="active" type="button">作品展示</button><button type="button">课程评价</button></div>
+              <div class="work-preview"><span>链接：analysis.example/report</span><span>图片：订单看板截图 3 张</span><span>视频：8 分钟讲解回放</span></div>
+            </div>
+          </article>
+          <article class="work-row" data-work-detail>
+            <article class="game-card micro art-ppt rarity-elite">
+              <div class="game-card-top"><b>精英</b><span>理论</span></div>
+              <div class="game-card-art"></div>
+            </article>
+            <div class="work-row-main">
+              <div class="work-row-head"><strong>PPT 改稿前后对比</strong><span>绑定卡牌：PPT 结构化表达</span><button type="button">查看详情</button></div>
+              <div class="work-tabs"><button class="active" type="button">作品展示</button><button type="button">课程评价</button></div>
+              <div class="work-preview"><span>链接：slides.example/case</span><span>图片：改稿前后对比 6 张</span><span>评价：周亦 · 结构很清楚</span></div>
+            </div>
+          </article>
+          <article class="work-row" data-work-detail>
+            <article class="game-card micro art-excel rarity-elite">
+              <div class="game-card-top"><b>精英</b><span>应用</span></div>
+              <div class="game-card-art"></div>
+            </article>
+            <div class="work-row-main">
+              <div class="work-row-head"><strong>函数案例库</strong><span>绑定卡牌：Excel 函数自动化</span><button type="button">查看详情</button></div>
+              <div class="work-tabs"><button class="active" type="button">作品展示</button><button type="button">课程评价</button></div>
+              <div class="work-preview"><span>链接：sheet.example/functions</span><span>视频：批量匹配演示</span><span>评价：高晴 · 交付边界明确</span></div>
+            </div>
+          </article>
         </div>
       </section>
     </main>
@@ -271,3 +305,6 @@
     <script src="assets/app.js"></script>
   </body>
 </html>
+
+
+
