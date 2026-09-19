@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SkillLoop 技能互换平台</title>
+    <meta
+      name="description"
+      content="SkillLoop 帮助用户发布可教授技能和想学习技能，通过匹配、信用、日程和交换协议降低学习门槛。"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b2b26'/%3E%3Cpath d='M18 34c0-8 6-14 14-14h14v8H32a6 6 0 0 0 0 12h2v8h-2c-8 0-14-6-14-14Z' fill='%23f0d66b'/%3E%3Cpath d='M46 30c0 8-6 14-14 14H18v-8h14a6 6 0 0 0 0-12h-2v-8h2c8 0 14 6 14 14Z' fill='%234fd1a5'/%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        --ink: #10231f;
+        --muted: #66766f;
+        --line: #d9e4df;
+        --paper: #f7faf6;
+        --panel: #ffffff;
+        --deep: #0b2b26;
+        --mint: #4fd1a5;
+        --gold: #f0d66b;
+        --blue: #4078ff;
+        --rose: #de5f70;
+        --shadow: 0 18px 48px rgba(12, 44, 38, 0.11);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background:
+          linear-gradient(120deg, rgba(79, 209, 165, 0.16), transparent 34%),
+          linear-gradient(300deg, rgba(64, 120, 255, 0.12), transparent 38%),
+          var(--paper);
+        font-family:
+          Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system,
+          BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      .shell {
+        width: min(1440px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 22px 0 34px;
+      }
+
+      .topbar {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 18px;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .mark {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border-radius: 12px;
+        color: var(--gold);
+        background: var(--deep);
+        font-weight: 900;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.55rem, 3vw, 2.5rem);
+        line-height: 1.12;
+        letter-spacing: 0;
+      }
+
+      .tagline {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .metrics {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .metric {
+        min-width: 112px;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 1.15rem;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: 340px minmax(0, 1fr) 330px;
+        gap: 16px;
+        align-items: start;
+      }
+
+      .panel,
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: var(--shadow);
+      }
+
+      .panel {
+        overflow: hidden;
+      }
+
+      .panel-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h2,
+      h3 {
+        margin: 0;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        font-size: 1.05rem;
+      }
+
+      h3 {
+        font-size: 0.98rem;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 26px;
+        padding: 3px 9px;
+        border-radius: 999px;
+        color: #17443a;
+        background: rgba(79, 209, 165, 0.19);
+        font-size: 0.78rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .form {
+        display: grid;
+        gap: 12px;
+        padding: 16px 18px 18px;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        color: #2d4039;
+        font-size: 0.88rem;
+        font-weight: 700;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        min-height: 42px;
+        border: 1px solid #cad8d2;
+        border-radius: 8px;
+        background: #fff;
+        color: var(--ink);
+        padding: 10px 11px;
+        outline: none;
+      }
+
+      textarea {
+        min-height: 84px;
+        resize: vertical;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(64, 120, 255, 0.13);
+      }
+
+      .segmented {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+
+      .segmented button,
+      .primary,
+      .ghost {
+        min-height: 42px;
+        border: 0;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 800;
+      }
+
+      .segmented button {
+        color: var(--muted);
+        background: #edf4f1;
+      }
+
+      .segmented button.active {
+        color: #06251f;
+        background: var(--mint);
+      }
+
+      .primary {
+        color: #071c18;
+        background: var(--gold);
+      }
+
+      .ghost {
+        color: var(--deep);
+        background: #e9f3ef;
+      }
+
+      .board {
+        display: grid;
+        gap: 16px;
+      }
+
+      .hero-panel {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 18px;
+        padding: 22px;
+        overflow: hidden;
+        background:
+          linear-gradient(135deg, rgba(11, 43, 38, 0.96), rgba(15, 77, 66, 0.94)),
+          var(--deep);
+        color: #f6fff9;
+      }
+
+      .hero-panel p {
+        max-width: 650px;
+        margin: 10px 0 18px;
+        color: rgba(246, 255, 249, 0.76);
+        line-height: 1.7;
+      }
+
+      .hero-panel h2 {
+        font-size: clamp(1.45rem, 3vw, 2.35rem);
+        line-height: 1.16;
+      }
+
+      .journey {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .step {
+        min-height: 92px;
+        padding: 13px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .step b {
+        display: block;
+        margin-bottom: 7px;
+      }
+
+      .step span {
+        color: rgba(246, 255, 249, 0.74);
+        font-size: 0.86rem;
+        line-height: 1.45;
+      }
+
+      .radar {
+        position: relative;
+        min-height: 240px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        background:
+          linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+          linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+        background-size: 42px 42px;
+      }
+
+      .node {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        width: 76px;
+        height: 76px;
+        border: 2px solid rgba(255, 255, 255, 0.72);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        text-align: center;
+        font-size: 0.8rem;
+        font-weight: 800;
+      }
+
+      .node.main {
+        left: 50%;
+        top: 50%;
+        width: 96px;
+        height: 96px;
+        transform: translate(-50%, -50%);
+        color: #09241f;
+        background: var(--gold);
+      }
+
+      .node.a {
+        left: 8%;
+        top: 16%;
+      }
+
+      .node.b {
+        right: 10%;
+        top: 13%;
+      }
+
+      .node.c {
+        left: 16%;
+        bottom: 12%;
+      }
+
+      .node.d {
+        right: 12%;
+        bottom: 11%;
+      }
+
+      .match-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      .match-card {
+        display: grid;
+        gap: 12px;
+        box-shadow: none;
+      }
+
+      .person {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .avatar {
+        display: grid;
+        width: 46px;
+        height: 46px;
+        flex: 0 0 46px;
+        place-items: center;
+        border-radius: 50%;
+        color: #fff;
+        background: var(--deep);
+        font-weight: 900;
+      }
+
+      .person p,
+      .swap p,
+      .roadmap p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        line-height: 1.55;
+        font-size: 0.92rem;
+      }
+
+      .skill-pair {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .skill-box {
+        min-height: 74px;
+        padding: 11px;
+        border-radius: 8px;
+        background: #f3f8f5;
+      }
+
+      .skill-box small {
+        display: block;
+        color: var(--muted);
+        font-size: 0.76rem;
+        margin-bottom: 4px;
+      }
+
+      .score {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .bar {
+        overflow: hidden;
+        height: 8px;
+        border-radius: 999px;
+        background: #e0ebe6;
+      }
+
+      .bar span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--mint), var(--blue));
+      }
+
+      .side {
+        display: grid;
+        gap: 16px;
+      }
+
+      .swap,
+      .roadmap {
+        display: grid;
+        gap: 12px;
+      }
+
+      .swap-row {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        gap: 10px;
+        align-items: start;
+      }
+
+      .badge {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 8px;
+        color: #09241f;
+        background: var(--mint);
+        font-weight: 900;
+      }
+
+      .trust {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+
+      .trust div {
+        min-height: 74px;
+        padding: 10px;
+        border-radius: 8px;
+        background: #f3f8f5;
+      }
+
+      .trust strong {
+        display: block;
+      }
+
+      .trust span {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .roadmap-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .roadmap-item:last-child {
+        border-bottom: 0;
+      }
+
+      .status {
+        color: var(--deep);
+        font-size: 0.78rem;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .toast {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        max-width: min(390px, calc(100vw - 36px));
+        padding: 13px 15px;
+        border: 1px solid rgba(79, 209, 165, 0.35);
+        border-radius: 8px;
+        background: #0b2b26;
+        color: #fff;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(10px);
+        transition: 180ms ease;
+        pointer-events: none;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 1120px) {
+        .workspace {
+          grid-template-columns: 320px minmax(0, 1fr);
+        }
+
+        .side {
+          grid-column: 1 / -1;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 820px) {
+        .shell {
+          width: min(100% - 22px, 720px);
+          padding-top: 14px;
+        }
+
+        .topbar,
+        .workspace,
+        .hero-panel,
+        .match-grid,
+        .side {
+          grid-template-columns: 1fr;
+        }
+
+        .metrics {
+          justify-content: stretch;
+        }
+
+        .metric {
+          flex: 1 1 120px;
+        }
+
+        .journey {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 520px) {
+        .shell {
+          width: min(100% - 16px, 480px);
+        }
+
+        .panel-head,
+        .form,
+        .card,
+        .hero-panel {
+          padding: 14px;
+        }
+
+        .journey,
+        .trust {
+          grid-template-columns: 1fr;
+        }
+
+        .skill-pair {
+          grid-template-columns: 1fr;
+        }
+
+        .skill-pair strong {
+          text-align: center;
+        }
+
+        .radar {
+          min-height: 210px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="mark" aria-hidden="true">SL</div>
+          <div>
+            <h1>SkillLoop 技能互换平台</h1>
+            <p class="tagline">把“我会什么”和“我想学什么”连成一次可执行的交换。</p>
+          </div>
+        </div>
+        <div></div>
+        <section class="metrics" aria-label="平台核心指标">
+          <div class="metric"><strong>3,482</strong><span>可交换技能</span></div>
+          <div class="metric"><strong>92%</strong><span>匹配后履约率</span></div>
+          <div class="metric"><strong>48h</strong><span>平均达成交换</span></div>
+        </section>
+      </header>
+
+      <section class="workspace">
+        <aside class="panel" aria-label="发布技能表单">
+          <div class="panel-head">
+            <h2>发布交换需求</h2>
+            <span class="pill">即时预匹配</span>
+          </div>
+          <form class="form" id="skillForm">
+            <div class="segmented" role="group" aria-label="发布类型">
+              <button type="button" class="active" data-mode="teach">我能教</button>
+              <button type="button" data-mode="learn">我想学</button>
+            </div>
+            <label>
+              技能名称
+              <input id="skillName" value="Python 数据分析" autocomplete="off" />
+            </label>
+            <label>
+              我的基础
+              <select id="level">
+                <option>零基础</option>
+                <option selected>入门到进阶</option>
+                <option>能独立完成项目</option>
+              </select>
+            </label>
+            <label>
+              可交换时间
+              <select id="timeSlot">
+                <option>工作日晚上</option>
+                <option selected>周末下午</option>
+                <option>碎片时间 30 分钟</option>
+              </select>
+            </label>
+            <label>
+              期望换到
+              <textarea id="wish">想换摄影构图或短视频剪辑，每周 1 次，4 周完成一个作品。</textarea>
+            </label>
+            <button class="primary" type="submit">生成匹配方案</button>
+            <button class="ghost" type="button" id="fillDemo">换一个示例</button>
+          </form>
+        </aside>
+
+        <section class="board">
+          <article class="hero-panel">
+            <div>
+              <h2>先匹配目标，再锁定交换承诺。</h2>
+              <p>
+                SkillLoop 不只列出技能名，还把学习目标、可用时间、交换价值和履约信用一起计算，
+                帮用户找到愿意教、学得动、排得上时间的人。
+              </p>
+              <div class="journey" aria-label="核心流程">
+                <div class="step"><b>1. 发布</b><span>拆成技能、目标、时间和可交付成果。</span></div>
+                <div class="step"><b>2. 匹配</b><span>按互补技能、距离、时间重合和信用排序。</span></div>
+                <div class="step"><b>3. 约定</b><span>自动生成 4 周交换计划与双方任务。</span></div>
+                <div class="step"><b>4. 复盘</b><span>完成后沉淀作品、评价和下一轮推荐。</span></div>
+              </div>
+            </div>
+            <div class="radar" aria-label="技能匹配网络">
+              <div class="node main">你的<br />技能环</div>
+              <div class="node a">摄影<br />构图</div>
+              <div class="node b">Python<br />项目</div>
+              <div class="node c">吉他<br />入门</div>
+              <div class="node d">剪辑<br />实战</div>
+            </div>
+          </article>
+
+          <section class="match-grid" id="matches" aria-label="推荐匹配"></section>
+        </section>
+
+        <aside class="side">
+          <section class="card swap">
+            <div>
+              <h2>交换协议</h2>
+              <p>平台把口头约定变成清晰任务，减少“聊完就散”和进度失控。</p>
+            </div>
+            <div class="swap-row">
+              <div class="badge">A</div>
+              <div><strong>双方各开 4 节课</strong><p>每节 45 分钟，系统自动安排提醒和课后确认。</p></div>
+            </div>
+            <div class="swap-row">
+              <div class="badge">B</div>
+              <div><strong>用作品定义完成</strong><p>例如一组人像照片、一段可运行脚本或一首完整弹唱。</p></div>
+            </div>
+            <div class="swap-row">
+              <div class="badge">C</div>
+              <div><strong>信用分保护体验</strong><p>迟到、取消、作业反馈都会进入下一次匹配权重。</p></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>信任机制</h2>
+            <div class="trust" aria-label="信任机制">
+              <div><strong>作品墙</strong><span>先看成果再约课</span></div>
+              <div><strong>互评</strong><span>教得清楚、学得认真</span></div>
+              <div><strong>押金</strong><span>爽约成本可选择开启</span></div>
+            </div>
+          </section>
+
+          <section class="card roadmap">
+            <div>
+              <h2>产品结构</h2>
+              <p>首版聚焦技能交换闭环，后续再扩展社群和变现。</p>
+            </div>
+            <div class="roadmap-item"><strong>技能发布与标签体系</strong><span class="status">MVP</span></div>
+            <div class="roadmap-item"><strong>匹配排序与交换计划</strong><span class="status">MVP</span></div>
+            <div class="roadmap-item"><strong>信用评价与作品沉淀</strong><span class="status">MVP</span></div>
+            <div class="roadmap-item"><strong>小班交换与付费补差</strong><span class="status">Next</span></div>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      const demos = [
+        {
+          skill: "Python 数据分析",
+          level: "入门到进阶",
+          time: "周末下午",
+          wish: "想换摄影构图或短视频剪辑，每周 1 次，4 周完成一个作品。",
+        },
+        {
+          skill: "民谣吉他入门",
+          level: "能独立完成项目",
+          time: "工作日晚上",
+          wish: "想换英语口语陪练，重点练面试表达和日常交流。",
+        },
+        {
+          skill: "手机摄影修图",
+          level: "入门到进阶",
+          time: "碎片时间 30 分钟",
+          wish: "想换 Notion 效率系统搭建，整理学习计划和项目资料。",
+        },
+      ];
+
+      const people = [
+        {
+          name: "林岚",
+          title: "品牌摄影师",
+          teach: "人像构图、自然光拍摄",
+          learn: "Python 自动整理图片",
+          score: 96,
+          note: "周末时间重合，目标都可用作品验收。",
+          initials: "LL",
+        },
+        {
+          name: "周亦",
+          title: "剪辑博主",
+          teach: "短视频脚本与剪辑节奏",
+          learn: "数据看板搭建",
+          score: 91,
+          note: "技能价值接近，可按 4 次课等价交换。",
+          initials: "ZY",
+        },
+        {
+          name: "陈默",
+          title: "后端工程师",
+          teach: "Python 项目拆解",
+          learn: "吉他弹唱",
+          score: 87,
+          note: "同城可线下，信用分高，履约稳定。",
+          initials: "CM",
+        },
+        {
+          name: "许诺",
+          title: "效率教练",
+          teach: "Notion 学习系统",
+          learn: "手机摄影修图",
+          score: 84,
+          note: "适合碎片时间，双方都需要轻量陪跑。",
+          initials: "XN",
+        },
+      ];
+
+      const matches = document.querySelector("#matches");
+      const toast = document.querySelector("#toast");
+      const form = document.querySelector("#skillForm");
+      const demoButton = document.querySelector("#fillDemo");
+      const modeButtons = document.querySelectorAll("[data-mode]");
+      let demoIndex = 0;
+      let mode = "teach";
+
+      function renderMatches(seed = "Python 数据分析") {
+        matches.innerHTML = people
+          .map((person, index) => {
+            const width = Math.max(72, person.score - index * 2);
+            return `
+              <article class="card match-card">
+                <div class="person">
+                  <div class="avatar">${person.initials}</div>
+                  <div>
+                    <h3>${person.name} · ${person.title}</h3>
+                    <p>${person.note}</p>
+                  </div>
+                </div>
+                <div class="skill-pair">
+                  <div class="skill-box"><small>对方能教</small><strong>${person.teach}</strong></div>
+                  <strong>⇄</strong>
+                  <div class="skill-box"><small>对方想学</small><strong>${index === 0 ? seed : person.learn}</strong></div>
+                </div>
+                <div class="score"><span>匹配度 ${person.score}%</span><span>${index < 2 ? "建议优先沟通" : "可加入候选"}</span></div>
+                <div class="bar" aria-hidden="true"><span style="width:${width}%"></span></div>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        window.clearTimeout(showToast.timer);
+        showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 2800);
+      }
+
+      modeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          mode = button.dataset.mode;
+          modeButtons.forEach((item) => item.classList.toggle("active", item === button));
+        });
+      });
+
+      demoButton.addEventListener("click", () => {
+        demoIndex = (demoIndex + 1) % demos.length;
+        const demo = demos[demoIndex];
+        document.querySelector("#skillName").value = demo.skill;
+        document.querySelector("#level").value = demo.level;
+        document.querySelector("#timeSlot").value = demo.time;
+        document.querySelector("#wish").value = demo.wish;
+        renderMatches(demo.skill);
+        showToast("已换成新的用户场景，匹配列表同步刷新。");
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const skill = document.querySelector("#skillName").value.trim() || "新技能";
+        renderMatches(skill);
+        showToast(`${mode === "teach" ? "教学" : "学习"}需求已生成：优先推荐时间重合、目标互补的人。`);
+      });
+
+      renderMatches();
+    </script>
+  </body>
+</html>
