@@ -174,9 +174,11 @@ function ensureExchangeModal() {
           <div class="choice-list" data-target-card-options></div>
         </section>
       </div>
-      <div class="draft-units">
-        <label>我的交换单位<select><option>30 分钟课程</option><option>1 次作品点评</option><option>1 个具体函数</option><option>1 个项目陪跑节点</option></select></label>
-        <label>希望对方交付<select><option>30 分钟课程</option><option>1 次作品点评</option><option>1 个作品项目</option><option>1 个具体函数</option></select></label>
+      <div class="draft-units split-units">
+        <label>我的交付数量<input value="30min" /></label>
+        <label>我的交付方式<select><option>课时</option><option>作业点评</option><option>其他交付</option></select></label>
+        <label>希望对方数量<input value="1次" /></label>
+        <label>希望对方方式<select><option>课时</option><option>作业点评</option><option>其他交付</option></select></label>
       </div>
       <label class="modal-note">补充说明<textarea placeholder="写清楚你想用这次交换完成什么，比如：我想做一个 5 秒循环动画，希望对方先讲分镜再看作业。"></textarea></label>
       <div class="modal-actions">
@@ -283,6 +285,8 @@ function initMyTabs() {
     toast("新的“我想学”技能卡已加入牌组，推荐会按这张卡更新。");
   });
   initMyModals();
+  initWorkRows();
+  initDeckDeletion();
 }
 
 function openSimpleModal(selector) {
@@ -348,12 +352,13 @@ function miniGameCard(card) {
 function funPairCard(card, index) {
   const wanted = myTeachCards[index % myTeachCards.length];
   return `
-    <article class="fun-pair-card" data-profile="${card.user}" data-card-title="${card.title}">
+    <article class="fun-pair-card" data-profile="${card.user}" data-card-title="${card.title}" data-card-meta="${card.meta}">
       <div class="fun-pair-head"><b>${card.user}</b><span>${card.score}% 匹配</span></div>
       <div class="fun-pair-body">
         <section><strong>对方提供</strong>${miniGameCard(card)}</section>
         <section><strong>对方想学</strong>${marketSkillCard("想换", wanted.name, wanted.scenes, "want")}</section>
       </div>
+      <button class="cart-add-button" type="button" data-add-cart="${card.user}">加入购物车</button>
     </article>
   `;
 }
@@ -366,14 +371,17 @@ function renderFunCards(offset = 0) {
   root.hidden = false;
   funUnlockedStage = "result";
   setFunStage("result");
-  document.querySelectorAll("[data-profile]").forEach((card) => {
-    card.addEventListener("click", () => {
-      const user = encodeURIComponent(card.dataset.profile);
-      location.href = `profile.html?user=${user}`;
+  document.querySelectorAll("[data-add-cart]").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      addToCart(button.closest("[data-profile]"));
     });
+  });
+  document.querySelectorAll("[data-profile]").forEach((card) => {
     card.addEventListener("mouseenter", () => showQuickApply(card.dataset.cardTitle));
     card.addEventListener("focus", () => showQuickApply(card.dataset.cardTitle));
   });
+  showCartButton();
   showQuickApply(cards[0].title);
 }
 
@@ -554,6 +562,89 @@ function initSummonCanvas() {
   });
 }
 
+
+const exchangeCart = [];
+
+function ensureCartModal() {
+  let modal = document.querySelector("[data-cart-modal]");
+  if (modal) return modal;
+  modal = document.createElement("section");
+  modal.className = "modal-backdrop";
+  modal.dataset.cartModal = "";
+  modal.hidden = true;
+  modal.innerHTML = `<div class="exchange-modal cart-modal"><div class="modal-head"><div><p class="eyebrow">Exchange Cart</p><h2>交换购物车</h2></div><button class="icon-button" type="button" data-close-cart>×</button></div><div class="cart-list" data-cart-list></div></div>`;
+  document.body.appendChild(modal);
+  modal.querySelector("[data-close-cart]").addEventListener("click", () => modal.hidden = true);
+  modal.addEventListener("click", (event) => { if (event.target === modal) modal.hidden = true; });
+  return modal;
+}
+
+function showCartButton() {
+  let button = document.querySelector("[data-open-cart]");
+  if (!button) {
+    button = document.createElement("button");
+    button.className = "floating-cart";
+    button.type = "button";
+    button.dataset.openCart = "";
+    button.innerHTML = `🛒<span data-cart-count>0</span>`;
+    document.body.appendChild(button);
+    button.addEventListener("click", () => {
+      const modal = ensureCartModal();
+      modal.querySelector("[data-cart-list]").innerHTML = exchangeCart.map((item) => `
+        <article class="cart-request-row">
+          <div class="cart-user"><b>${item.user}</b><span>${item.info}</span></div>
+          <div class="market-card-pair">
+            <section><strong>对方提供</strong>${marketSkillCard("提供", item.title, item.meta, "offer")}</section>
+            <section><strong>对方想学</strong>${marketSkillCard("想换", "Python 数据分析", "清洗订单数据 / 一页报告", "want")}</section>
+          </div>
+        </article>`).join("") || `<p class="empty-cart">还没有加入交换申请。</p>`;
+      modal.hidden = false;
+    });
+  }
+  button.hidden = false;
+  button.querySelector("[data-cart-count]").textContent = exchangeCart.length;
+}
+
+function addToCart(card) {
+  if (!card) return;
+  exchangeCart.push({ user: card.dataset.profile, title: card.dataset.cardTitle, meta: card.dataset.cardMeta || "技能交换" });
+  showCartButton();
+  toast(`${card.dataset.profile} 的交换申请已加入购物车。`);
+}
+
+function initWorkRows() {
+  document.querySelectorAll(".work-row").forEach((row) => {
+    const tabs = row.querySelectorAll(".work-tabs button");
+    const preview = row.querySelector(".work-preview");
+    tabs.forEach((tab) => tab.addEventListener("click", () => {
+      tabs.forEach((item) => item.classList.toggle("active", item === tab));
+      if (preview) preview.dataset.mode = tab.textContent.trim();
+      toast(`已切换到${tab.textContent.trim()}。`);
+    }));
+    row.querySelector(".work-row-head button")?.addEventListener("click", () => toast(`${row.querySelector("strong")?.textContent || "作品"}详情已打开。`));
+  });
+}
+
+function initDeckDeletion() {
+  let targetCard = null;
+  const modal = document.createElement("section");
+  modal.className = "modal-backdrop";
+  modal.dataset.deleteModal = "";
+  modal.hidden = true;
+  modal.innerHTML = `<div class="exchange-modal confirm-modal"><div class="modal-head"><div><p class="eyebrow">Delete Card</p><h2>确认删除这张卡牌？</h2></div></div><p>删除后该卡不会再出现在你的牌组示例中。</p><div class="modal-actions"><button class="ghost-action" type="button" data-cancel-delete>取消</button><button class="primary-action danger-action" type="button" data-confirm-delete>确认删除</button></div></div>`;
+  document.body.appendChild(modal);
+  document.querySelectorAll("[data-delete-card]").forEach((button) => button.addEventListener("click", (event) => {
+    event.preventDefault(); event.stopPropagation();
+    targetCard = button.closest(".game-card");
+    modal.hidden = false;
+  }));
+  modal.querySelector("[data-cancel-delete]").addEventListener("click", () => modal.hidden = true);
+  modal.querySelector("[data-confirm-delete]").addEventListener("click", () => {
+    targetCard?.remove();
+    modal.hidden = true;
+    toast("卡牌已删除。");
+  });
+}
 function initMessages() {
   const cats = document.querySelectorAll("[data-message-cat]");
   cats.forEach((cat) => {
@@ -595,7 +686,10 @@ function initMessages() {
 
 function initProfilePage() {
   const nameEl = document.querySelector("[data-profile-name]");
-  if (!nameEl) return;
+  if (!nameEl) {
+    document.querySelectorAll("[data-profile-apply]").forEach((button) => button.addEventListener("click", () => toast("已发起交换申请。")));
+    return;
+  }
   const user = new URLSearchParams(location.search).get("user") || "林岚";
   nameEl.textContent = user;
   document.querySelector("[data-profile-avatar]").textContent = user.slice(0, 1);
@@ -607,6 +701,11 @@ initMarket();
 initMyTabs();
 initMessages();
 initProfilePage();
+initWorkRows();
+
+
+
+
 
 
 
