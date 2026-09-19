@@ -141,6 +141,25 @@
           <button class="primary-action add-request-button" data-open-request-modal>+ 新增需求</button>
         </div>
         <div class="battle-log">
+          <article class="battle-record pending-request-record">
+            <div class="battle-side pending-side">
+              <span>递出</span>
+              <div class="pending-card-slot">待确认递出卡牌</div>
+            </div>
+            <div class="battle-mid">
+              <b>陈同学 → 待接单</b>
+              <span>单独发出：想换 咖啡拉花 · 作业点评</span>
+              <em>已发布 · 等待有人选择递出卡牌</em>
+            </div>
+            <div class="battle-side receive">
+              <span>收到</span>
+              <article class="game-card micro art-coffee rarity-elite">
+                <div class="game-card-top"><b>精英</b><span>应用</span></div>
+                <div class="game-card-art"></div>
+              </article>
+            </div>
+          </article>
+
           <article class="battle-record">
             <div class="battle-side">
               <span>递出</span>
@@ -275,6 +294,18 @@
       </section>
 
       <section class="my-panel" data-tab-panel="favorites">
+        <div class="favorites-head">
+          <div>
+            <p class="eyebrow">Saved Exchanges</p>
+            <h2>我的收藏</h2>
+          </div>
+          <div class="favorite-stats" aria-label="我的信用概览">
+            <span><b>96</b>信用分</span>
+            <span><b>18</b>完成交换</span>
+            <span><b>4.9</b>平均评分</span>
+            <span><b>7</b>发布中</span>
+          </div>
+        </div>
         <div class="favorites-board">
           <article class="exchange-card compact-exchange-card">
             <div class="exchange-card-head"><div class="user-line"><div class="avatar">林</div><div><b>林岚</b><span>品牌摄影师</span></div></div><span class="tag">热度 96</span></div>
@@ -282,6 +313,7 @@
               <section><strong>我会</strong><article class="game-card market-skill-card art-photo rarity-elite"><div class="game-card-top"><b>大师</b><span>应用</span></div><div class="game-card-art"></div><div class="game-card-body"><h3>手机摄影构图</h3><p>人像构图 / 自然光 / 修图方向</p></div></article></section>
               <section><strong>我想学</strong><article class="game-card market-skill-card art-anime rarity-apprentice want-kind"><div class="game-card-top"><b>学徒</b><span>应用</span></div><div class="game-card-art"></div><div class="game-card-body"><h3>动漫制作</h3><p>角色分镜 / 5 秒循环动画</p></div></article></section>
             </div>
+            <a class="ghost-action favorite-detail" href="skill-detail.html?user=%E6%9E%97%E5%B2%9A&skill=%E6%89%8B%E6%9C%BA%E6%91%84%E5%BD%B1%E6%9E%84%E5%9B%BE">查看详情</a>
           </article>
           <article class="exchange-card compact-exchange-card">
             <div class="exchange-card-head"><div class="user-line"><div class="avatar">周</div><div><b>周亦</b><span>剪辑博主</span></div></div><span class="tag">热度 92</span></div>
@@ -289,6 +321,7 @@
               <section><strong>我会</strong><article class="game-card market-skill-card art-video rarity-elite"><div class="game-card-top"><b>大师</b><span>应用</span></div><div class="game-card-art"></div><div class="game-card-body"><h3>短视频剪辑</h3><p>开头钩子 / 镜头节奏</p></div></article></section>
               <section><strong>我想学</strong><article class="game-card market-skill-card art-python rarity-apprentice want-kind"><div class="game-card-top"><b>学徒</b><span>应用</span></div><div class="game-card-art"></div><div class="game-card-body"><h3>Python 数据分析</h3><p>清洗订单数据 / 一页报告</p></div></article></section>
             </div>
+            <a class="ghost-action favorite-detail" href="skill-detail.html?user=%E5%91%A8%E4%BA%A6&skill=%E7%9F%AD%E8%A7%86%E9%A2%91%E5%89%AA%E8%BE%91">查看详情</a>
           </article>
         </div>
       </section>
@@ -342,9 +375,29 @@
           <div><p class="eyebrow">New Request</p><h2>新增交换需求</h2></div>
           <button class="icon-button" type="button" data-close-request-modal aria-label="关闭">×</button>
         </div>
-        <div class="modal-grid">
-          <label>选择我递出的卡牌<select><option>Python 数据分析 · 30min</option><option>PPT 结构化表达 · 作品点评</option><option>Excel 函数自动化 · 具体函数</option></select></label>
-          <label>想换的标准技能<select><option>动漫制作</option><option>手机摄影构图</option><option>短视频剪辑</option><option>英语口语表达</option></select></label>
+        <div class="request-visual-grid">
+          <section>
+            <h3>选择我递出的卡牌</h3>
+            <label class="visual-skill-option">
+              <input type="radio" name="request-offer" checked />
+              <article class="game-card modal-skill-card art-python rarity-master">
+                <div class="game-card-top"><b>大师</b><span>应用</span></div>
+                <div class="game-card-art"></div>
+                <div class="game-card-body"><h3>Python 数据分析</h3><p>清洗订单数据 / 一页报告</p></div>
+              </article>
+            </label>
+          </section>
+          <section>
+            <h3>想换的技能牌</h3>
+            <label class="visual-skill-option">
+              <input type="radio" name="request-want" checked />
+              <article class="game-card modal-skill-card art-coffee rarity-elite">
+                <div class="game-card-top"><b>精英</b><span>应用</span></div>
+                <div class="game-card-art"></div>
+                <div class="game-card-body"><h3>咖啡拉花</h3><p>打奶泡 / 心形 / 出杯</p></div>
+              </article>
+            </label>
+          </section>
         </div>
         <label class="modal-note">具体卡牌信息<textarea>希望交换到：1 个 5 秒循环动画，从分镜到关键帧点评。</textarea></label>
         <button class="primary-action" type="submit">发布到我的交换需求</button>
