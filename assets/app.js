@@ -189,7 +189,10 @@ function initMarket() {
       document.querySelectorAll("[data-market-view]").forEach((item) => item.classList.toggle("active", item === button));
       document.querySelector("[data-classic-market]").hidden = isFun;
       document.querySelector("[data-fun-market]").hidden = !isFun;
-      if (isFun) initFunChat();
+      if (isFun) {
+        initFunChat();
+        setFunStage("chat");
+      }
     });
   });
   tabs.forEach((tab) => {
@@ -294,6 +297,8 @@ function renderFunCards(offset = 0) {
   root.querySelector(".top-row").innerHTML = cards.slice(0, 5).map(miniGameCard).join("");
   root.querySelector(".bottom-row").innerHTML = cards.slice(5).map(miniGameCard).join("");
   root.hidden = false;
+  funUnlockedStage = "result";
+  setFunStage("result");
   document.querySelectorAll("[data-profile]").forEach((card) => {
     card.addEventListener("click", () => {
       const user = encodeURIComponent(card.dataset.profile);
@@ -315,6 +320,7 @@ const funSteps = [
 
 let funStepIndex = 0;
 let funChatStarted = false;
+let funUnlockedStage = "chat";
 
 function addFunMessage(text, who = "assistant") {
   const chat = document.querySelector("[data-fun-chat]");
@@ -333,7 +339,8 @@ function renderFunQuestion() {
   if (!step) {
     addFunMessage("收到。现在请在圆台上画下你这次交换的心情，然后开始抽卡。");
     choices.innerHTML = "";
-    document.querySelector("[data-summon-step]").hidden = false;
+    funUnlockedStage = "draw";
+    setFunStage("draw");
     document.querySelector("[data-fun-results]").hidden = true;
     return;
   }
@@ -355,7 +362,30 @@ function initFunChat() {
   if (!funChatStarted) {
     funChatStarted = true;
     renderFunQuestion();
+    document.querySelectorAll("[data-axis-step]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.axisStep;
+        if (target === "draw" && funUnlockedStage === "chat") return toast("先回答完小精灵的问题。");
+        if (target === "result" && funUnlockedStage !== "result") return toast("先完成抽卡，才能查看结果。");
+        setFunStage(target);
+      });
+    });
   }
+}
+
+function setFunStage(stage) {
+  const chat = document.querySelector("[data-chat-step]");
+  const draw = document.querySelector("[data-draw-step]");
+  const result = document.querySelector("[data-result-step]");
+  if (!chat || !draw || !result) return;
+  chat.hidden = stage !== "chat";
+  draw.hidden = stage !== "draw";
+  result.hidden = stage !== "result";
+  const order = ["chat", "draw", "result"];
+  document.querySelectorAll("[data-axis-step]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.axisStep === stage);
+    button.classList.toggle("done", order.indexOf(button.dataset.axisStep) < order.indexOf(funUnlockedStage));
+  });
 }
 
 function showQuickApply(title) {
@@ -450,6 +480,8 @@ function initSummonCanvas() {
     drawBase();
     document.querySelector("[data-fun-results]").hidden = true;
     document.querySelector("[data-quick-apply]").hidden = true;
+    funUnlockedStage = "draw";
+    setFunStage("draw");
     toast("圆台已重置，画几笔后可以重新抽卡。");
   });
 }
@@ -469,14 +501,18 @@ function initMessages() {
       document.querySelectorAll("[data-chat]").forEach((item) => item.classList.toggle("active", item === chat));
       const name = chat.querySelector("b").textContent;
       document.querySelector("[data-thread-name]").textContent = name;
-      document.querySelector("[data-thread-subtitle]").textContent = name === "林岚" ? "摄影、剪辑 ⇄ 动漫制作" : "交换申请沟通中";
-      document.querySelector("[data-draft-form]").hidden = true;
-      document.querySelector("[data-detail-default]").hidden = false;
+      document.querySelector("[data-thread-subtitle]").textContent = name === "林岚" ? "陈同学的 Python 数据分析卡 ⇄ 林岚的动漫制作卡" : "交换申请沟通中";
+      document.querySelector("[data-ai-summary-entry]").hidden = false;
+      document.querySelector("[data-detail-content]").hidden = true;
     });
   });
   document.querySelector("[data-open-draft]")?.addEventListener("click", () => {
-    document.querySelector("[data-detail-default]").hidden = true;
-    document.querySelector("[data-draft-form]").hidden = false;
+    document.querySelector("[data-ai-summary-entry]").hidden = true;
+    document.querySelector("[data-detail-content]").hidden = false;
+  });
+  document.querySelector("[data-ai-summary-entry]")?.addEventListener("click", () => {
+    document.querySelector("[data-ai-summary-entry]").hidden = true;
+    document.querySelector("[data-detail-content]").hidden = false;
   });
   document.querySelector("[data-draft-form]")?.addEventListener("submit", (event) => {
     event.preventDefault();
