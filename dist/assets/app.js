@@ -189,7 +189,7 @@ function initMarket() {
       document.querySelectorAll("[data-market-view]").forEach((item) => item.classList.toggle("active", item === button));
       document.querySelector("[data-classic-market]").hidden = isFun;
       document.querySelector("[data-fun-market]").hidden = !isFun;
-      if (isFun) renderFunCards();
+      if (isFun) initFunChat();
     });
   });
   tabs.forEach((tab) => {
@@ -248,6 +248,7 @@ function initMyModals() {
     closeSimpleModal("[data-card-modal]");
     toast("新的技能牌已加入我的牌组。");
   });
+  document.querySelector("[data-evaluate-card]")?.addEventListener("click", evaluateCardForge);
   document.querySelector("[data-open-request-modal]")?.addEventListener("click", () => openSimpleModal("[data-request-modal]"));
   document.querySelector("[data-close-request-modal]")?.addEventListener("click", () => closeSimpleModal("[data-request-modal]"));
   document.querySelector("[data-request-modal]")?.addEventListener("click", (event) => {
@@ -261,27 +262,27 @@ function initMyModals() {
 }
 
 const funCardPool = [
-  { art: "art-anime", title: "动漫制作", meta: "5 秒循环动画", score: 98, rarity: "rarity-legend" },
-  { art: "art-photo", title: "手机摄影构图", meta: "人像与自然光", score: 93, rarity: "rarity-rare" },
-  { art: "art-video", title: "短视频剪辑", meta: "开头节奏优化", score: 91, rarity: "rarity-epic" },
-  { art: "art-python", title: "Python 数据分析", meta: "一页报告", score: 89, rarity: "rarity-legend" },
-  { art: "art-ppt", title: "PPT 结构表达", meta: "路演叙事", score: 87, rarity: "rarity-rare" },
-  { art: "art-excel", title: "Excel 自动化", meta: "具体函数", score: 84, rarity: "rarity-rare" },
-  { art: "art-video", title: "脚本结构", meta: "选题拆解", score: 82, rarity: "rarity-epic" },
-  { art: "art-photo", title: "作品点评", meta: "拍摄复盘", score: 80, rarity: "rarity-rare" },
-  { art: "art-anime", title: "分镜设计", meta: "关键帧点评", score: 79, rarity: "rarity-legend" },
-  { art: "art-python", title: "数据看板", meta: "入门搭建", score: 77, rarity: "rarity-epic" },
-  { art: "art-ppt", title: "视觉排版", meta: "一页改稿", score: 74, rarity: "rarity-rare" },
-  { art: "art-excel", title: "批量整理", meta: "表格效率", score: 72, rarity: "rarity-rare" },
+  { art: "art-anime", title: "动漫制作", meta: "5 秒循环动画", score: 98, rarity: "rarity-legend", rank: "传说", type: "应用", user: "林岚" },
+  { art: "art-photo", title: "手机摄影构图", meta: "人像与自然光", score: 93, rarity: "rarity-master", rank: "大师", type: "理论+应用", user: "许诺" },
+  { art: "art-video", title: "短视频剪辑", meta: "开头节奏优化", score: 91, rarity: "rarity-master", rank: "大师", type: "应用", user: "周亦" },
+  { art: "art-python", title: "Python 数据分析", meta: "一页报告", score: 89, rarity: "rarity-elite", rank: "精英", type: "应用", user: "陈默" },
+  { art: "art-ppt", title: "PPT 结构表达", meta: "路演叙事", score: 87, rarity: "rarity-elite", rank: "精英", type: "理论", user: "高晴" },
+  { art: "art-excel", title: "Excel 自动化", meta: "具体函数", score: 84, rarity: "rarity-elite", rank: "精英", type: "应用", user: "韩知" },
+  { art: "art-video", title: "脚本结构", meta: "选题拆解", score: 82, rarity: "rarity-elite", rank: "精英", type: "理论", user: "周亦" },
+  { art: "art-photo", title: "作品点评", meta: "拍摄复盘", score: 80, rarity: "rarity-apprentice", rank: "学徒", type: "应用", user: "袁野" },
+  { art: "art-anime", title: "分镜设计", meta: "关键帧点评", score: 79, rarity: "rarity-master", rank: "大师", type: "理论+应用", user: "林岚" },
+  { art: "art-python", title: "数据看板", meta: "入门搭建", score: 77, rarity: "rarity-elite", rank: "精英", type: "应用", user: "陈默" },
+  { art: "art-ppt", title: "视觉排版", meta: "一页改稿", score: 74, rarity: "rarity-apprentice", rank: "学徒", type: "应用", user: "韩知" },
+  { art: "art-excel", title: "批量整理", meta: "表格效率", score: 72, rarity: "rarity-apprentice", rank: "学徒", type: "应用", user: "高晴" },
 ];
 
 function miniGameCard(card) {
   return `
-    <article class="game-card mini ${card.art} ${card.rarity}">
-      <div class="game-card-top"><b>${Math.max(3, Math.round(card.score / 14))}</b><span>${card.score}%</span></div>
+    <article class="game-card mini ${card.art} ${card.rarity}" data-profile="${card.user}" data-card-title="${card.title}">
+      <div class="game-card-top"><b>${card.rank}</b><span>${card.type}</span></div>
       <div class="game-card-art"></div>
       <div class="game-card-body"><h3>${card.title}</h3><p>${card.meta}</p></div>
-      <div class="game-card-foot"><span>推荐</span><strong>申请</strong></div>
+      <div class="game-card-foot"><span>${card.score}% 匹配</span><strong>${card.user}</strong></div>
     </article>
   `;
 }
@@ -292,6 +293,101 @@ function renderFunCards(offset = 0) {
   const cards = Array.from({ length: 10 }, (_, index) => funCardPool[(index + offset) % funCardPool.length]);
   root.querySelector(".top-row").innerHTML = cards.slice(0, 5).map(miniGameCard).join("");
   root.querySelector(".bottom-row").innerHTML = cards.slice(5).map(miniGameCard).join("");
+  root.hidden = false;
+  document.querySelectorAll("[data-profile]").forEach((card) => {
+    card.addEventListener("click", () => {
+      const user = encodeURIComponent(card.dataset.profile);
+      location.href = `profile.html?user=${user}`;
+    });
+    card.addEventListener("mouseenter", () => showQuickApply(card.dataset.cardTitle));
+    card.addEventListener("focus", () => showQuickApply(card.dataset.cardTitle));
+  });
+  showQuickApply(cards[0].title);
+}
+
+const funSteps = [
+  { q: "你这次最想换到哪类技能？", options: ["动漫制作", "手机摄影构图", "短视频剪辑", "英语口语表达"] },
+  { q: "你愿意递出哪张自己的卡？", options: ["Python 数据分析", "PPT 结构化表达", "Excel 函数自动化"] },
+  { q: "你更偏好的交换方式是？", options: ["线上", "同城线下", "都可以"] },
+  { q: "你这次适合什么时间？", options: ["周末下午", "工作日晚上", "灵活约"] },
+  { q: "想要的难度大概是？", options: ["入门陪跑", "进阶突破", "作品级交付"] },
+];
+
+let funStepIndex = 0;
+let funChatStarted = false;
+
+function addFunMessage(text, who = "assistant") {
+  const chat = document.querySelector("[data-fun-chat]");
+  if (!chat) return;
+  const message = document.createElement("div");
+  message.className = `chat-message ${who}`;
+  message.textContent = text;
+  chat.appendChild(message);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function renderFunQuestion() {
+  const choices = document.querySelector("[data-fun-choices]");
+  if (!choices) return;
+  const step = funSteps[funStepIndex];
+  if (!step) {
+    addFunMessage("收到。现在请在圆台上画下你这次交换的心情，然后开始抽卡。");
+    choices.innerHTML = "";
+    document.querySelector("[data-summon-step]").hidden = false;
+    document.querySelector("[data-fun-results]").hidden = true;
+    return;
+  }
+  addFunMessage(step.q);
+  choices.innerHTML = step.options.map((option) => `<button type="button" data-fun-answer="${option}">${option}</button>`).join("");
+  choices.querySelectorAll("[data-fun-answer]").forEach((button) => {
+    button.addEventListener("click", () => acceptFunAnswer(button.dataset.funAnswer));
+  });
+}
+
+function acceptFunAnswer(answer) {
+  if (!answer.trim()) return;
+  addFunMessage(answer, "user");
+  funStepIndex += 1;
+  renderFunQuestion();
+}
+
+function initFunChat() {
+  if (!funChatStarted) {
+    funChatStarted = true;
+    renderFunQuestion();
+  }
+}
+
+function showQuickApply(title) {
+  const quick = document.querySelector("[data-quick-apply]");
+  if (!quick) return;
+  quick.hidden = false;
+  quick.querySelector("[data-quick-title]").textContent = title;
+}
+
+function evaluateCardForge() {
+  const years = Number(document.querySelector("[data-years-input]")?.value || 0);
+  const uses = Number(document.querySelector("[data-uses-input]")?.value || 0);
+  const works = Number(document.querySelector("[data-work-input]")?.value || 0);
+  const type = document.querySelector("[data-card-type-input]")?.value || "应用";
+  const skill = document.querySelector("[data-skill-input]")?.value || "新技能";
+  const score = years * 22 + Math.min(uses, 80) * 0.8 + works * 14;
+  let rank = "学徒";
+  let rarity = "rarity-apprentice";
+  if (score >= 120) { rank = "传说"; rarity = "rarity-legend"; }
+  else if (score >= 82) { rank = "大师"; rarity = "rarity-master"; }
+  else if (score >= 42) { rank = "精英"; rarity = "rarity-elite"; }
+  const card = document.querySelector("[data-forge-preview] .game-card");
+  card.classList.remove("blank-card", "rarity-apprentice", "rarity-elite", "rarity-master", "rarity-legend");
+  card.classList.add(rarity);
+  document.querySelector("[data-forge-rank]").textContent = rank;
+  document.querySelector("[data-forge-type]").textContent = type;
+  document.querySelector("[data-forge-title]").textContent = skill;
+  document.querySelector("[data-forge-copy]").textContent = `临时评分 ${Math.round(score)}：综合年限、使用次数和作品数后，卡牌完成锻造。`;
+  document.querySelector("[data-forge-years]").textContent = `${years} 年`;
+  document.querySelector("[data-forge-proof]").textContent = `${works} 作品`;
+  document.querySelector("[data-forge-status]").textContent = "已锻造";
+  document.querySelector("[data-forge-log]").innerHTML = `<b>AI 评估过程</b><span>读取年限 ${years} 年、使用 ${uses} 次、作品 ${works} 个。</span><span>评估稳定度与可交换边界。</span><span>锻造结果：${rank} · ${type}。</span>`;
 }
 
 function initSummonCanvas() {
@@ -332,6 +428,17 @@ function initSummonCanvas() {
   window.addEventListener("pointerup", () => {
     drawing = false;
   });
+  document.querySelector("[data-fun-custom-send]")?.addEventListener("click", () => {
+    const input = document.querySelector("[data-fun-custom]");
+    acceptFunAnswer(input.value);
+    input.value = "";
+  });
+  document.querySelector("[data-fun-custom]")?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.querySelector("[data-fun-custom-send]")?.click();
+    }
+  });
   document.querySelector("[data-draw-cards]")?.addEventListener("click", () => renderFunCards(offset));
   document.querySelector("[data-shuffle-cards]")?.addEventListener("click", () => {
     offset = (offset + 3) % funCardPool.length;
@@ -341,8 +448,9 @@ function initSummonCanvas() {
   document.querySelector("[data-reset-draw]")?.addEventListener("click", () => {
     offset = 0;
     drawBase();
-    renderFunCards(offset);
-    toast("圆台已重置，可以重新抽卡。");
+    document.querySelector("[data-fun-results]").hidden = true;
+    document.querySelector("[data-quick-apply]").hidden = true;
+    toast("圆台已重置，画几笔后可以重新抽卡。");
   });
 }
 
@@ -376,6 +484,17 @@ function initMessages() {
   });
 }
 
+function initProfilePage() {
+  const nameEl = document.querySelector("[data-profile-name]");
+  if (!nameEl) return;
+  const user = new URLSearchParams(location.search).get("user") || "林岚";
+  nameEl.textContent = user;
+  document.querySelector("[data-profile-avatar]").textContent = user.slice(0, 1);
+  document.querySelector("[data-profile-summary]").textContent = `${user} 的技能主页。你可以先看对方卡牌、作品证明和交换偏好，再决定是否申请交换。`;
+  document.querySelector("[data-profile-apply]")?.addEventListener("click", () => toast(`已向 ${user} 发起交换申请。`));
+}
+
 initMarket();
 initMyTabs();
 initMessages();
+initProfilePage();
