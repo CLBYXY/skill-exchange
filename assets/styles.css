@@ -223,7 +223,7 @@ h1, h2, h3, p { margin-top: 0; }
 .swap-box strong { font-size: 1.18rem; line-height: 1.35; }
 .exchange-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; color: var(--muted); font-size: 0.88rem; }
 .exchange-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.ghost-action { min-height: 38px; border: 1px solid var(--line); border-radius: var(--radius); padding: 0 12px; background: #fff; color: var(--mint-dark); font-weight: 900; }
+.ghost-action { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; border: 1px solid var(--line); border-radius: var(--radius); padding: 0 12px; background: #fff; color: var(--mint-dark); font-weight: 900; }
 
 .general-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: center; padding: 18px; margin-bottom: 16px; }
 .user-block { display: flex; gap: 14px; align-items: center; }
@@ -367,6 +367,12 @@ h1, h2, h3, p { margin-top: 0; }
 .art-photo .game-card-art { background-position: 0% 100%; }
 .art-video .game-card-art { background-position: 50% 100%; }
 .art-anime .game-card-art { background-position: 100% 100%; }
+.art-guitar .game-card-art { background-position: 100% 100%; filter: hue-rotate(24deg) saturate(1.16) brightness(0.96); }
+.art-coffee .game-card-art { background-position: 0% 100%; filter: sepia(0.42) hue-rotate(-18deg) saturate(1.18); }
+.art-web .game-card-art { background-position: 100% 0%; filter: hue-rotate(42deg) saturate(1.14); }
+.art-design .game-card-art { background-position: 50% 0%; filter: hue-rotate(-22deg) saturate(1.2); }
+.art-speech .game-card-art { background-position: 50% 100%; filter: hue-rotate(78deg) saturate(0.96) brightness(1.04); }
+.art-notion .game-card-art { background-position: 0% 0%; filter: grayscale(0.28) contrast(1.08) brightness(1.02); }
 .game-card-body {
   position: relative;
   z-index: 1;
@@ -535,6 +541,21 @@ h1, h2, h3, p { margin-top: 0; }
 .game-card.micro .game-card-art { margin: 0; border-radius: 6px; }
 .game-card.micro .game-card-body,
 .game-card.micro .game-card-foot { display: none; }
+.pending-card-slot {
+  display: grid;
+  width: 92px;
+  min-height: 138px;
+  place-items: center;
+  padding: 10px;
+  border: 2px dashed #c7d8d3;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.62);
+  color: #728389;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+.pending-request-record { border-style: dashed; }
 .profile-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 320px;
@@ -1070,18 +1091,6 @@ h1, h2, h3, p { margin-top: 0; }
   padding: 7px;
   border-radius: 12px;
 }
-.market-skill-card .market-card-label {
-  position: absolute;
-  left: 10px;
-  top: 46px;
-  z-index: 4;
-  padding: 4px 8px;
-  border-radius: 999px;
-  background: rgba(255, 232, 168, 0.95);
-  color: #211710;
-  font-size: 0.68rem;
-  font-weight: 900;
-}
 .market-skill-card .game-card-art { min-height: 128px; margin: 0 0 6px; border-radius: 8px; }
 .market-skill-card .game-card-body { padding: 8px; }
 .market-skill-card .game-card-body h3 { font-size: 0.95rem; margin-bottom: 4px; }
@@ -1169,6 +1178,12 @@ h1, h2, h3, p { margin-top: 0; }
 .fun-pair-card { padding: 12px; }
 .fun-pair-body .game-card { min-height: 190px; }
 .fun-pair-body .game-card-art { min-height: 86px; }
+.fun-pair-actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
 .cart-add-button {
   min-height: 36px;
   border: 0;
@@ -1177,6 +1192,12 @@ h1, h2, h3, p { margin-top: 0; }
   color: #082922;
   font-weight: 900;
 }
+.request-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.request-visual-grid h3 { margin: 0 0 8px; font-size: 1rem; }
 .floating-cart {
   position: fixed;
   right: 22px;
@@ -1215,8 +1236,15 @@ h1, h2, h3, p { margin-top: 0; }
   border-radius: var(--radius);
   background: #fff;
 }
-.cart-user { display: flex; justify-content: space-between; gap: 12px; }
-.cart-user span { color: var(--muted); }
+.cart-user { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
+.cart-user span, .cart-user em { color: var(--muted); font-style: normal; }
+.cart-request-row .market-card-pair { grid-template-columns: repeat(2, minmax(0, 140px)); justify-content: start; }
+.cart-request-row .market-skill-card { min-height: 138px; }
+.cart-request-row .market-skill-card .game-card-art { min-height: 58px; }
+.cart-request-row .market-skill-card .game-card-body { padding: 6px; }
+.cart-request-row .market-skill-card .game-card-body h3 { font-size: 0.75rem; }
+.cart-request-row .market-skill-card .game-card-body p { font-size: 0.64rem; }
+.cart-detail-button { justify-self: end; min-height: 34px; }
 .empty-cart { color: var(--muted); }
 .split-units {
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1252,6 +1280,31 @@ h1, h2, h3, p { margin-top: 0; }
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
+.favorites-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+.favorites-head h2 { margin: 0; }
+.favorite-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(82px, 1fr));
+  gap: 8px;
+}
+.favorite-stats span {
+  display: grid;
+  gap: 2px;
+  min-height: 58px;
+  padding: 9px 12px;
+  border-radius: var(--radius);
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+.favorite-stats b { color: var(--ink); font-size: 1.2rem; }
+.favorite-detail { margin-top: 12px; min-height: 34px; width: max-content; }
 .profile-work-only { padding-top: 24px; }
 .profile-skill-list .work-row {
   grid-template-columns: 112px minmax(0, 1fr);
@@ -1261,7 +1314,69 @@ h1, h2, h3, p { margin-top: 0; }
   min-height: 148px;
 }
 .work-preview[data-mode="课程评价"] span:first-child::before { content: "评价："; }
+.skill-detail-page { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 26px 0 44px; }
+.skill-detail-shell {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+.detail-hero-card { min-height: 480px; }
+.detail-content-card {
+  min-height: 480px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.9);
+  box-shadow: var(--shadow);
+}
+.detail-title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 14px;
+}
+.detail-title-row h1 { margin-bottom: 6px; }
+.detail-user-card {
+  display: grid;
+  gap: 4px;
+  min-width: 180px;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: var(--soft);
+}
+.detail-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.detail-tabs button {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 14px;
+  background: #fff;
+  font-weight: 900;
+}
+.detail-tabs button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.detail-panel { display: none; }
+.detail-panel.active { display: grid; gap: 12px; }
+.proof-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.proof-card, .review-card {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+.proof-card b, .proof-card span, .review-card b, .review-card span { display: block; }
+.proof-card span, .review-card p { color: var(--muted); line-height: 1.55; }
+.review-list { display: grid; gap: 12px; }
+.review-card { display: grid; gap: 8px; }
+.review-top { display: flex; justify-content: space-between; gap: 12px; }
+.stars { color: #f5b934; letter-spacing: 1px; font-weight: 900; }
 @media (max-width: 760px) {
-  .recommend-row, .favorites-board, .split-units { grid-template-columns: 1fr; }
+  .recommend-row, .favorites-board, .split-units, .request-visual-grid, .skill-detail-shell, .proof-grid, .favorite-stats { grid-template-columns: 1fr; }
+  .favorites-head, .detail-title-row { flex-direction: column; align-items: stretch; }
   .floating-cart { right: 14px; bottom: 14px; }
 }
