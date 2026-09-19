@@ -31,15 +31,16 @@
           <h1>技能交换市场</h1>
           <p>一个框就是一个交换需求。先看对方会什么、想换什么，再决定是否发起交换申请。</p>
         </div>
-        <div class="market-summary">
-          <strong>126</strong>
-          <span>今日新增交换需求</span>
+        <div class="market-title-actions">
+          <section class="play-mode-switch" aria-label="体验模式切换">
+            <button class="active" data-market-view="classic">经典模式</button>
+            <button data-market-view="fun">趣味模式</button>
+          </section>
+          <div class="market-summary">
+            <strong>126</strong>
+            <span>今日新增交换需求</span>
+          </div>
         </div>
-      </section>
-
-      <section class="play-mode-switch" aria-label="体验模式切换">
-        <button class="active" data-market-view="classic">经典模式</button>
-        <button data-market-view="fun">趣味模式</button>
       </section>
 
       <div data-classic-market>
@@ -53,6 +54,7 @@
         <section class="feed-layout">
           <aside class="filter-panel">
             <h2>筛选</h2>
+            <label>我的交换<select data-filter-request><option value="all">不限</option><option value="req-anime">Python 数据分析 → 动漫制作</option><option value="req-video">PPT 结构化表达 → 短视频剪辑</option><option value="req-coffee">待确认递出卡牌 → 咖啡拉花</option></select></label>
             <label>交换方式<select data-filter-type><option value="all">不限</option><option value="online">线上</option><option value="offline">线下</option></select></label>
             <label>时间<select data-filter-time><option value="all">不限</option><option value="weekend">周末</option><option value="weekday">工作日</option></select></label>
             <label>难度<select><option>不限</option><option>入门</option><option>进阶</option><option>作品级</option></select></label>
