@@ -57,10 +57,10 @@ function userStats(item, label = "热度") {
   return `
     <div class="user-stat-pack" aria-label="${item.user || "用户"}信用概览">
       <span class="tag">${label} ${heat}</span>
-      <span><b>${heat}</b>信用分</span>
-      <span><b>${done}</b>完成交换</span>
-      <span><b>${rating}</b>平均评分</span>
-      <span><b>${published}</b>${label === "匹配" ? "作品证明" : "发布中"}</span>
+      <span><b>${heat}</b> 信用分</span>
+      <span><b>${done}</b> 完成交换</span>
+      <span><b>${rating}</b> 平均评分</span>
+      <span><b>${published}</b> ${label === "匹配" ? "作品证明" : "发布中"}</span>
     </div>
   `;
 }
@@ -339,9 +339,10 @@ function initMarket() {
     });
   });
   document.querySelector("[data-search]")?.addEventListener("input", () => renderMarket(current));
-  document.querySelector("[data-filter-type]")?.addEventListener("change", () => renderMarket(current));
-  document.querySelector("[data-filter-time]")?.addEventListener("change", () => renderMarket(current));
-  document.querySelector("[data-filter-request]")?.addEventListener("change", () => renderMarket(current));
+  document.querySelector("[data-apply-filters]")?.addEventListener("click", () => {
+    renderMarket(current);
+    toast("筛选条件已应用。");
+  });
   renderMarket(current);
   initSummonCanvas();
 }
@@ -366,7 +367,7 @@ function initMyTabs() {
   });
   initMyModals();
   initWorkRows();
-  initDeckDeletion();
+  initDeckManagement();
 }
 
 function openSimpleModal(selector) {
@@ -736,24 +737,22 @@ function initWorkRows() {
   });
 }
 
-function initDeckDeletion() {
-  let targetCard = null;
-  const modal = document.createElement("section");
-  modal.className = "modal-backdrop";
-  modal.dataset.deleteModal = "";
-  modal.hidden = true;
-  modal.innerHTML = `<div class="exchange-modal confirm-modal"><div class="modal-head"><div><p class="eyebrow">Delete Card</p><h2>确认删除这张卡牌？</h2></div></div><p>删除后该卡不会再出现在你的牌组示例中。</p><div class="modal-actions"><button class="ghost-action" type="button" data-cancel-delete>取消</button><button class="primary-action danger-action" type="button" data-confirm-delete>确认删除</button></div></div>`;
-  document.body.appendChild(modal);
-  document.querySelectorAll("[data-delete-card]").forEach((button) => button.addEventListener("click", (event) => {
-    event.preventDefault(); event.stopPropagation();
-    targetCard = button.closest(".game-card");
-    modal.hidden = false;
-  }));
-  modal.querySelector("[data-cancel-delete]").addEventListener("click", () => modal.hidden = true);
-  modal.querySelector("[data-confirm-delete]").addEventListener("click", () => {
-    targetCard?.remove();
-    modal.hidden = true;
-    toast("卡牌已删除。");
+function initDeckManagement() {
+  const button = document.querySelector("[data-manage-deck]");
+  const board = document.querySelector(".deck-board");
+  if (!button || !board) return;
+  button.addEventListener("click", () => {
+    const active = board.classList.toggle("deck-managing");
+    button.classList.toggle("active", active);
+    button.textContent = active ? "完成管理" : "管理牌组";
+    toast(active ? "已进入牌组管理，可点击卡牌移除。" : "已退出牌组管理。");
+  });
+  board.querySelectorAll(".deck-section .game-card:not(.empty-card)").forEach((card) => {
+    card.addEventListener("click", () => {
+      if (!board.classList.contains("deck-managing")) return;
+      card.remove();
+      toast("卡牌已移除。");
+    });
   });
 }
 function initMessages() {
