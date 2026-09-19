@@ -24,7 +24,7 @@ async function copyTree(source, target) {
   await copyFile(source, target);
 }
 
-const pages = ["index.html", "my.html", "messages.html"];
+const pages = ["index.html", "my.html", "messages.html", "profile.html"];
 
 for (const page of pages) {
   await copyFile(page, join("dist", page));
