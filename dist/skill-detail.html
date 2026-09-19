@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>技能详情 - SkillLoop</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark">SL</span><span>SkillLoop</span></a>
+      <nav class="top-nav">
+        <a href="index.html">技能交换市场</a>
+        <a href="my.html">我的</a>
+        <a href="messages.html">沟通</a>
+      </nav>
+      <div class="header-actions">
+        <a class="publish-button" href="my.html#publish">发布需求</a>
+      </div>
+    </header>
+
+    <main class="skill-detail-page">
+      <section class="skill-detail-shell">
+        <article class="game-card detail-hero-card art-photo rarity-elite" data-detail-card>
+          <div class="game-card-top"><b data-detail-rank>大师</b><span data-detail-type>应用</span></div>
+          <div class="game-card-art"></div>
+          <div class="game-card-body">
+            <h3 data-detail-card-title>手机摄影构图</h3>
+            <p data-detail-card-meta>人像构图 / 自然光 / 修图方向</p>
+          </div>
+        </article>
+
+        <section class="detail-content-card">
+          <div class="detail-title-row">
+            <div>
+              <p class="eyebrow">Skill Detail</p>
+              <h1 data-detail-title>手机摄影构图</h1>
+              <p><span data-detail-user>林岚</span> · <span data-detail-role>品牌摄影师</span></p>
+            </div>
+            <div class="detail-user-card">
+              <b><span data-detail-score>96</span> 信用分</b>
+              <span>完成交换 24</span>
+              <span>平均评分 4.9</span>
+            </div>
+          </div>
+
+          <div class="detail-tabs">
+            <button class="active" type="button" data-detail-tab="proof">作品展示</button>
+            <button type="button" data-detail-tab="reviews">课程评价</button>
+          </div>
+
+          <section class="detail-panel active" data-detail-panel="proof">
+            <div class="proof-grid">
+              <article class="proof-card">
+                <b>作品链接</b>
+                <span>portfolio.example/case-study</span>
+              </article>
+              <article class="proof-card">
+                <b>图片材料</b>
+                <span>成品图 9 张 · 过程截图 4 张</span>
+              </article>
+              <article class="proof-card">
+                <b>视频材料</b>
+                <span>8 分钟讲解回放 · 15 秒成果演示</span>
+              </article>
+            </div>
+            <article class="proof-card">
+              <b>交付边界</b>
+              <span>会先确认目标作品，再按一次课或一次作品点评拆解步骤，最后给出可复用检查清单。</span>
+            </article>
+          </section>
+
+          <section class="detail-panel" data-detail-panel="reviews">
+            <div class="review-list">
+              <article class="review-card">
+                <div class="review-top"><b>周亦</b><span class="stars">★★★★★</span></div>
+                <p>讲得很像淘宝好评里那种“确实能用”的课。先看我的素材，再指出三处构图问题，课后给了检查表。</p>
+              </article>
+              <article class="review-card">
+                <div class="review-top"><b>高晴</b><span class="stars">★★★★★</span></div>
+                <p>时间边界清楚，30 分钟没有跑题。对方会把“哪里不好看”说成具体可改的动作。</p>
+              </article>
+              <article class="review-card">
+                <div class="review-top"><b>许诺</b><span class="stars">★★★★☆</span></div>
+                <p>适合入门到进阶。希望下次能多给一点课前准备清单，但课程本身非常扎实。</p>
+              </article>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" data-toast></div>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
