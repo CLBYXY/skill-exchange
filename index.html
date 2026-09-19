@@ -37,29 +37,73 @@
         </div>
       </section>
 
-      <section class="mode-tabs" aria-label="市场筛选">
-        <button class="active" data-mode="browse">随便逛逛</button>
-        <button data-mode="recommend">推荐</button>
-        <button data-mode="hot">热门</button>
-        <button data-mode="nearby">周围</button>
+      <section class="play-mode-switch" aria-label="体验模式切换">
+        <button class="active" data-market-view="classic">经典模式</button>
+        <button data-market-view="fun">趣味模式</button>
       </section>
 
-      <section class="feed-layout">
-        <aside class="filter-panel">
-          <h2>筛选</h2>
-          <label>交换方式<select data-filter-type><option value="all">不限</option><option value="online">线上</option><option value="offline">线下</option></select></label>
-          <label>时间<select data-filter-time><option value="all">不限</option><option value="weekend">周末</option><option value="weekday">工作日</option></select></label>
-          <label>难度<select><option>不限</option><option>入门</option><option>进阶</option><option>作品级</option></select></label>
-          <div class="rule-note">联系方式默认隐藏。只有双方互相同意交换后，才进入沟通和草案确认。</div>
-        </aside>
-
-        <section>
-          <div class="feed-head">
-            <h2 data-feed-title>随便逛逛</h2>
-            <span data-result-count></span>
-          </div>
-          <div class="exchange-feed" data-exchange-feed></div>
+      <div data-classic-market>
+        <section class="mode-tabs" aria-label="市场筛选">
+          <button class="active" data-mode="browse">随便逛逛</button>
+          <button data-mode="recommend">推荐</button>
+          <button data-mode="hot">热门</button>
+          <button data-mode="nearby">周围</button>
         </section>
+
+        <section class="feed-layout">
+          <aside class="filter-panel">
+            <h2>筛选</h2>
+            <label>交换方式<select data-filter-type><option value="all">不限</option><option value="online">线上</option><option value="offline">线下</option></select></label>
+            <label>时间<select data-filter-time><option value="all">不限</option><option value="weekend">周末</option><option value="weekday">工作日</option></select></label>
+            <label>难度<select><option>不限</option><option>入门</option><option>进阶</option><option>作品级</option></select></label>
+            <div class="rule-note">联系方式默认隐藏。只有双方互相同意交换后，才进入沟通和草案确认。</div>
+          </aside>
+
+          <section>
+            <div class="feed-head">
+              <h2 data-feed-title>随便逛逛</h2>
+              <span data-result-count></span>
+            </div>
+            <div class="exchange-feed" data-exchange-feed></div>
+          </section>
+        </section>
+      </div>
+
+      <section class="fun-market" data-fun-market hidden>
+        <div class="sprite-panel">
+          <img src="assets/sprite-guide.png" alt="" />
+          <div class="sprite-dialog">
+            <p class="eyebrow">趣味模式</p>
+            <h2>让小精灵帮你抽一组交换对象</h2>
+            <div class="dialog-steps">
+              <label>想要的技能<select><option>动漫制作</option><option>手机摄影构图</option><option>短视频剪辑</option><option>英语口语表达</option></select></label>
+              <label>这次愿意给出的卡牌<select><option>Python 数据分析</option><option>PPT 结构化表达</option><option>Excel 函数自动化</option></select></label>
+              <label>交换方式<select><option>线上</option><option>同城线下</option><option>都可以</option></select></label>
+              <label>时间<select><option>周末下午</option><option>工作日晚上</option><option>灵活约</option></select></label>
+              <label>难度<select><option>入门</option><option>进阶</option><option>作品级</option></select></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="summon-board">
+          <div class="summon-platform" data-draw-platform>
+            <canvas width="420" height="420" data-summon-canvas></canvas>
+            <div class="platform-copy">
+              <strong>在圆台上画下你的交换意向</strong>
+              <span>随手画几笔后点击抽卡，系统会推荐 10 张候选卡。</span>
+            </div>
+          </div>
+          <div class="summon-actions">
+            <button class="primary-action" data-draw-cards>开始抽卡</button>
+            <button class="ghost-action" data-shuffle-cards>换一换</button>
+            <button class="ghost-action" data-reset-draw>重新抽卡</button>
+          </div>
+        </div>
+
+        <div class="recommendation-table" data-fun-results>
+          <div class="recommend-row top-row"></div>
+          <div class="recommend-row bottom-row"></div>
+        </div>
       </section>
     </main>
 
