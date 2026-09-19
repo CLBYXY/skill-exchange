@@ -291,10 +291,10 @@ h1, h2, h3, p { margin-top: 0; }
 .game-card {
   position: relative;
   display: grid;
-  grid-template-rows: auto 1fr auto auto;
-  min-height: 390px;
+  grid-template-rows: auto auto auto;
+  min-height: 560px;
   overflow: hidden;
-  padding: 10px;
+  padding: 12px;
   border: 2px solid #b48a3b;
   border-radius: 16px;
   background:
@@ -313,41 +313,52 @@ h1, h2, h3, p { margin-top: 0; }
 }
 .game-card:hover { transform: translateY(-3px); transition: 180ms ease; }
 .game-card-top {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 38px;
-  padding: 0 8px;
+  min-height: 44px;
+  padding: 0;
+  pointer-events: none;
 }
 .game-card-top b {
   display: grid;
-  width: 36px;
-  height: 36px;
+  min-width: 58px;
+  height: 38px;
   place-items: center;
-  border-radius: 50%;
-  background: #f5c542;
+  border-radius: 999px;
+  padding: 0 10px;
+  background: linear-gradient(135deg, #ffe591, #f5c542);
   color: #211710;
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.45);
+  font-size: 0.92rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 0 0 2px rgba(255, 255, 255, 0.5);
 }
 .game-card-top span {
-  padding: 5px 9px;
+  padding: 8px 11px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.14);
-  color: #ffe8a8;
+  background: rgba(7, 13, 16, 0.82);
+  color: #fff7df;
   font-weight: 900;
-  font-size: 0.8rem;
+  font-size: 0.86rem;
+  border: 1px solid rgba(255, 226, 157, 0.46);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.32);
 }
 .game-card-art {
   position: relative;
-  min-height: 190px;
-  margin: 6px 0 10px;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  min-height: 0;
+  margin: 0 0 10px;
   border: 1px solid rgba(255, 226, 157, 0.55);
-  border-radius: 10px;
+  border-radius: 12px;
   background-image: url("skill-card-sheet.png");
   background-size: 300% 200%;
-  box-shadow: inset 0 -30px 40px rgba(0, 0, 0, 0.25);
+  background-repeat: no-repeat;
+  box-shadow: inset 0 -30px 40px rgba(0, 0, 0, 0.12);
 }
 .art-python .game-card-art { background-position: 0% 0%; }
 .art-ppt .game-card-art { background-position: 50% 0%; }
@@ -382,7 +393,10 @@ h1, h2, h3, p { margin-top: 0; }
 }
 .game-card-foot strong { margin-left: auto; background: #f5c542; color: #211710; }
 .rarity-legend { border-color: #f5c542; box-shadow: 0 20px 40px rgba(245, 197, 66, 0.22), inset 0 0 0 3px rgba(255, 230, 166, 0.2); }
-.rarity-epic { border-color: #d685ff; }
+.rarity-master { border-color: #d685ff; box-shadow: 0 20px 40px rgba(151, 85, 255, 0.18), inset 0 0 0 3px rgba(255, 230, 166, 0.18); }
+.rarity-elite { border-color: #5ccbb3; }
+.rarity-apprentice { border-color: #c9a66a; }
+.blank-card { filter: grayscale(0.85); opacity: 0.92; }
 .want-kind { background: linear-gradient(160deg, #261c29, #102022 58%, #382714); }
 .request-market-list {
   display: grid;
@@ -390,6 +404,17 @@ h1, h2, h3, p { margin-top: 0; }
   gap: 14px;
 }
 .request-card { min-height: 280px; }
+.profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 16px;
+}
+.profile-deck { grid-template-columns: repeat(2, minmax(220px, 1fr)); margin-top: 14px; }
+.profile-side {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
 .skill-card {
   display: grid;
   gap: 10px;
@@ -556,6 +581,29 @@ h1, h2, h3, p { margin-top: 0; }
   border-radius: var(--radius);
   padding: 9px 10px;
 }
+.forge-preview {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #f7fbfa;
+}
+.forge-card { min-height: 420px; }
+.forge-card .game-card-body h3 { font-size: 1rem; }
+.forge-log {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: #fff;
+  border: 1px solid var(--line);
+}
+.forge-log b { font-size: 1.05rem; }
+.forge-log span { color: var(--muted); line-height: 1.55; }
 
 .fun-market {
   display: grid;
@@ -580,17 +628,51 @@ h1, h2, h3, p { margin-top: 0; }
   border-radius: 18px;
 }
 .sprite-dialog h2 { margin-bottom: 12px; }
-.dialog-steps {
+.ai-chat {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
+  max-height: 280px;
+  overflow: auto;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
 }
-.dialog-steps label { display: grid; gap: 7px; font-weight: 850; }
-.dialog-steps select {
+.chat-message {
+  width: fit-content;
+  max-width: min(620px, 92%);
+  padding: 10px 12px;
+  border-radius: 14px;
+  line-height: 1.55;
+}
+.chat-message.assistant { background: #eff6f3; color: #18313a; border-top-left-radius: 4px; }
+.chat-message.user { justify-self: end; background: #dff7ef; color: #092e27; border-top-right-radius: 4px; }
+.choice-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.choice-chips button {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 12px;
+  background: #fff;
+  color: #17423a;
+  font-weight: 900;
+}
+.custom-answer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 10px;
+}
+.custom-answer input {
   min-height: 40px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 8px;
+  padding: 0 12px;
 }
 .summon-board {
   display: grid;
@@ -598,6 +680,7 @@ h1, h2, h3, p { margin-top: 0; }
   gap: 18px;
   align-items: center;
 }
+.summon-board[hidden] { display: none; }
 .summon-platform {
   position: relative;
   display: grid;
@@ -645,19 +728,38 @@ h1, h2, h3, p { margin-top: 0; }
   background: rgba(255, 255, 255, 0.76);
   box-shadow: var(--shadow);
 }
+.recommendation-table[hidden] { display: none; }
 .recommend-row {
   display: grid;
   grid-template-columns: repeat(5, minmax(150px, 1fr));
   gap: 12px;
 }
 .game-card.mini {
-  min-height: 290px;
+  min-height: 370px;
   border-radius: 13px;
   padding: 8px;
+  cursor: pointer;
 }
-.game-card.mini .game-card-art { min-height: 132px; }
+.game-card.mini .game-card-art { min-height: 0; }
 .game-card.mini .game-card-body h3 { font-size: 0.96rem; }
 .game-card.mini .game-card-body p { font-size: 0.82rem; }
+.quick-apply-card {
+  position: fixed;
+  right: 18px;
+  bottom: 76px;
+  z-index: 20;
+  display: grid;
+  gap: 8px;
+  width: 190px;
+  padding: 12px;
+  border: 1px solid rgba(245, 197, 66, 0.75);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow);
+}
+.quick-apply-card[hidden] { display: none; }
+.quick-apply-card span { color: var(--muted); }
+.quick-apply-card .primary-action { min-height: 34px; }
 
 .toast {
   position: fixed;
@@ -677,7 +779,7 @@ h1, h2, h3, p { margin-top: 0; }
 .toast.show { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 1180px) {
-  .site-header, .feed-layout, .general-card, .publish-form, .deck-builder, .message-page, .sprite-panel, .summon-board { grid-template-columns: 1fr; }
+  .site-header, .feed-layout, .general-card, .publish-form, .deck-builder, .message-page, .sprite-panel, .summon-board, .profile-layout { grid-template-columns: 1fr; }
   .site-header { position: static; align-items: stretch; padding: 14px; }
   .top-nav, .header-actions { flex-wrap: wrap; }
   .search-box { width: 100%; }
@@ -688,10 +790,11 @@ h1, h2, h3, p { margin-top: 0; }
 
 @media (max-width: 760px) {
   .market-page, .my-page, .message-page { width: min(100% - 20px, 720px); }
-  .exchange-feed, .field-grid, .field-grid.compact, .scenario-grid, .general-stats, .work-grid, .skill-deck, .game-deck, .modal-grid, .draft-units, .request-market-list, .dialog-steps, .recommend-row { grid-template-columns: 1fr; }
+  .exchange-feed, .field-grid, .field-grid.compact, .scenario-grid, .general-stats, .work-grid, .skill-deck, .game-deck, .modal-grid, .draft-units, .request-market-list, .recommend-row, .forge-preview { grid-template-columns: 1fr; }
   .market-title { flex-direction: column; align-items: stretch; }
   .deck-toolbar, .request-board-head { flex-direction: column; align-items: stretch; }
   .summon-platform { min-height: 340px; }
+  .quick-apply-card { left: 10px; right: 10px; bottom: 68px; width: auto; }
   .chat-item, .chat-input { grid-template-columns: 1fr; }
   .bubble { max-width: 100%; }
 }
