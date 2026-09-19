@@ -662,6 +662,7 @@ h1, h2, h3, p { margin-top: 0; }
 .modal-note textarea { min-height: 86px; resize: vertical; }
 .modal-actions { margin-top: 14px; justify-content: flex-end; }
 .card-create-modal { display: grid; gap: 14px; }
+.card-forge-modal { width: min(1120px, calc(100vw - 40px)); }
 .card-create-modal input, .card-create-modal select, .card-create-modal textarea {
   width: 100%;
   min-height: 40px;
@@ -669,6 +670,33 @@ h1, h2, h3, p { margin-top: 0; }
   border-radius: var(--radius);
   padding: 9px 10px;
 }
+.card-forge-grid {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+.forge-card-column {
+  display: grid;
+  place-items: start center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #f7fbfa 0%, #eef7f4 100%);
+}
+.forge-card-column .forge-card {
+  width: 100%;
+  max-width: 260px;
+  min-height: 420px;
+}
+.forge-input-column {
+  display: grid;
+  grid-template-rows: auto auto minmax(150px, 1fr) auto;
+  gap: 14px;
+  min-width: 0;
+}
+.forge-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.forge-scenarios { grid-template-columns: 1fr; }
 .forge-preview {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
@@ -690,6 +718,7 @@ h1, h2, h3, p { margin-top: 0; }
   background: #fff;
   border: 1px solid var(--line);
 }
+.forge-input-column .forge-log { min-height: 150px; }
 .forge-log b { font-size: 1.05rem; }
 .forge-log span { color: var(--muted); line-height: 1.55; }
 
@@ -920,7 +949,9 @@ h1, h2, h3, p { margin-top: 0; }
 
 @media (max-width: 760px) {
   .market-page, .my-page, .message-page { width: min(100% - 20px, 720px); }
-  .exchange-feed, .field-grid, .field-grid.compact, .scenario-grid, .general-stats, .work-grid, .skill-deck, .game-deck, .modal-grid, .draft-units, .request-market-list, .recommend-row, .forge-preview { grid-template-columns: 1fr; }
+  .exchange-feed, .field-grid, .field-grid.compact, .scenario-grid, .general-stats, .work-grid, .skill-deck, .game-deck, .modal-grid, .draft-units, .request-market-list, .recommend-row, .forge-preview, .card-forge-grid, .forge-fields { grid-template-columns: 1fr; }
+  .card-forge-modal { width: min(100% - 20px, 720px); }
+  .forge-card-column .forge-card { max-width: 240px; }
   .market-title { flex-direction: column; align-items: stretch; }
   .deck-toolbar, .request-board-head { flex-direction: column; align-items: stretch; }
   .summon-platform { min-height: 340px; }
