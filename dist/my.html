@@ -39,6 +39,7 @@
         <button class="active" data-my-tab="deck" id="publish">我的牌组</button>
         <button data-my-tab="requests">交换需求</button>
         <button data-my-tab="works">作品管理</button>
+        <button data-my-tab="calendar">授课日历</button>
       </section>
 
       <section class="my-panel active" data-tab-panel="deck">
@@ -244,6 +245,33 @@
           </article>
         </div>
       </section>
+
+      <section class="my-panel" data-tab-panel="calendar">
+        <div class="calendar-shell">
+          <div class="calendar-head">
+            <div>
+              <p class="eyebrow">Schedule</p>
+              <h2>授课日历</h2>
+              <span>记录已经和其他用户约好的授课、被授课时间段和课程名。</span>
+            </div>
+            <button class="ghost-action" type="button">同步本周</button>
+          </div>
+          <div class="course-calendar" aria-label="本周技能交换课表">
+            <div class="time-col header-cell">时间</div>
+            <div class="day-col header-cell">周一</div>
+            <div class="day-col header-cell">周二</div>
+            <div class="day-col header-cell">周三</div>
+            <div class="day-col header-cell">周四</div>
+            <div class="day-col header-cell">周五</div>
+            <div class="day-col header-cell">周六</div>
+            <div class="day-col header-cell">周日</div>
+            <div class="time-col">09:00-10:00</div><div></div><div class="course-pill teach">授课：Python 数据分析<br><span>许诺 · 线上</span></div><div></div><div></div><div></div><div></div><div></div>
+            <div class="time-col">14:00-15:00</div><div></div><div></div><div></div><div class="course-pill learn">被授课：手机摄影构图<br><span>林岚 · 作品点评</span></div><div></div><div></div><div></div>
+            <div class="time-col">15:00-16:00</div><div></div><div></div><div></div><div></div><div></div><div class="course-pill learn">被授课：动漫制作<br><span>林岚 · 第 1/4 次</span></div><div></div>
+            <div class="time-col">19:00-20:00</div><div class="course-pill teach">授课：PPT 结构表达<br><span>周亦 · 改稿</span></div><div></div><div></div><div></div><div class="course-pill teach">授课：Excel 函数自动化<br><span>高晴 · 线下</span></div><div></div><div></div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <div class="toast" data-toast></div>
@@ -305,6 +333,8 @@
     <script src="assets/app.js"></script>
   </body>
 </html>
+
+
 
 
 
