@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SkillLoop | 配对交换</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body data-page="matches">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="index.html"><span class="brand-mark">SL</span><span><strong>SkillLoop</strong><small>技能配对网站</small></span></a>
+        <nav class="nav">
+          <a href="index.html">今日</a><a href="profile.html">上传资料</a><a href="market.html">技能市场</a><a href="pet.html">宠物 AI</a><a href="basket.html">猎物篮 <span class="nav-count" data-basket-count>0</span></a><a class="active" href="matches.html">配对交换</a>
+        </nav>
+      </aside>
+      <main class="main">
+        <header class="topbar compact">
+          <div><p class="eyebrow">Match Rooms</p><h1>配对成功后，才进入交换房间。</h1><p class="lead">这里展示三个状态：已解锁、等待回选、仅收藏。平台用状态保护用户，不让低意向的人打扰彼此。</p></div>
+        </header>
+        <section class="match-room-grid">
+          <article class="room unlocked"><span class="room-state">已配对</span><h2>林岚 · 摄影构图 ⇄ Python 数据分析</h2><p>双方已互选，交换房间开放。可以约课、签协议、提交作品。</p><div class="room-actions"><button class="button primary" data-room-action>进入交换房间</button><button class="button ghost" data-room-action>生成 4 周协议</button></div></article>
+          <article class="room pending"><span class="room-state">等待回选</span><h2>周亦 · 剪辑脚本 ⇄ 数据看板</h2><p>你已发起意向，对方还没有回选。现在只能补充提案，不能直接交换。</p><div class="room-actions"><button class="button ghost" data-room-action>补充交换提案</button></div></article>
+          <article class="room locked"><span class="room-state">仅收藏</span><h2>许诺 · Notion 效率 ⇄ 手机摄影</h2><p>还在猎物篮中。勾选发起意向后，才会进入等待回选。</p><div class="room-actions"><a class="button ghost" href="basket.html">去猎物篮勾选</a></div></article>
+        </section>
+        <section class="panel exchange-room">
+          <h2>已配对房间预览</h2>
+          <div class="exchange-columns">
+            <div><b>你要交付</b><p>4 节 Python 数据分析课、1 个清洗脚本、1 页数据报告模板。</p></div>
+            <div><b>对方要交付</b><p>4 节摄影构图课、9 张照片作业点评、自然光拍摄清单。</p></div>
+            <div><b>平台保障</b><p>课前提醒、课后确认、作品验收、互评沉淀信用。</p></div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="toast" data-toast></div>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
