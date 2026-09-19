@@ -1160,3 +1160,108 @@ h1, h2, h3, p { margin-top: 0; }
   .market-card-pair, .fun-pair-body, .choice-list { grid-template-columns: 1fr; }
   .course-calendar { grid-template-columns: 92px repeat(7, 120px); }
 }
+
+/* Density and interaction fixes. */
+.recommend-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.fun-pair-card { padding: 12px; }
+.fun-pair-body .game-card { min-height: 190px; }
+.fun-pair-body .game-card-art { min-height: 86px; }
+.cart-add-button {
+  min-height: 36px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--mint);
+  color: #082922;
+  font-weight: 900;
+}
+.floating-cart {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 60;
+  width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 1.35rem;
+  box-shadow: var(--shadow);
+}
+.floating-cart span {
+  position: absolute;
+  right: -4px;
+  top: -4px;
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #201510;
+  font-size: .75rem;
+  font-weight: 900;
+}
+.cart-modal { width: min(980px, calc(100vw - 40px)); }
+.cart-list { display: grid; gap: 12px; }
+.cart-request-row {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+.cart-user { display: flex; justify-content: space-between; gap: 12px; }
+.cart-user span { color: var(--muted); }
+.empty-cart { color: var(--muted); }
+.split-units {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.split-units input,
+.split-units select {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #cbd8d4;
+  border-radius: var(--radius);
+  padding: 9px 10px;
+}
+.card-delete {
+  position: absolute;
+  right: 10px;
+  top: 48px;
+  z-index: 8;
+  display: none;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: #ef6f6c;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 900;
+}
+.deck-section .game-card:hover .card-delete { display: grid; place-items: center; }
+.confirm-modal { width: min(420px, calc(100vw - 40px)); }
+.danger-action { background: #ef6f6c; color: #fff; }
+.favorites-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.profile-work-only { padding-top: 24px; }
+.profile-skill-list .work-row {
+  grid-template-columns: 112px minmax(0, 1fr);
+}
+.profile-skill-list .game-card.micro {
+  width: 100px;
+  min-height: 148px;
+}
+.work-preview[data-mode="课程评价"] span:first-child::before { content: "评价："; }
+@media (max-width: 760px) {
+  .recommend-row, .favorites-board, .split-units { grid-template-columns: 1fr; }
+  .floating-cart { right: 14px; bottom: 14px; }
+}
