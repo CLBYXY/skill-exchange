@@ -214,46 +214,43 @@
 
     <div class="toast" data-toast></div>
     <section class="modal-backdrop" data-card-modal hidden>
-      <form class="exchange-modal card-create-modal" data-card-form>
+      <form class="exchange-modal card-create-modal card-forge-modal" data-card-form>
         <div class="modal-head">
           <div><p class="eyebrow">Create Card</p><h2>新增技能牌</h2></div>
           <button class="icon-button" type="button" data-close-card-modal aria-label="关闭">×</button>
         </div>
-        <div class="field-grid compact">
-          <label>卡牌类型<select><option>我会</option><option>我想学</option></select></label>
-          <label>标准技能名<select data-skill-input><option>Python 数据分析</option><option>动漫制作</option><option>手机摄影构图</option><option>短视频剪辑</option><option>PPT 结构化表达</option><option>Excel 函数自动化</option></select></label>
-          <label>熟练度<select data-level-input><option>可教学</option><option>专家</option><option>熟练</option><option>入门</option><option>零基础</option></select></label>
-        </div>
-        <div class="field-grid compact">
-          <label>方向<select data-card-type-input><option>应用</option><option>理论</option><option>理论 + 应用</option></select></label>
-          <label>交换单位<select><option>30 分钟课程</option><option>1 次作品点评</option><option>1 个具体函数</option><option>1 个作品项目</option></select></label>
-          <label>学习/使用年限<input type="number" min="0" max="20" value="2" data-years-input /></label>
-        </div>
-        <div class="field-grid compact">
-          <label>真实使用次数<input type="number" min="0" value="24" data-uses-input /></label>
-          <label>可证明作品数<input type="number" min="0" value="3" data-work-input /></label>
-          <label>交换信心<select><option>可以独立教学</option><option>可以带着做</option><option>想找人一起练</option></select></label>
-        </div>
-        <div class="scenario-grid">
-          <label>使用场景 1<input value="完成一个可展示作品" /></label>
-          <label>使用场景 2<input value="解决一个具体问题" /></label>
-          <label>使用场景 3<input value="形成可复用方法" /></label>
-        </div>
-        <div class="forge-preview" data-forge-preview>
-          <article class="game-card forge-card blank-card art-python rarity-apprentice">
-            <div class="game-card-top"><b data-forge-rank>白卡</b><span data-forge-type>待评估</span></div>
-            <div class="game-card-art"></div>
-            <div class="game-card-body"><h3 data-forge-title>未锻造技能牌</h3><p data-forge-copy>填写信息后，系统会根据年限、使用次数和作品数临时评估等级。</p></div>
-            <div class="game-card-foot"><span data-forge-years>0 年</span><span data-forge-proof>0 作品</span><strong data-forge-status>待锻造</strong></div>
-          </article>
-          <div class="forge-log" data-forge-log>
-            <b>AI 评估过程</b>
-            <span>白卡待锻造：还没有读取你的经验信息。</span>
+        <div class="card-forge-grid" data-forge-preview>
+          <aside class="forge-card-column" aria-label="技能牌预览">
+            <article class="game-card forge-card blank-card art-python rarity-apprentice">
+              <div class="game-card-top"><b data-forge-rank>白卡</b><span data-forge-type>待评估</span></div>
+              <div class="game-card-art"></div>
+              <div class="game-card-body"><h3 data-forge-title>未锻造技能牌</h3><p data-forge-copy>填写信息后，系统会根据年限、熟练度和作品数临时评估等级。</p></div>
+              <div class="game-card-foot"><span data-forge-years>0 年</span><span data-forge-proof>0 作品</span><strong data-forge-status>待锻造</strong></div>
+            </article>
+          </aside>
+          <div class="forge-input-column">
+            <div class="field-grid forge-fields">
+              <label>卡牌类型<select><option>我会</option><option>我想学</option></select></label>
+              <label>标准技能名<select data-skill-input><option>Python 数据分析</option><option>动漫制作</option><option>手机摄影构图</option><option>短视频剪辑</option><option>PPT 结构化表达</option><option>Excel 函数自动化</option></select></label>
+              <label>熟练度<select data-level-input><option>可教学</option><option>专家</option><option>熟练</option><option>入门</option><option>零基础</option></select></label>
+              <label>方向<select data-card-type-input><option>应用</option><option>理论</option><option>理论 + 应用</option></select></label>
+              <label>学习/使用年限<input type="number" min="0" max="20" value="2" data-years-input /></label>
+              <label>可证明作品数<input type="number" min="0" value="3" data-work-input /></label>
+            </div>
+            <div class="scenario-grid forge-scenarios">
+              <label>使用场景 1<input value="完成一个可展示作品" /></label>
+              <label>使用场景 2<input value="解决一个具体问题" /></label>
+              <label>使用场景 3<input value="形成可复用方法" /></label>
+            </div>
+            <div class="forge-log" data-forge-log>
+              <b>AI 评估过程</b>
+              <span>白卡待锻造：等待读取你的技能信息。</span>
+            </div>
+            <div class="modal-actions">
+              <button class="ghost-action" type="button" data-evaluate-card>开始 AI 评估</button>
+              <button class="primary-action" type="submit">加入牌组</button>
+            </div>
           </div>
-        </div>
-        <div class="modal-actions">
-          <button class="ghost-action" type="button" data-evaluate-card>开始 AI 评估</button>
-          <button class="primary-action" type="submit">加入牌组</button>
         </div>
       </form>
     </section>
