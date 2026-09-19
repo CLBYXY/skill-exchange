@@ -24,11 +24,11 @@ async function copyTree(source, target) {
   await copyFile(source, target);
 }
 
-const pages = ["index.html", "profile.html", "market.html", "pet.html", "basket.html", "matches.html"];
+const pages = ["index.html", "my.html", "messages.html"];
 
 for (const page of pages) {
   await copyFile(page, join("dist", page));
 }
 
 await copyTree("assets", "dist/assets");
-console.log("Static multi-page site ready in dist/");
+console.log("Static skill market site ready in dist/");
