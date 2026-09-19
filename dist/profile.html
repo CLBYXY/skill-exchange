@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>用户主页 | SkillLoop</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body data-page="profile">
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark">SL</span><span>SkillLoop</span></a>
+      <nav class="top-nav" aria-label="主导航">
+        <a href="index.html">技能交换市场</a>
+        <a href="my.html">我的</a>
+        <a href="messages.html">沟通</a>
+      </nav>
+      <div class="header-actions"><a class="publish-button" href="my.html#publish">发布需求</a></div>
+    </header>
+
+    <main class="my-page profile-page">
+      <section class="general-card">
+        <div class="user-block">
+          <div class="avatar" data-profile-avatar>林</div>
+          <div>
+            <h1 data-profile-name>林岚</h1>
+            <p data-profile-summary>品牌摄影师，会手机摄影构图、短视频剪辑，想换动漫制作。</p>
+          </div>
+        </div>
+        <div class="general-stats">
+          <div><strong>98</strong><span>信用分</span></div>
+          <div><strong>24</strong><span>完成交换</span></div>
+          <div><strong>4.9</strong><span>平均评分</span></div>
+          <div><strong>5</strong><span>作品证明</span></div>
+        </div>
+      </section>
+
+      <section class="profile-layout">
+        <div class="deck-section">
+          <p class="eyebrow">Offered Cards</p>
+          <h2>对方可交换卡牌</h2>
+          <div class="game-deck profile-deck">
+            <article class="game-card art-photo rarity-master">
+              <div class="game-card-top"><b>大师</b><span>理论+应用</span></div>
+              <div class="game-card-art"></div>
+              <div class="game-card-body"><h3>手机摄影构图</h3><p>人像构图 / 自然光 / 修图方向</p></div>
+              <div class="game-card-foot"><span>5 年使用</span><span>12 作品</span><strong>点评</strong></div>
+            </article>
+            <article class="game-card art-video rarity-elite">
+              <div class="game-card-top"><b>精英</b><span>应用</span></div>
+              <div class="game-card-art"></div>
+              <div class="game-card-body"><h3>短视频剪辑</h3><p>开头节奏 / 转场 / 发布版成片</p></div>
+              <div class="game-card-foot"><span>3 年使用</span><span>8 作品</span><strong>30min</strong></div>
+            </article>
+          </div>
+        </div>
+
+        <aside class="profile-side">
+          <div class="detail-card">
+            <b>交换偏好</b>
+            <span>线上优先，周末下午最稳定。申请后双方先选牌，再进入交换草案。</span>
+          </div>
+          <div class="detail-card">
+            <b>作品证明</b>
+            <span>摄影样片 3 组、短视频成片 2 条、课程大纲 1 份。</span>
+          </div>
+          <button class="primary-action" data-profile-apply>申请交换</button>
+        </aside>
+      </section>
+    </main>
+
+    <div class="toast" data-toast></div>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
