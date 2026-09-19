@@ -76,40 +76,46 @@
           <button data-axis-step="result"><span></span>抽卡</button>
         </div>
 
-        <div class="sprite-panel" data-chat-step>
-          <img src="assets/sprite-guide.png" alt="" />
-          <div class="sprite-dialog">
-            <p class="eyebrow">趣味模式</p>
-            <h2>先和小精灵聊聊，再抽一组交换对象</h2>
-            <div class="ai-chat" data-fun-chat>
-              <div class="chat-message assistant">今天想带哪张卡出门交换？我会一步一步问，答完再让你画下心情。</div>
-            </div>
-            <div class="choice-chips" data-fun-choices></div>
-            <div class="custom-answer">
-              <input data-fun-custom placeholder="也可以自定义回答" />
-              <button class="ghost-action" data-fun-custom-send>发送</button>
+        <div class="fun-stage-panel" data-chat-step>
+          <div class="sprite-panel">
+            <img src="assets/sprite-guide.png" alt="" />
+            <div class="sprite-dialog">
+              <p class="eyebrow">趣味模式</p>
+              <h2>先和小精灵聊聊，再抽一组交换对象</h2>
+              <div class="ai-chat" data-fun-chat>
+                <div class="chat-message assistant">今天想带哪张卡出门交换？我会一步一步问，答完再让你画下心情。</div>
+              </div>
+              <div class="choice-chips" data-fun-choices></div>
+              <div class="custom-answer">
+                <input data-fun-custom placeholder="也可以自定义回答" />
+                <button class="ghost-action" data-fun-custom-send>发送</button>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="summon-board" data-draw-step hidden>
-          <div class="summon-platform" data-draw-platform>
-            <canvas width="420" height="420" data-summon-canvas></canvas>
-            <div class="platform-copy">
-              <strong>画下你这次交换的心情</strong>
-              <span>聊完之后再画几笔，系统会用它作为抽卡仪式。</span>
+        <div class="fun-stage-panel draw-stage" data-draw-step hidden>
+          <div class="summon-board">
+            <div class="summon-platform" data-draw-platform>
+              <canvas width="420" height="420" data-summon-canvas></canvas>
+              <div class="platform-copy">
+                <strong>画下你这次交换的心情</strong>
+                <span>聊完之后再画几笔，系统会用它作为抽卡仪式。</span>
+              </div>
             </div>
-          </div>
-          <div class="summon-actions">
-            <button class="primary-action" data-draw-cards>开始抽卡</button>
-            <button class="ghost-action" data-shuffle-cards>换一换</button>
-            <button class="ghost-action" data-reset-draw>重新抽卡</button>
+            <div class="summon-actions">
+              <button class="primary-action" data-draw-cards>开始抽卡</button>
+              <button class="ghost-action" data-shuffle-cards>换一换</button>
+              <button class="ghost-action" data-reset-draw>重新抽卡</button>
+            </div>
           </div>
         </div>
 
-        <div class="recommendation-table" data-result-step data-fun-results hidden>
-          <div class="recommend-row top-row"></div>
-          <div class="recommend-row bottom-row"></div>
+        <div class="fun-stage-panel" data-result-step hidden>
+          <div class="recommendation-table" data-fun-results>
+            <div class="recommend-row top-row"></div>
+            <div class="recommend-row bottom-row"></div>
+          </div>
         </div>
 
         <aside class="quick-apply-card" data-quick-apply hidden>
@@ -117,10 +123,11 @@
           <span data-quick-title>动漫制作</span>
           <button class="primary-action">申请交换</button>
         </aside>
-      </section>
-    </main>
+      </section>    </main>
 
     <div class="toast" data-toast></div>
     <script src="assets/app.js"></script>
   </body>
 </html>
+
+
