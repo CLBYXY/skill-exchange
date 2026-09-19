@@ -3,84 +3,66 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SkillLoop | 今日配对</title>
-    <meta name="description" content="SkillLoop 是带 AI 宠物助手的技能配对互换平台。" />
+    <title>技能交换市场 | SkillLoop</title>
+    <meta name="description" content="SkillLoop 技能交换市场，按随便逛逛、推荐、热门、周围浏览交换需求。" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
-  <body data-page="home">
-    <div class="app-shell">
-      <aside class="sidebar">
-        <a class="brand" href="index.html" aria-label="SkillLoop 首页">
-          <span class="brand-mark">SL</span>
-          <span><strong>SkillLoop</strong><small>技能配对网站</small></span>
-        </a>
-        <nav class="nav" aria-label="主导航">
-          <a class="active" href="index.html">今日</a>
-          <a href="profile.html">上传资料</a>
-          <a href="market.html">技能市场</a>
-          <a href="pet.html">宠物 AI</a>
-          <a href="basket.html">猎物篮 <span class="nav-count" data-basket-count>0</span></a>
-          <a href="matches.html">配对交换</a>
-        </nav>
-        <section class="side-note">
-          <b>核心机制</b>
-          <p>先互相看见价值，再互相选择。只有双方配对成功，才解锁联系方式、日程和交换协议。</p>
-        </section>
-      </aside>
+  <body data-page="market">
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark">SL</span><span>SkillLoop</span></a>
+      <nav class="top-nav" aria-label="主导航">
+        <a class="active" href="index.html">技能交换市场</a>
+        <a href="my.html">我的</a>
+        <a href="messages.html">沟通</a>
+      </nav>
+      <div class="header-actions">
+        <label class="search-box">
+          <span>⌕</span>
+          <input data-search placeholder="搜索 摄影、剪辑、动漫制作、Python" />
+        </label>
+        <a class="publish-button" href="my.html#publish">发布需求</a>
+      </div>
+    </header>
 
-      <main class="main">
-        <header class="topbar">
-          <div>
-            <p class="eyebrow">今天的小伙伴：Mochi</p>
-            <h1>Mochi 出门给你带回了 6 个技能“猎物”。</h1>
-            <p class="lead">它先替你筛掉时间不合、目标模糊、信用不足的人，只留下适合互选的候选。你可以加入猎物篮，等双方都点头后再交换技能。</p>
+    <main class="market-page">
+      <section class="market-title">
+        <div>
+          <h1>技能交换市场</h1>
+          <p>一个框就是一个交换需求。先看对方会什么、想换什么，再决定是否发起交换申请。</p>
+        </div>
+        <div class="market-summary">
+          <strong>126</strong>
+          <span>今日新增交换需求</span>
+        </div>
+      </section>
+
+      <section class="mode-tabs" aria-label="市场筛选">
+        <button class="active" data-mode="browse">随便逛逛</button>
+        <button data-mode="recommend">推荐</button>
+        <button data-mode="hot">热门</button>
+        <button data-mode="nearby">周围</button>
+      </section>
+
+      <section class="feed-layout">
+        <aside class="filter-panel">
+          <h2>筛选</h2>
+          <label>交换方式<select data-filter-type><option value="all">不限</option><option value="online">线上</option><option value="offline">线下</option></select></label>
+          <label>时间<select data-filter-time><option value="all">不限</option><option value="weekend">周末</option><option value="weekday">工作日</option></select></label>
+          <label>难度<select><option>不限</option><option>入门</option><option>进阶</option><option>作品级</option></select></label>
+          <div class="rule-note">联系方式默认隐藏。只有双方互相同意交换后，才进入沟通和草案确认。</div>
+        </aside>
+
+        <section>
+          <div class="feed-head">
+            <h2 data-feed-title>随便逛逛</h2>
+            <span data-result-count></span>
           </div>
-          <div class="pet-card">
-            <div class="pet-face" aria-hidden="true">ฅ</div>
-            <div><strong>AI 宠物雷达</strong><span>根据你的技能护照，今日推荐准确度 94%</span></div>
-          </div>
-        </header>
-
-        <section class="hero-grid">
-          <article class="panel primary-panel">
-            <div class="panel-copy">
-              <h2>从发布资料到配对交换，一条完整路径。</h2>
-              <p>SkillLoop 不让用户在帖子海里乱翻。你先上传“我会教”和“我想学”，系统生成技能护照；宠物 AI 外出淘技能；你把候选放进猎物篮；双方互选后进入交换房间。</p>
-            </div>
-            <div class="flow-strip">
-              <span>上传技能护照</span><span>宠物外出海淘</span><span>加入猎物篮</span><span>双方配对成功</span><span>解锁交换房间</span>
-            </div>
-          </article>
-
-          <aside class="panel">
-            <h2>你的状态</h2>
-            <div class="status-list">
-              <div><strong>资料完整度</strong><span>86% · 还差 1 个作品样例</span></div>
-              <div><strong>猎物篮</strong><span><span data-basket-count>0</span> 个候选等待勾选</span></div>
-              <div><strong>已配对</strong><span>2 个交换房间可继续推进</span></div>
-            </div>
-            <a class="button full" href="profile.html">补全我的技能护照</a>
-          </aside>
+          <div class="exchange-feed" data-exchange-feed></div>
         </section>
+      </section>
+    </main>
 
-        <section class="section-head">
-          <div><h2>今日推荐猎物</h2><p>Mochi 按技能互补度、时间重合、作品可信度和配对概率排序。</p></div>
-          <a class="button ghost" href="market.html">进入技能市场</a>
-        </section>
-        <section class="profile-grid" data-featured-profiles></section>
-
-        <section class="section-head">
-          <div><h2>配对规则</h2><p>平台故意不让任何人直接交换，先保护双方时间和信任。</p></div>
-        </section>
-        <section class="rule-grid">
-          <article class="rule-card"><b>1. 先加入猎物篮</b><span>用户先收藏想交换的对象，比较技能价值、作品和时间。</span></article>
-          <article class="rule-card"><b>2. 一键勾选换技能</b><span>从猎物篮发起意向，对方看到的是明确的交换提案。</span></article>
-          <article class="rule-card"><b>3. 互选才解锁</b><span>只有双方都选择对方，才开放联系方式、日程和协议。</span></article>
-          <article class="rule-card"><b>4. 完成后沉淀信用</b><span>作品、评价、爽约记录会影响下一次被推荐概率。</span></article>
-        </section>
-      </main>
-    </div>
     <div class="toast" data-toast></div>
     <script src="assets/app.js"></script>
   </body>
