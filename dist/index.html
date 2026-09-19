@@ -74,23 +74,24 @@
           <img src="assets/sprite-guide.png" alt="" />
           <div class="sprite-dialog">
             <p class="eyebrow">趣味模式</p>
-            <h2>让小精灵帮你抽一组交换对象</h2>
-            <div class="dialog-steps">
-              <label>想要的技能<select><option>动漫制作</option><option>手机摄影构图</option><option>短视频剪辑</option><option>英语口语表达</option></select></label>
-              <label>这次愿意给出的卡牌<select><option>Python 数据分析</option><option>PPT 结构化表达</option><option>Excel 函数自动化</option></select></label>
-              <label>交换方式<select><option>线上</option><option>同城线下</option><option>都可以</option></select></label>
-              <label>时间<select><option>周末下午</option><option>工作日晚上</option><option>灵活约</option></select></label>
-              <label>难度<select><option>入门</option><option>进阶</option><option>作品级</option></select></label>
+            <h2>先和小精灵聊聊，再抽一组交换对象</h2>
+            <div class="ai-chat" data-fun-chat>
+              <div class="chat-message assistant">今天想带哪张卡出门交换？我会一步一步问，答完再让你画下心情。</div>
+            </div>
+            <div class="choice-chips" data-fun-choices></div>
+            <div class="custom-answer">
+              <input data-fun-custom placeholder="也可以自定义回答" />
+              <button class="ghost-action" data-fun-custom-send>发送</button>
             </div>
           </div>
         </div>
 
-        <div class="summon-board">
+        <div class="summon-board" data-summon-step hidden>
           <div class="summon-platform" data-draw-platform>
             <canvas width="420" height="420" data-summon-canvas></canvas>
             <div class="platform-copy">
-              <strong>在圆台上画下你的交换意向</strong>
-              <span>随手画几笔后点击抽卡，系统会推荐 10 张候选卡。</span>
+              <strong>画下你这次交换的心情</strong>
+              <span>聊完之后再画几笔，系统会用它作为抽卡仪式。</span>
             </div>
           </div>
           <div class="summon-actions">
@@ -100,10 +101,16 @@
           </div>
         </div>
 
-        <div class="recommendation-table" data-fun-results>
+        <div class="recommendation-table" data-fun-results hidden>
           <div class="recommend-row top-row"></div>
           <div class="recommend-row bottom-row"></div>
         </div>
+
+        <aside class="quick-apply-card" data-quick-apply hidden>
+          <b>看中这张？</b>
+          <span data-quick-title>动漫制作</span>
+          <button class="primary-action">申请交换</button>
+        </aside>
       </section>
     </main>
 
