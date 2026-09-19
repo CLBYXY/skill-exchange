@@ -53,14 +53,11 @@ function userStats(item, label = "热度") {
   const heat = item.heat ?? item.score ?? 90;
   const done = Math.max(7, Math.round(heat / 4));
   const rating = (4.4 + Math.min(heat, 100) / 200).toFixed(1);
-  const published = item.cards?.length || Math.max(3, Math.round(heat / 18));
   return `
     <div class="user-stat-pack" aria-label="${item.user || "用户"}信用概览">
       <span class="tag">${label} ${heat}</span>
-      <span><b>${heat}</b> 信用分</span>
       <span><b>${done}</b> 完成交换</span>
       <span><b>${rating}</b> 平均评分</span>
-      <span><b>${published}</b> ${label === "匹配" ? "作品证明" : "发布中"}</span>
     </div>
   `;
 }
@@ -209,6 +206,85 @@ function visualSkillOption(card, group, checked = false) {
     </label>
   `;
 }
+
+function requestSkillCard(card) {
+  const title = card.name || card.title || "技能卡";
+  return {
+    id: card.id || title,
+    title,
+    meta: card.scenes || card.meta || "技能交换卡",
+    style: card.style || card.type || typeForSkill(title),
+    rank: card.rank || rankForSkill(title),
+    rarity: card.rarity || (rankForSkill(title) === "大师" ? "rarity-master" : "rarity-elite"),
+    art: card.art || artForSkill(title),
+  };
+}
+
+function getSystemRequestCards() {
+  const map = new Map();
+  [...exchanges.flatMap((item) => item.cards || []), ...funCardPool].forEach((card) => {
+    const normalized = requestSkillCard(card);
+    if (!map.has(normalized.title)) map.set(normalized.title, normalized);
+  });
+  return [...map.values()];
+}
+
+function requestResultButton(card, source) {
+  const normalized = requestSkillCard(card);
+  return `
+    <button class="request-result-item" type="button" data-request-pick="${source}" data-card-id="${normalized.id}">
+      <span>${normalized.title}</span>
+      <em>${normalized.meta}</em>
+    </button>
+  `;
+}
+
+function smallRequestPreview(card) {
+  const normalized = requestSkillCard(card);
+  return `
+    <article class="game-card market-skill-card request-preview-card ${normalized.art} ${normalized.rarity}">
+      <div class="game-card-top"><b>${normalized.rank}</b><span>${normalized.style}</span></div>
+      <div class="game-card-art"></div>
+      <div class="game-card-body"><h3>${normalized.title}</h3><p>${normalized.meta}</p></div>
+    </article>
+  `;
+}
+
+function initRequestBuilder() {
+  const offerInput = document.querySelector("[data-request-offer-search]");
+  const wantInput = document.querySelector("[data-request-want-search]");
+  if (!offerInput || !wantInput) return;
+  const offerCards = myTeachCards.map(requestSkillCard);
+  const systemCards = getSystemRequestCards();
+
+  function render(source, query = "") {
+    const cards = source === "offer" ? offerCards : systemCards;
+    const resultEl = document.querySelector(source === "offer" ? "[data-request-offer-results]" : "[data-request-want-results]");
+    const needle = query.trim().toLowerCase();
+    const list = cards
+      .filter((card) => !needle || `${card.title} ${card.meta}`.toLowerCase().includes(needle))
+      .slice(0, 5);
+    resultEl.innerHTML = list.map((card) => requestResultButton(card, source)).join("") || `<p class="request-empty-result">没有找到匹配技能。</p>`;
+    resultEl.querySelectorAll("[data-request-pick]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const picked = cards.find((card) => card.id === button.dataset.cardId);
+        if (!picked) return;
+        const preview = document.querySelector(source === "offer" ? "[data-request-offer-preview]" : "[data-request-want-preview]");
+        const value = document.querySelector(source === "offer" ? "[data-request-offer-value]" : "[data-request-want-value]");
+        preview.innerHTML = smallRequestPreview(picked);
+        value.value = picked.title;
+      });
+    });
+  }
+
+  offerInput.addEventListener("input", () => render("offer", offerInput.value));
+  wantInput.addEventListener("input", () => render("want", wantInput.value));
+  render("offer");
+  render("want");
+  document.querySelector('[data-request-pick="offer"]')?.click();
+  document.querySelector('[data-request-pick="want"]')?.click();
+}
+
 function skillOption(card, group, checked = false) {
   return `
     <label class="select-skill-card">
@@ -296,9 +372,11 @@ function renderMarket(mode = "browse") {
   const list = exchanges.filter((item) => {
     const text = `${item.user} ${item.role} ${item.teach} ${item.want} ${item.desc} ${item.cards?.map((card) => `${card.name} ${card.scenes}`).join(" ")}`.toLowerCase();
     const requestRule = myOpenRequests[request];
+    const offeredText = `${item.teach} ${item.cards?.map((card) => `${card.name} ${card.scenes}`).join(" ")}`.toLowerCase();
+    const wantedText = `${item.want} ${item.wantScenes || ""}`.toLowerCase();
     const matchesRequest = !requestRule ||
-      requestRule.want.some((word) => text.includes(word.toLowerCase())) ||
-      requestRule.offer.some((word) => `${item.want} ${item.desc}`.toLowerCase().includes(word.toLowerCase()));
+      requestRule.offer.some((word) => wantedText.includes(word.toLowerCase())) ||
+      requestRule.want.some((word) => offeredText.includes(word.toLowerCase()));
     return item.mode.includes(mode) && (!search || text.includes(search)) && (type === "all" || item.type === type) && (time === "all" || item.time === time) && matchesRequest;
   });
   document.querySelector("[data-feed-title]").textContent = modeNames[mode];
@@ -402,6 +480,7 @@ function initMyModals() {
     closeSimpleModal("[data-request-modal]");
     toast("新的交换需求已发布，正在等待对方选牌。");
   });
+  initRequestBuilder();
 }
 
 const funCardPool = [
