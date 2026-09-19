@@ -70,7 +70,13 @@
       </div>
 
       <section class="fun-market" data-fun-market hidden>
-        <div class="sprite-panel">
+        <div class="fun-axis" data-fun-axis>
+          <button class="active" data-axis-step="chat"><span></span>问答</button>
+          <button data-axis-step="draw"><span></span>画心情</button>
+          <button data-axis-step="result"><span></span>抽卡</button>
+        </div>
+
+        <div class="sprite-panel" data-chat-step>
           <img src="assets/sprite-guide.png" alt="" />
           <div class="sprite-dialog">
             <p class="eyebrow">趣味模式</p>
@@ -86,7 +92,7 @@
           </div>
         </div>
 
-        <div class="summon-board" data-summon-step hidden>
+        <div class="summon-board" data-draw-step hidden>
           <div class="summon-platform" data-draw-platform>
             <canvas width="420" height="420" data-summon-canvas></canvas>
             <div class="platform-copy">
@@ -101,7 +107,7 @@
           </div>
         </div>
 
-        <div class="recommendation-table" data-fun-results hidden>
+        <div class="recommendation-table" data-result-step data-fun-results hidden>
           <div class="recommend-row top-row"></div>
           <div class="recommend-row bottom-row"></div>
         </div>
