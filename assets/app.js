@@ -1,28 +1,20 @@
-const profiles = [
-  { id: "lin", name: "林岚", role: "品牌摄影师", cat: "design", avatar: "林", teach: "人像构图、自然光拍摄", learn: "Python 自动整理图片订单", score: 97, time: "周末下午", trust: "信用 98 · 21 次交换", ai: "Mochi 评价：目标互补，作品可验收，是今天最肥的一只猎物。" },
-  { id: "zhou", name: "周亦", role: "短视频剪辑博主", cat: "design", avatar: "周", teach: "脚本结构、剪辑节奏", learn: "数据看板搭建", score: 92, time: "工作日晚上", trust: "信用 94 · 13 次交换", ai: "Mochi 评价：适合用剪辑模板交换数据看板，配对概率高。" },
-  { id: "xu", name: "许诺", role: "效率系统教练", cat: "tech", avatar: "许", teach: "Notion 学习系统", learn: "手机摄影修图", score: 88, time: "碎片 30 分钟", trust: "信用 93 · 16 次交换", ai: "Mochi 评价：轻量高频交换，适合怕坚持不下来的人。" },
-  { id: "chen", name: "陈默", role: "后端工程师", cat: "tech", avatar: "默", teach: "Python 项目拆解", learn: "民谣吉他弹唱", score: 84, time: "周三晚上", trust: "信用 91 · 9 次交换", ai: "Mochi 评价：技能强但目标不完全互补，建议先短聊。" },
-  { id: "gao", name: "高晴", role: "英语面试教练", cat: "life", avatar: "高", teach: "英语口语、面试表达", learn: "PPT 信息设计", score: 86, time: "工作日早晨", trust: "信用 95 · 18 次交换", ai: "Mochi 评价：如果你想练表达，这是值得抓回篮子的猎物。" },
-  { id: "yuan", name: "袁野", role: "咖啡拉花玩家", cat: "life", avatar: "袁", teach: "咖啡拉花、手冲入门", learn: "短视频拍摄", score: 78, time: "周末上午", trust: "信用 89 · 7 次交换", ai: "Mochi 评价：兴趣型交换，适合低压力体验。" },
-  { id: "han", name: "韩知", role: "产品设计师", cat: "design", avatar: "韩", teach: "Figma 原型、交互评审", learn: "Python 自动化", score: 90, time: "周日晚上", trust: "信用 97 · 24 次交换", ai: "Mochi 评价：能帮你把作品做得更像完整产品。" },
-  { id: "lu", name: "陆声", role: "吉他老师", cat: "life", avatar: "陆", teach: "民谣吉他、弹唱节奏", learn: "个人网站搭建", score: 82, time: "周五晚上", trust: "信用 92 · 15 次交换", ai: "Mochi 评价：生活技能交换，反馈口碑稳定。" },
+const exchanges = [
+  { user: "林岚", avatar: "林", role: "品牌摄影师", teach: "摄影、剪辑", want: "动漫制作", mode: ["browse", "recommend", "hot"], type: "online", time: "weekend", distance: "3.2km", heat: 96, desc: "可教人像构图、自然光和短视频剪辑节奏，希望换到角色分镜和 5 秒循环动画。" },
+  { user: "周亦", avatar: "周", role: "剪辑博主", teach: "短视频剪辑、脚本结构", want: "Python 数据分析", mode: ["browse", "recommend", "hot"], type: "online", time: "weekday", distance: "12km", heat: 92, desc: "每次 30 分钟，可按作品拆解剪辑问题，想换一个数据看板入门。" },
+  { user: "许诺", avatar: "许", role: "效率教练", teach: "Notion 学习系统", want: "手机摄影修图", mode: ["browse", "nearby"], type: "online", time: "weekday", distance: "1.8km", heat: 74, desc: "擅长搭建学习复盘系统，希望有人带我做一组可发布的照片。" },
+  { user: "陈默", avatar: "默", role: "后端工程师", teach: "Python 项目拆解", want: "吉他弹唱", mode: ["browse", "nearby"], type: "offline", time: "weekend", distance: "800m", heat: 81, desc: "可以讲接口设计和自动化脚本，想换吉他节奏和一首完整弹唱。" },
+  { user: "高晴", avatar: "高", role: "英语教练", teach: "英语面试、口语表达", want: "PPT 视觉设计", mode: ["browse", "recommend"], type: "online", time: "weekday", distance: "8km", heat: 88, desc: "帮你练面试回答和表达流畅度，希望换到一套路演 PPT 设计建议。" },
+  { user: "韩知", avatar: "韩", role: "产品设计师", teach: "Figma 原型、交互评审", want: "Python 自动化", mode: ["browse", "hot"], type: "online", time: "weekend", distance: "5.6km", heat: 90, desc: "能帮你把想法做成可演示原型，想换脚本自动化处理资料。" },
+  { user: "陆声", avatar: "陆", role: "吉他老师", teach: "民谣吉他、弹唱节奏", want: "个人网站搭建", mode: ["browse", "nearby"], type: "offline", time: "weekend", distance: "2.4km", heat: 77, desc: "一对一纠正节奏和和弦，希望换一个个人主页。" },
+  { user: "袁野", avatar: "袁", role: "咖啡玩家", teach: "咖啡拉花、手冲入门", want: "短视频拍摄", mode: ["browse"], type: "offline", time: "weekend", distance: "4.1km", heat: 69, desc: "适合兴趣入门，想把咖啡制作过程拍成短视频。" },
 ];
 
-const basketKey = "skillloop-prey-basket";
-const intentKey = "skillloop-match-intents";
-
-function readIds(key) {
-  try {
-    return JSON.parse(localStorage.getItem(key) || "[]");
-  } catch {
-    return [];
-  }
-}
-
-function writeIds(key, ids) {
-  localStorage.setItem(key, JSON.stringify([...new Set(ids)]));
-}
+const modeNames = {
+  browse: "随便逛逛",
+  recommend: "推荐",
+  hot: "热门",
+  nearby: "周围",
+};
 
 function toast(message) {
   const el = document.querySelector("[data-toast]");
@@ -30,148 +22,121 @@ function toast(message) {
   el.textContent = message;
   el.classList.add("show");
   clearTimeout(toast.timer);
-  toast.timer = setTimeout(() => el.classList.remove("show"), 2600);
+  toast.timer = setTimeout(() => el.classList.remove("show"), 2400);
 }
 
-function syncCount() {
-  const count = readIds(basketKey).length;
-  document.querySelectorAll("[data-basket-count]").forEach((node) => {
-    node.textContent = String(count);
-  });
-}
-
-function addToBasket(id) {
-  const ids = readIds(basketKey);
-  if (!ids.includes(id)) ids.push(id);
-  writeIds(basketKey, ids);
-  syncCount();
-  const profile = profiles.find((item) => item.id === id);
-  toast(`${profile.name} 已被 Mochi 放进猎物篮。`);
-}
-
-function profileCard(profile, options = {}) {
-  const inBasket = readIds(basketKey).includes(profile.id);
+function card(item) {
   return `
-    <article class="profile-card locked" data-card="${profile.id}">
-      <div class="profile-head">
-        <div class="avatar">${profile.avatar}</div>
-        <div>
-          <h3>${profile.name} · ${profile.role}</h3>
-          <span>${profile.trust} · ${profile.time}</span>
+    <article class="exchange-card">
+      <div class="exchange-card-head">
+        <div class="user-line">
+          <div class="avatar">${item.avatar}</div>
+          <div><b>${item.user}</b><span>${item.role}</span></div>
         </div>
+        <span class="tag">热度 ${item.heat}</span>
       </div>
-      <p><b>能教：</b>${profile.teach}</p>
-      <p><b>想学：</b>${profile.learn}</p>
-      <p>${profile.ai}</p>
-      <div class="mini-tags">
-        <span>匹配 ${profile.score}%</span>
-        <span>配对后解锁</span>
-        <span>${profile.cat === "tech" ? "技术效率" : profile.cat === "design" ? "创作表达" : "生活兴趣"}</span>
+      <div class="swap-boxes">
+        <div class="swap-box"><small>我会</small><strong>${item.teach}</strong></div>
+        <div class="swap-box want"><small>我想换</small><strong>${item.want}</strong></div>
       </div>
-      <p class="contact-line">微信 / 电话 / 详细日程：配对成功后可见</p>
-      <div class="profile-actions">
-        <button class="button primary" data-add-basket="${profile.id}">${inBasket ? "已在猎物篮" : "加入猎物篮"}</button>
-        <button class="button ghost" data-peek="${profile.id}">让 Mochi 解释</button>
+      <div class="exchange-meta">
+        <span>${item.type === "online" ? "线上" : "线下"}</span>
+        <span>${item.time === "weekend" ? "周末可约" : "工作日可约"}</span>
+        <span>${item.distance}</span>
+      </div>
+      <p>${item.desc}</p>
+      <div class="exchange-actions">
+        <button class="primary-action" data-apply="${item.user}">申请交换</button>
+        <button class="ghost-action" data-save="${item.user}">收藏</button>
       </div>
     </article>
   `;
 }
 
-function bindProfileActions() {
-  document.querySelectorAll("[data-add-basket]").forEach((button) => {
-    button.addEventListener("click", () => {
-      addToBasket(button.dataset.addBasket);
-      button.textContent = "已在猎物篮";
-    });
+function renderMarket(mode = "browse") {
+  const feed = document.querySelector("[data-exchange-feed]");
+  if (!feed) return;
+  const search = (document.querySelector("[data-search]")?.value || "").trim().toLowerCase();
+  const type = document.querySelector("[data-filter-type]")?.value || "all";
+  const time = document.querySelector("[data-filter-time]")?.value || "all";
+  const list = exchanges.filter((item) => {
+    const text = `${item.user} ${item.role} ${item.teach} ${item.want} ${item.desc}`.toLowerCase();
+    return item.mode.includes(mode) && (!search || text.includes(search)) && (type === "all" || item.type === type) && (time === "all" || item.time === time);
   });
-  document.querySelectorAll("[data-peek]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const profile = profiles.find((item) => item.id === button.dataset.peek);
-      toast(profile.ai);
-    });
+  document.querySelector("[data-feed-title]").textContent = modeNames[mode];
+  document.querySelector("[data-result-count]").textContent = `${list.length} 条交换需求`;
+  feed.innerHTML = list.map(card).join("");
+  document.querySelectorAll("[data-apply]").forEach((button) => {
+    button.addEventListener("click", () => toast(`已向 ${button.dataset.apply} 发送交换申请。对方同意后进入沟通页确认草案。`));
   });
-}
-
-function renderHome() {
-  const target = document.querySelector("[data-featured-profiles]");
-  if (!target) return;
-  target.innerHTML = profiles.slice(0, 6).map((item) => profileCard(item)).join("");
-  bindProfileActions();
-}
-
-function renderMarket() {
-  const target = document.querySelector("[data-market-profiles]");
-  if (!target) return;
-  const search = document.querySelector("[data-market-search]");
-  const filter = document.querySelector("[data-market-filter]");
-  const render = () => {
-    const keyword = (search.value || "").trim().toLowerCase();
-    const cat = filter.value;
-    const visible = profiles.filter((profile) => {
-      const text = `${profile.name} ${profile.role} ${profile.teach} ${profile.learn}`.toLowerCase();
-      return (!keyword || text.includes(keyword)) && (cat === "all" || profile.cat === cat);
-    });
-    target.innerHTML = visible.map((item) => profileCard(item)).join("");
-    bindProfileActions();
-  };
-  search.addEventListener("input", render);
-  filter.addEventListener("change", render);
-  render();
-}
-
-function renderPet() {
-  const target = document.querySelector("[data-pet-picks]");
-  if (!target) return;
-  target.innerHTML = profiles.slice(0, 3).map((item) => profileCard(item)).join("");
-  bindProfileActions();
-  document.querySelector("[data-hunt]")?.addEventListener("click", () => {
-    target.innerHTML = profiles.slice(0, 5).map((item) => profileCard(item)).join("");
-    bindProfileActions();
-    toast("Mochi 又叼回 2 个新猎物，已按配对概率重新排序。");
+  document.querySelectorAll("[data-save]").forEach((button) => {
+    button.addEventListener("click", () => toast(`${button.dataset.save} 的交换需求已收藏。`));
   });
 }
 
-function renderBasket() {
-  const target = document.querySelector("[data-basket-list]");
-  if (!target) return;
-  const ids = readIds(basketKey);
-  const items = profiles.filter((profile) => ids.includes(profile.id));
-  if (!items.length) {
-    target.innerHTML = `<div class="basket-empty">猎物篮还是空的。先去技能市场或让 Mochi 外出海淘。</div>`;
-  } else {
-    target.innerHTML = items.map((profile) => `
-      <label class="basket-item">
-        <input type="checkbox" value="${profile.id}" checked />
-        <span><b>${profile.name}</b><br /><small>${profile.teach} ⇄ ${profile.learn}</small></span>
-        <span class="lock-pill">${profile.score}%</span>
-      </label>
-    `).join("");
+function initMarket() {
+  const tabs = document.querySelectorAll("[data-mode]");
+  if (!tabs.length) return;
+  let current = "browse";
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      current = tab.dataset.mode;
+      tabs.forEach((item) => item.classList.toggle("active", item === tab));
+      renderMarket(current);
+    });
+  });
+  document.querySelector("[data-search]")?.addEventListener("input", () => renderMarket(current));
+  document.querySelector("[data-filter-type]")?.addEventListener("change", () => renderMarket(current));
+  document.querySelector("[data-filter-time]")?.addEventListener("change", () => renderMarket(current));
+  renderMarket(current);
+}
+
+function initMyTabs() {
+  const buttons = document.querySelectorAll("[data-my-tab]");
+  if (!buttons.length) return;
+  const panels = document.querySelectorAll("[data-tab-panel]");
+  function activate(name) {
+    buttons.forEach((button) => button.classList.toggle("active", button.dataset.myTab === name));
+    panels.forEach((panel) => panel.classList.toggle("active", panel.dataset.tabPanel === name));
   }
-  document.querySelector("[data-request-selected]")?.addEventListener("click", () => {
-    const selected = [...document.querySelectorAll(".basket-item input:checked")].map((input) => input.value);
-    writeIds(intentKey, selected);
-    if (selected.length) {
-      toast(`已向 ${selected.length} 位候选发起配对意向。对方回选后才会解锁交换。`);
-    } else {
-      toast("先勾选至少一个猎物，再发起配对。");
-    }
-  });
-}
-
-function bindStaticActions() {
-  document.querySelector("[data-passport-form]")?.addEventListener("submit", (event) => {
+  buttons.forEach((button) => button.addEventListener("click", () => activate(button.dataset.myTab)));
+  if (location.hash === "#publish") activate("publish");
+  document.querySelector("[data-publish-form]")?.addEventListener("submit", (event) => {
     event.preventDefault();
-    toast("技能护照已保存，Mochi 会用它重新外出寻猎。");
-  });
-  document.querySelector("[data-fake-upload]")?.addEventListener("click", () => toast("作品样例已加入护照，资料完整度 +8%。"));
-  document.querySelectorAll("[data-room-action]").forEach((button) => {
-    button.addEventListener("click", () => toast("这是已配对后才开放的交换动作：约课、签协议、提交作品。"));
+    toast("新的交换需求已发布到市场。");
   });
 }
 
-syncCount();
-renderHome();
-renderMarket();
-renderPet();
-renderBasket();
-bindStaticActions();
+function initMessages() {
+  const cats = document.querySelectorAll("[data-message-cat]");
+  cats.forEach((cat) => {
+    cat.addEventListener("click", () => {
+      cats.forEach((item) => item.classList.toggle("active", item === cat));
+      const title = cat.textContent.trim().replace(/\d+$/, "");
+      document.querySelector("[data-chat-title]").textContent = title;
+      toast(`已切换到${title}`);
+    });
+  });
+  document.querySelectorAll("[data-chat]").forEach((chat) => {
+    chat.addEventListener("click", () => {
+      document.querySelectorAll("[data-chat]").forEach((item) => item.classList.toggle("active", item === chat));
+      const name = chat.querySelector("b").textContent;
+      document.querySelector("[data-thread-name]").textContent = name;
+      document.querySelector("[data-thread-subtitle]").textContent = name === "林岚" ? "摄影、剪辑 ⇄ 动漫制作" : "交换申请沟通中";
+      document.querySelector("[data-draft-form]").hidden = true;
+      document.querySelector("[data-detail-default]").hidden = false;
+    });
+  });
+  document.querySelector("[data-open-draft]")?.addEventListener("click", () => {
+    document.querySelector("[data-detail-default]").hidden = true;
+    document.querySelector("[data-draft-form]").hidden = false;
+  });
+  document.querySelector("[data-draft-form]")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    toast("交换草案已发送给对方确认。");
+  });
+}
+
+initMarket();
+initMyTabs();
+initMessages();
