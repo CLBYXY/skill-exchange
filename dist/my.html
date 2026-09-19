@@ -24,7 +24,7 @@
           <div class="avatar">陈</div>
           <div>
             <h1>陈同学</h1>
-            <p>会 Python 数据分析、PPT 结构化表达；想换摄影、剪辑、动漫制作。</p>
+            <p>我的技能像一副牌组：用“我会”卡牌递出能力，用“我想学”卡牌标记目标，再和别人完成一对一连线。</p>
           </div>
         </div>
         <div class="general-stats">
@@ -42,44 +42,140 @@
       </section>
 
       <section class="my-panel active" data-tab-panel="publish">
-        <form class="publish-form" data-publish-form>
-          <div class="form-card">
-            <h2>我会什么</h2>
-            <label>技能名称<input value="摄影、剪辑" /></label>
-            <label>可提供形式<select><option>30 分钟课程</option><option>作品点评</option><option>项目陪跑</option></select></label>
-            <label>说明<textarea>可以讲手机摄影构图、基础剪辑节奏，适合想做第一条短视频的人。</textarea></label>
-          </div>
-          <div class="form-card">
-            <h2>我想换什么</h2>
-            <label>目标技能<input value="动漫制作" /></label>
-            <label>期望单位<select><option>30 分钟课程</option><option>一次作业点评</option><option>4 周作品项目</option></select></label>
-            <label>说明<textarea>希望对方能教我从角色草图到一个 5 秒循环动画的完整流程。</textarea></label>
-          </div>
-          <div class="form-card wide">
-            <h2>交换条件</h2>
-            <div class="field-grid">
-              <label>可约时间<select><option>周末下午</option><option>工作日晚上</option><option>灵活约</option></select></label>
-              <label>交换方式<select><option>线上</option><option>同城线下</option><option>都可以</option></select></label>
-              <label>可见范围<select><option>公开到市场</option><option>仅推荐可见</option></select></label>
+        <div class="deck-builder">
+          <form class="form-card skill-card-form" data-publish-form>
+            <div>
+              <p class="eyebrow">我会卡片</p>
+              <h2>新建可交换技能卡</h2>
             </div>
-            <button class="primary-action" type="submit">发布交换需求</button>
-          </div>
-        </form>
+            <label>标准技能名
+              <select>
+                <option>Python 数据分析</option>
+                <option>PPT 结构化表达</option>
+                <option>Excel 函数自动化</option>
+                <option>手机摄影构图</option>
+                <option>短视频剪辑</option>
+                <option>Figma 原型设计</option>
+              </select>
+            </label>
+            <div class="field-grid compact">
+              <label>熟练度<select><option>可教学</option><option>熟练</option><option>专家</option><option>入门陪练</option></select></label>
+              <label>类型<select><option>应用</option><option>理论</option><option>理论 + 应用</option></select></label>
+              <label>交换单位<select><option>30 分钟课程</option><option>1 次作品点评</option><option>1 个具体函数</option><option>1 个项目陪跑节点</option></select></label>
+            </div>
+            <div class="scenario-grid">
+              <label>使用场景 1<input value="清洗一份订单数据" /></label>
+              <label>使用场景 2<input value="做一页分析报告" /></label>
+              <label>使用场景 3<input value="讲清楚图表结论" /></label>
+            </div>
+            <button class="primary-action" type="submit">加入我会牌组</button>
+          </form>
+
+          <form class="form-card skill-card-form" data-want-form>
+            <div>
+              <p class="eyebrow">我想学卡片</p>
+              <h2>新建学习目标卡</h2>
+            </div>
+            <label>标准技能名
+              <select>
+                <option>动漫制作</option>
+                <option>手机摄影构图</option>
+                <option>短视频剪辑</option>
+                <option>英语口语表达</option>
+                <option>吉他弹唱</option>
+                <option>个人网站搭建</option>
+              </select>
+            </label>
+            <div class="field-grid compact">
+              <label>当前程度<select><option>零基础</option><option>入门</option><option>需要突破</option></select></label>
+              <label>学习方向<select><option>应用</option><option>理论</option><option>理论 + 应用</option></select></label>
+              <label>期望单位<select><option>30 分钟课程</option><option>1 次作业点评</option><option>1 个作品项目</option><option>1 个具体函数</option></select></label>
+            </div>
+            <div class="scenario-grid">
+              <label>想用在 1<input value="做一个 5 秒循环动画" /></label>
+              <label>想用在 2<input value="理解角色分镜流程" /></label>
+              <label>想用在 3<input value="完成可发布作品" /></label>
+            </div>
+            <button class="ghost-action" type="submit">加入我想学牌组</button>
+          </form>
+        </div>
+
+        <div class="deck-board">
+          <section class="deck-section">
+            <div class="deck-head">
+              <div>
+                <p class="eyebrow">可递出的筹码</p>
+                <h2>我会牌组</h2>
+              </div>
+              <span>3 张</span>
+            </div>
+            <div class="skill-deck">
+              <article class="skill-card teach-card">
+                <small>标准技能名</small>
+                <h3>Python 数据分析</h3>
+                <div class="card-tags"><span>可教学</span><span>应用</span><span>30 分钟课程</span></div>
+                <p>场景：清洗订单数据 / 做一页分析报告 / 讲清楚图表结论</p>
+              </article>
+              <article class="skill-card teach-card">
+                <small>标准技能名</small>
+                <h3>PPT 结构化表达</h3>
+                <div class="card-tags"><span>专家</span><span>理论 + 应用</span><span>1 次作品点评</span></div>
+                <p>场景：路演框架 / 信息层级 / 一页改稿</p>
+              </article>
+              <article class="skill-card teach-card">
+                <small>标准技能名</small>
+                <h3>Excel 函数自动化</h3>
+                <div class="card-tags"><span>熟练</span><span>应用</span><span>1 个具体函数</span></div>
+                <p>场景：匹配查找 / 批量整理 / 自动汇总</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="deck-section">
+            <div class="deck-head">
+              <div>
+                <p class="eyebrow">想抽到的能力</p>
+                <h2>我想学牌组</h2>
+              </div>
+              <span>3 张</span>
+            </div>
+            <div class="skill-deck">
+              <article class="skill-card want-card">
+                <small>标准技能名</small>
+                <h3>动漫制作</h3>
+                <div class="card-tags"><span>零基础</span><span>应用</span><span>1 个作品项目</span></div>
+                <p>场景：角色草图 / 分镜节奏 / 5 秒循环动画</p>
+              </article>
+              <article class="skill-card want-card">
+                <small>标准技能名</small>
+                <h3>手机摄影构图</h3>
+                <div class="card-tags"><span>入门</span><span>理论 + 应用</span><span>1 次作品点评</span></div>
+                <p>场景：人像拍摄 / 自然光 / 修图方向</p>
+              </article>
+              <article class="skill-card want-card">
+                <small>标准技能名</small>
+                <h3>短视频剪辑</h3>
+                <div class="card-tags"><span>需要突破</span><span>应用</span><span>30 分钟课程</span></div>
+                <p>场景：开头节奏 / 转场 / 发布版成片</p>
+              </article>
+            </div>
+          </section>
+        </div>
       </section>
 
       <section class="my-panel" data-tab-panel="requests">
         <div class="request-table">
-          <article><b>我会：Python 数据分析</b><span>我想换：摄影构图</span><em>12 个浏览 · 3 个申请</em></article>
-          <article><b>我会：PPT 结构化表达</b><span>我想换：短视频剪辑</span><em>8 个浏览 · 1 个申请</em></article>
-          <article><b>我会：Excel 自动化</b><span>我想换：英语口语</span><em>23 个浏览 · 5 个申请</em></article>
+          <article><b>递出卡：Python 数据分析 · 30 分钟课程</b><span>想换卡：手机摄影构图 · 1 次作品点评</span><em>3 个候选连线 · 1 个草案待确认</em></article>
+          <article><b>递出卡：PPT 结构化表达 · 1 次作品点评</b><span>想换卡：短视频剪辑 · 30 分钟课程</span><em>2 个候选连线 · 对方正在选牌</em></article>
+          <article><b>递出卡：Excel 函数自动化 · 1 个具体函数</b><span>想换卡：英语口语表达 · 30 分钟陪练</span><em>5 个候选连线 · 已进入沟通</em></article>
         </div>
       </section>
 
       <section class="my-panel" data-tab-panel="works">
         <div class="work-grid">
-          <article><strong>数据分析报告</strong><span>证明你能教 Python 数据分析</span><button>管理</button></article>
-          <article><strong>PPT 改稿前后对比</strong><span>证明你能做结构化表达</span><button>管理</button></article>
-          <article><strong>课程大纲</strong><span>用于提高交换申请通过率</span><button>管理</button></article>
+          <article><strong>数据分析报告</strong><span>绑定卡牌：Python 数据分析，用于证明可教学</span><button>管理</button></article>
+          <article><strong>PPT 改稿前后对比</strong><span>绑定卡牌：PPT 结构化表达，用于提高申请通过率</span><button>管理</button></article>
+          <article><strong>函数案例库</strong><span>绑定卡牌：Excel 函数自动化，让对方知道可交换边界</span><button>管理</button></article>
         </div>
       </section>
     </main>
