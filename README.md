@@ -13,3 +13,5 @@
 - 静态入口：`index.html`
 - 备用发布目录：`dist`
 - 如使用 Render Static Site，Publish Directory 可设为 `.` 或 `dist`
+
+Render trigger: game deck update.
