@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>我的 | SkillLoop</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body data-page="my">
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark">SL</span><span>SkillLoop</span></a>
+      <nav class="top-nav" aria-label="主导航">
+        <a href="index.html">技能交换市场</a>
+        <a class="active" href="my.html">我的</a>
+        <a href="messages.html">沟通</a>
+      </nav>
+      <div class="header-actions"><a class="publish-button" href="my.html#publish">发布需求</a></div>
+    </header>
+
+    <main class="my-page">
+      <section class="general-card">
+        <div class="user-block">
+          <div class="avatar">陈</div>
+          <div>
+            <h1>陈同学</h1>
+            <p>会 Python 数据分析、PPT 结构化表达；想换摄影、剪辑、动漫制作。</p>
+          </div>
+        </div>
+        <div class="general-stats">
+          <div><strong>96</strong><span>信用分</span></div>
+          <div><strong>18</strong><span>完成交换</span></div>
+          <div><strong>4.9</strong><span>平均评分</span></div>
+          <div><strong>7</strong><span>发布中</span></div>
+        </div>
+      </section>
+
+      <section class="my-tabs" aria-label="我的功能页签">
+        <button class="active" data-my-tab="publish" id="publish">发布新的交换需求</button>
+        <button data-my-tab="requests">我的交换需求</button>
+        <button data-my-tab="works">作品管理</button>
+      </section>
+
+      <section class="my-panel active" data-tab-panel="publish">
+        <form class="publish-form" data-publish-form>
+          <div class="form-card">
+            <h2>我会什么</h2>
+            <label>技能名称<input value="摄影、剪辑" /></label>
+            <label>可提供形式<select><option>30 分钟课程</option><option>作品点评</option><option>项目陪跑</option></select></label>
+            <label>说明<textarea>可以讲手机摄影构图、基础剪辑节奏，适合想做第一条短视频的人。</textarea></label>
+          </div>
+          <div class="form-card">
+            <h2>我想换什么</h2>
+            <label>目标技能<input value="动漫制作" /></label>
+            <label>期望单位<select><option>30 分钟课程</option><option>一次作业点评</option><option>4 周作品项目</option></select></label>
+            <label>说明<textarea>希望对方能教我从角色草图到一个 5 秒循环动画的完整流程。</textarea></label>
+          </div>
+          <div class="form-card wide">
+            <h2>交换条件</h2>
+            <div class="field-grid">
+              <label>可约时间<select><option>周末下午</option><option>工作日晚上</option><option>灵活约</option></select></label>
+              <label>交换方式<select><option>线上</option><option>同城线下</option><option>都可以</option></select></label>
+              <label>可见范围<select><option>公开到市场</option><option>仅推荐可见</option></select></label>
+            </div>
+            <button class="primary-action" type="submit">发布交换需求</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="my-panel" data-tab-panel="requests">
+        <div class="request-table">
+          <article><b>我会：Python 数据分析</b><span>我想换：摄影构图</span><em>12 个浏览 · 3 个申请</em></article>
+          <article><b>我会：PPT 结构化表达</b><span>我想换：短视频剪辑</span><em>8 个浏览 · 1 个申请</em></article>
+          <article><b>我会：Excel 自动化</b><span>我想换：英语口语</span><em>23 个浏览 · 5 个申请</em></article>
+        </div>
+      </section>
+
+      <section class="my-panel" data-tab-panel="works">
+        <div class="work-grid">
+          <article><strong>数据分析报告</strong><span>证明你能教 Python 数据分析</span><button>管理</button></article>
+          <article><strong>PPT 改稿前后对比</strong><span>证明你能做结构化表达</span><button>管理</button></article>
+          <article><strong>课程大纲</strong><span>用于提高交换申请通过率</span><button>管理</button></article>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" data-toast></div>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
